@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Chrome, Shield, Sparkles } from "lucide-react";
 import { BlurDemo } from "./BlurDemo";
 
+const extensionUrl = "https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb";
+
 export const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-20">
@@ -34,9 +36,11 @@ export const Hero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button variant="hero" size="xl" className="group">
-                <Chrome className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-                Add to Chrome - Free
+              <Button asChild variant="hero" size="xl" className="group">
+                <a href={extensionUrl} target="_blank" rel="noopener noreferrer">
+                  <Chrome className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                  Add to Chrome - Free
+                </a>
               </Button>
               <Button variant="glass" size="xl">
                 <Sparkles className="w-5 h-5" />

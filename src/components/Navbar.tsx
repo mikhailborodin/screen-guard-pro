@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Shield, Chrome } from "lucide-react";
 
+const extensionUrl = "https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb";
+
 export const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 px-4 py-4">
@@ -19,9 +21,11 @@ export const Navbar = () => {
             <a href="#privacy" className="hover:text-foreground transition-colors">Privacy</a>
           </div>
 
-          <Button variant="default" size="sm" className="group">
-            <Chrome className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-            <span className="hidden sm:inline">Install Free</span>
+          <Button asChild variant="default" size="sm" className="group">
+            <a href={extensionUrl} target="_blank" rel="noopener noreferrer">
+              <Chrome className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+              <span className="hidden sm:inline">Install Free</span>
+            </a>
           </Button>
         </div>
       </div>

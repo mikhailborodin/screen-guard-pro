@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Chrome, ArrowRight } from "lucide-react";
 
+const extensionUrl = "https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb";
+
 export const CTA = () => {
   return (
     <section className="py-24 px-4 relative">
@@ -20,10 +22,12 @@ export const CTA = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="hero" size="xl" className="group">
-              <Chrome className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-              Add to Chrome - It's Free
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <Button asChild variant="hero" size="xl" className="group">
+              <a href={extensionUrl} target="_blank" rel="noopener noreferrer">
+                <Chrome className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                Add to Chrome - It's Free
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
             </Button>
           </div>
 
