@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Screen Guard Pro</title>
+    <script>
+      const basePath = "/screen-guard-pro";
+      const { origin, pathname, search, hash } = window.location;
+
+      if (pathname.startsWith(basePath)) {
+        window.sessionStorage.setItem("screen-guard-pro:redirect", pathname + search + hash);
+        window.location.replace(origin + basePath + "/");
+      } else {
+        window.location.replace(origin + basePath + "/");
+      }
+    </script>
+  </head>
+  <body></body>
+</html>
