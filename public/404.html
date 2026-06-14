@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Screen Guard Pro</title>
+    <script>
+      const { origin, pathname, search, hash } = window.location;
+
+      window.sessionStorage.setItem("privacyblur:redirect", pathname + search + hash);
+      window.location.replace(origin + "/");
+    </script>
+  </head>
+  <body></body>
+</html>

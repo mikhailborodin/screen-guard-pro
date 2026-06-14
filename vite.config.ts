@@ -5,8 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  // Serve assets from repo subdirectory when building for GitHub Pages
-  base: mode === "development" ? "/" : "/screen-guard-pro/",
+  base: "/",
   server: {
     host: "::",
     port: 8080,

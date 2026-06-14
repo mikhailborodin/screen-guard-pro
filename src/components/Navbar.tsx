@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Shield, Chrome } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const extensionUrl = "https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb";
 
@@ -19,6 +20,7 @@ export const Navbar = () => {
             <a href="#features" className="hover:text-foreground transition-colors">Features</a>
             <a href="#how-it-works" className="hover:text-foreground transition-colors">How It Works</a>
             <a href="#privacy" className="hover:text-foreground transition-colors">Privacy</a>
+            <Link to="/support" className="hover:text-foreground transition-colors">Support</Link>
           </div>
 
           <Button asChild variant="default" size="sm" className="group">

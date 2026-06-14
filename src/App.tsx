@@ -5,11 +5,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Paywall from "./pages/Paywall";
+import PaymentCancelled from "./pages/PaymentCancelled";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import Support from "./pages/Support";
 
 const queryClient = new QueryClient();
 
-// Align router base with Vite's base URL so GitHub Pages works when hosted in
-// a repo subdirectory (e.g. /screen-guard-pro/).
+// Align router base with Vite's base URL when the app is hosted below a subpath.
 const routerBase = import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const App = () => (
@@ -20,6 +23,10 @@ const App = () => (
       <BrowserRouter basename={routerBase}>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/paywall" element={<Paywall />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/payment-cancelled" element={<PaymentCancelled />} />
+          <Route path="/support" element={<Support />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
