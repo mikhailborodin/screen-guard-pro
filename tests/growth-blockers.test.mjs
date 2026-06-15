@@ -70,6 +70,15 @@ test("sitemap and robots expose growth pages", async () => {
   assert.match(robots, new RegExp(`Sitemap: ${siteUrl}/sitemap\\.xml`));
 });
 
+test("sitemap routes have static GitHub Pages fallbacks", async () => {
+  for (const path of sitemapPaths.filter((path) => path !== "/")) {
+    const html = await read(`public${path}/index.html`);
+
+    assert.match(html, /Screen Privacy Blur/);
+    assert.doesNotMatch(html, /sessionStorage\.setItem/);
+  }
+});
+
 test("social preview image replaces placeholder OG image", async () => {
   const index = await read("index.html");
 

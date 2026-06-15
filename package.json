@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "test": "node --test tests/*.test.mjs",
+    "generate:static-pages": "node scripts/generate-static-growth-pages.mjs",
     "build": "vite build",
     "predeploy": "npm run build",
     "deploy": "GIT_SSH_COMMAND=\"ssh -i ~/.ssh/id_ed25519_github\" gh-pages -d dist",
