@@ -18,7 +18,7 @@ export const CTA = () => {
           </h2>
           
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Join thousands of professionals who trust Screen Privacy Blur for their screen sharing needs.
+            Protect your screen before your next demo, call, or recording.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

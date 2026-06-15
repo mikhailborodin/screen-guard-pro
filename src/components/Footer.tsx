@@ -13,9 +13,11 @@ export const Footer = () => {
             <span className="font-display font-semibold">Screen Privacy Blur</span>
           </div>
 
-          <div className="flex items-center gap-6 text-sm text-muted-foreground">
-            <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-foreground transition-colors">Terms of Service</a>
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground md:justify-end">
+            <Link to="/privacy-policy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
+            <Link to="/data-collection" className="hover:text-foreground transition-colors">Data Collection</Link>
+            <Link to="/permissions" className="hover:text-foreground transition-colors">Permissions</Link>
             <Link to="/support" className="hover:text-foreground transition-colors">Support</Link>
           </div>
 

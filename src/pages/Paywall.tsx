@@ -54,7 +54,7 @@ const Paywall = () => {
                 Unlock <span className="text-gradient">Smart Auto Blur</span>
               </h1>
               <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
-                Upgrade Screen Guard Pro to automatically find and blur sensitive fields before they appear in
+                Upgrade Screen Privacy Blur to automatically find and blur sensitive fields before they appear in
                 screen shares or recordings.
               </p>
             </div>

@@ -61,7 +61,7 @@ const Support = () => {
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/20">
               <Shield className="h-4 w-4 text-primary" />
             </div>
-            <span className="font-display font-semibold">Screen Guard Pro</span>
+            <span className="font-display font-semibold">Screen Privacy Blur</span>
           </div>
         </nav>
 
@@ -74,7 +74,7 @@ const Support = () => {
 
             <div className="space-y-5">
               <h1 className="font-display text-4xl font-bold leading-tight md:text-6xl">
-                Get help with <span className="text-gradient">Screen Guard Pro</span>
+                Get help with <span className="text-gradient">Screen Privacy Blur</span>
               </h1>
               <p className="max-w-xl text-lg leading-relaxed text-muted-foreground">
                 Send setup questions, billing issues, bug reports, or Smart Auto Blur feedback. We route every request

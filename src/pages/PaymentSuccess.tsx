@@ -59,13 +59,13 @@ const PaymentSuccess = () => {
                 <Button asChild variant="hero" size="lg">
                   <a href={extensionUrl}>
                     <Chrome className="h-5 w-5" />
-                    Open Screen Guard Pro Extension
+                    Open Screen Privacy Blur Extension
                   </a>
                 </Button>
               ) : (
                 <Button type="button" variant="hero" size="lg" disabled>
                   <Chrome className="h-5 w-5" />
-                  Open Screen Guard Pro Extension
+                  Open Screen Privacy Blur Extension
                 </Button>
               )}
               <Button type="button" variant="glass" size="lg" disabled={isChecking} onClick={verifySubscription}>

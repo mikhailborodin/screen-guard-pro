@@ -1,0 +1,80 @@
+import { readFile, stat } from "node:fs/promises";
+import assert from "node:assert/strict";
+import test from "node:test";
+
+const siteUrl = "https://privacyblur.co";
+const sitemapPaths = [
+  "/",
+  "/privacy-policy",
+  "/terms",
+  "/support",
+  "/data-collection",
+  "/permissions",
+  "/use-cases/screen-sharing",
+  "/use-cases/google-meet",
+  "/use-cases/zoom",
+  "/use-cases/loom-recording",
+  "/use-cases/hide-api-keys",
+  "/alternatives/safe-screen-share",
+  "/alternatives/datablur",
+  "/alternatives/privacy-blu",
+];
+
+const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
+
+test("public copy uses Screen Privacy Blur consistently", async () => {
+  const files = await Promise.all([
+    read("index.html"),
+    read("src/pages/Paywall.tsx"),
+    read("src/pages/PaymentSuccess.tsx"),
+    read("src/pages/Support.tsx"),
+    read("public/404.html"),
+  ]);
+
+  for (const content of files) {
+    assert.doesNotMatch(content, /Screen Guard Pro/);
+  }
+});
+
+test("landing page does not overstate social proof", async () => {
+  const cta = await read("src/components/CTA.tsx");
+
+  assert.doesNotMatch(cta, /Join thousands/i);
+  assert.match(cta, /Protect your screen before your next demo, call, or recording\./);
+});
+
+test("footer links point to real pages", async () => {
+  const footer = await read("src/components/Footer.tsx");
+
+  assert.doesNotMatch(footer, /href="#"/);
+  assert.match(footer, /to="\/privacy-policy"/);
+  assert.match(footer, /to="\/terms"/);
+  assert.match(footer, /to="\/data-collection"/);
+  assert.match(footer, /to="\/permissions"/);
+});
+
+test("growth pages are routed explicitly", async () => {
+  const app = await read("src/App.tsx");
+
+  for (const path of sitemapPaths.filter((path) => path !== "/")) {
+    assert.match(app, new RegExp(`path="${path.replaceAll("/", "\\/")}"`));
+  }
+});
+
+test("sitemap and robots expose growth pages", async () => {
+  const [sitemap, robots] = await Promise.all([read("public/sitemap.xml"), read("public/robots.txt")]);
+
+  for (const path of sitemapPaths) {
+    assert.match(sitemap, new RegExp(`<loc>${siteUrl}${path}</loc>`));
+  }
+  assert.match(robots, new RegExp(`Sitemap: ${siteUrl}/sitemap\\.xml`));
+});
+
+test("social preview image replaces placeholder OG image", async () => {
+  const index = await read("index.html");
+
+  assert.doesNotMatch(index, /placeholder\.svg/);
+  assert.match(index, /https:\/\/privacyblur\.co\/social-preview\.png/);
+  const image = await stat(new URL("../public/social-preview.png", import.meta.url));
+  assert.ok(image.size > 10_000, "social preview image should be a real asset");
+});
