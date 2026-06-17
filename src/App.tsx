@@ -29,6 +29,7 @@ const App = () => (
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/payment-cancelled" element={<PaymentCancelled />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/support/" element={<Support />} />
           <Route path="/privacy-policy" element={<GrowthPage page={pageByPath["/privacy-policy"]} />} />
           <Route path="/terms" element={<GrowthPage page={pageByPath["/terms"]} />} />
           <Route path="/data-collection" element={<GrowthPage page={pageByPath["/data-collection"]} />} />

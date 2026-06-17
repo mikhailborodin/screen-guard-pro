@@ -22,13 +22,6 @@ const pages = [
       "Terms for using Screen Privacy Blur, including free manual blur and optional Smart Auto Blur Pro.",
   },
   {
-    path: "/support",
-    eyebrow: "Support",
-    title: "Support for Screen Privacy Blur",
-    description:
-      "Get help with setup, billing, bug reports, and Smart Auto Blur feedback for Screen Privacy Blur.",
-  },
-  {
     path: "/data-collection",
     eyebrow: "Data Collection",
     title: "What Screen Privacy Blur collects",

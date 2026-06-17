@@ -19,6 +19,7 @@ const sitemapPaths = [
   "/alternatives/datablur",
   "/alternatives/privacy-blu",
 ];
+const staticFallbackPaths = sitemapPaths.filter((path) => path !== "/" && path !== "/support");
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 
@@ -71,12 +72,16 @@ test("sitemap and robots expose growth pages", async () => {
 });
 
 test("sitemap routes have static GitHub Pages fallbacks", async () => {
-  for (const path of sitemapPaths.filter((path) => path !== "/")) {
+  for (const path of staticFallbackPaths) {
     const html = await read(`public${path}/index.html`);
 
     assert.match(html, /Screen Privacy Blur/);
     assert.doesNotMatch(html, /sessionStorage\.setItem/);
   }
+});
+
+test("support route stays on the React form instead of a static fallback", async () => {
+  await assert.rejects(() => read("public/support/index.html"), { code: "ENOENT" });
 });
 
 test("social preview image replaces placeholder OG image", async () => {
