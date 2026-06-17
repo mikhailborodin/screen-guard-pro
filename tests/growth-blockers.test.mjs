@@ -44,6 +44,14 @@ test("landing page does not overstate social proof", async () => {
   assert.match(cta, /Protect your screen before your next demo, call, or recording\./);
 });
 
+test("hero Watch Demo button links to the YouTube demo", async () => {
+  const hero = await read("src/components/Hero.tsx");
+
+  assert.match(hero, /https:\/\/www\.youtube\.com\/watch\?v=pLqxd8KaClQ/);
+  assert.match(hero, /target="_blank"/);
+  assert.match(hero, /rel="noopener noreferrer"/);
+});
+
 test("footer links point to real pages", async () => {
   const footer = await read("src/components/Footer.tsx");
 

@@ -3,6 +3,7 @@ import { Chrome, Shield, Sparkles } from "lucide-react";
 import { BlurDemo } from "./BlurDemo";
 
 const extensionUrl = "https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb";
+const demoUrl = "https://www.youtube.com/watch?v=pLqxd8KaClQ";
 
 export const Hero = () => {
   return (
@@ -42,9 +43,11 @@ export const Hero = () => {
                   Add to Chrome - Free
                 </a>
               </Button>
-              <Button variant="glass" size="xl">
-                <Sparkles className="w-5 h-5" />
-                Watch Demo
+              <Button asChild variant="glass" size="xl">
+                <a href={demoUrl} target="_blank" rel="noopener noreferrer">
+                  <Sparkles className="w-5 h-5" />
+                  Watch Demo
+                </a>
               </Button>
             </div>
 
