@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Chrome, Shield, Sparkles } from "lucide-react";
 import { BlurDemo } from "./BlurDemo";
 
 const extensionUrl = "https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb";
-const demoUrl = "https://www.youtube.com/watch?v=pLqxd8KaClQ";
+const demoEmbedUrl = "https://www.youtube.com/embed/pLqxd8KaClQ";
 
 export const Hero = () => {
   return (
@@ -43,12 +44,26 @@ export const Hero = () => {
                   Add to Chrome - Free
                 </a>
               </Button>
-              <Button asChild variant="glass" size="xl">
-                <a href={demoUrl} target="_blank" rel="noopener noreferrer">
-                  <Sparkles className="w-5 h-5" />
-                  Watch Demo
-                </a>
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="glass" size="xl">
+                    <Sparkles className="w-5 h-5" />
+                    Watch Demo
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="w-[calc(100vw-2rem)] max-w-5xl border-border/70 bg-background/95 p-0 shadow-elevated">
+                  <DialogTitle className="sr-only">Screen Privacy Blur demo</DialogTitle>
+                  <div className="aspect-video w-full overflow-hidden rounded-lg bg-black">
+                    <iframe
+                      className="h-full w-full"
+                      src={demoEmbedUrl}
+                      title="Screen Privacy Blur demo"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    />
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
 
             <div className="flex items-center gap-6 justify-center lg:justify-start text-sm text-muted-foreground">
