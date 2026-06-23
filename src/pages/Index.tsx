@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Features } from "@/components/Features";
+import { MacDesktopApp } from "@/components/MacDesktopApp";
 import { HowItWorks } from "@/components/HowItWorks";
 import { PrivacyPromise } from "@/components/PrivacyPromise";
 import { CTA } from "@/components/CTA";
@@ -13,6 +14,9 @@ const Index = () => {
       <Hero />
       <section id="features">
         <Features />
+      </section>
+      <section id="mac-desktop">
+        <MacDesktopApp />
       </section>
       <section id="how-it-works">
         <HowItWorks />

@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Chrome, Shield, Sparkles } from "lucide-react";
+import { Chrome, Download, Shield, Sparkles } from "lucide-react";
 import { BlurDemo } from "./BlurDemo";
 
 const extensionUrl = "https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb";
+const macDownloadUrl = "/downloads/ScreenPrivacyBlurMac.dmg";
 const demoEmbedUrl = "https://www.youtube.com/embed/pLqxd8KaClQ";
 
 export const Hero = () => {
@@ -24,7 +25,7 @@ export const Hero = () => {
           <div className="text-center lg:text-left space-y-8 animate-slide-up">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-muted-foreground">
               <Shield className="w-4 h-4 text-primary" />
-              <span>Privacy-First Chrome Extension</span>
+              <span>Privacy-First Chrome Extension + macOS App</span>
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display leading-tight">
@@ -34,14 +35,20 @@ export const Hero = () => {
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Protect your sensitive information during video calls, screen sharing, and recordings with customizable blur overlays.
+              Protect sensitive information during video calls, screen sharing, and recordings with customizable blur overlays for browser tabs and desktop apps.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start">
               <Button asChild variant="hero" size="xl" className="group">
                 <a href={extensionUrl} target="_blank" rel="noopener noreferrer">
                   <Chrome className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                   Add to Chrome - Free
+                </a>
+              </Button>
+              <Button asChild variant="glass" size="xl" className="group">
+                <a href={macDownloadUrl} download>
+                  <Download className="w-5 h-5 transition-transform group-hover:translate-y-0.5" />
+                  Download DMG
                 </a>
               </Button>
               <Dialog>

@@ -54,6 +54,30 @@ test("hero Watch Demo button opens the YouTube demo in a modal", async () => {
   assert.doesNotMatch(hero, /demoUrl[\s\S]*target="_blank"/);
 });
 
+test("hero mentions the macOS desktop app", async () => {
+  const hero = await read("src/components/Hero.tsx");
+
+  assert.match(hero, /Chrome Extension \+ macOS App/);
+  assert.match(hero, /Download DMG/);
+  assert.match(hero, /\/downloads\/ScreenPrivacyBlurMac\.dmg/);
+  assert.match(hero, /browser tabs and desktop apps/);
+});
+
+test("homepage includes a macOS desktop app section", async () => {
+  const [index, desktopApp] = await Promise.all([
+    read("src/pages/Index.tsx"),
+    read("src/components/MacDesktopApp.tsx"),
+  ]);
+
+  assert.match(index, /import \{ MacDesktopApp \} from "@\/components\/MacDesktopApp";/);
+  assert.match(index, /<section id="mac-desktop">/);
+  assert.match(index, /<MacDesktopApp \/>/);
+  assert.match(desktopApp, /macOS desktop app/);
+  assert.match(desktopApp, /Overlay Blur/);
+  assert.match(desktopApp, /Attach overlays to a visible app window/);
+  assert.match(desktopApp, /\/downloads\/ScreenPrivacyBlurMac\.dmg/);
+});
+
 test("footer links point to real pages", async () => {
   const footer = await read("src/components/Footer.tsx");
 
