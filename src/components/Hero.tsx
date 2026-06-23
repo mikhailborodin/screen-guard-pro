@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Chrome, Download, Shield, Sparkles } from "lucide-react";
 import { BlurDemo } from "./BlurDemo";
+import { trackInstallClick } from "@/lib/analytics";
 
 const extensionUrl = "https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb";
 const macDownloadUrl = "/downloads/ScreenPrivacyBlurMac.dmg";
@@ -40,13 +41,22 @@ export const Hero = () => {
 
             <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start">
               <Button asChild variant="hero" size="xl" className="group">
-                <a href={extensionUrl} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={extensionUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackInstallClick({ target: "chrome", placement: "hero", targetUrl: extensionUrl })}
+                >
                   <Chrome className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                   Add to Chrome - Free
                 </a>
               </Button>
               <Button asChild variant="glass" size="xl" className="group">
-                <a href={macDownloadUrl} download>
+                <a
+                  href={macDownloadUrl}
+                  download
+                  onClick={() => trackInstallClick({ target: "macos", placement: "hero", targetUrl: macDownloadUrl })}
+                >
                   <Download className="w-5 h-5 transition-transform group-hover:translate-y-0.5" />
                   Download DMG
                 </a>

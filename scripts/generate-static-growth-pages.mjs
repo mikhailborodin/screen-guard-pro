@@ -5,6 +5,9 @@ import { fileURLToPath } from "node:url";
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const publicDir = join(root, "public");
 const siteUrl = "https://privacyblur.co";
+const measurementId = "G-PE695ZZE0F";
+const extensionUrl =
+  "https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb";
 
 const pages = [
   {
@@ -103,6 +106,25 @@ const escapeHtml = (value) =>
 const render = ({ path, eyebrow, title, description }) => `<!doctype html>
 <html lang="en">
   <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${measurementId}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function gtag() {
+        window.dataLayer.push(arguments);
+      };
+      gtag('js', new Date());
+      gtag('config', '${measurementId}');
+      window.trackInstallClick = function trackInstallClick(targetUrl) {
+        window.gtag('event', 'install_chrome_click', {
+          event_category: 'install',
+          event_label: 'growth_page',
+          placement: 'growth_page',
+          platform: 'chrome',
+          target_url: targetUrl,
+          transport_type: 'beacon'
+        });
+      };
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${escapeHtml(title)} | Screen Privacy Blur</title>
@@ -227,7 +249,7 @@ const render = ({ path, eyebrow, title, description }) => `<!doctype html>
       <h1>${escapeHtml(title)}</h1>
       <p>${escapeHtml(description)}</p>
       <div class="actions">
-        <a class="button" href="https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb">Add to Chrome - Free</a>
+        <a class="button" href="${extensionUrl}" onclick="window.trackInstallClick(this.href)">Add to Chrome - Free</a>
         <a class="link" href="/support">Contact support</a>
       </div>
       <footer>

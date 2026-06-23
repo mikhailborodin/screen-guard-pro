@@ -8,6 +8,7 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { trackInstallClick } from "@/lib/analytics";
 
 const macDownloadUrl = "/downloads/ScreenPrivacyBlurMac.dmg";
 
@@ -66,7 +67,11 @@ export const MacDesktopApp = () => {
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <Button asChild variant="hero" size="xl" className="group">
-                <a href={macDownloadUrl} download>
+                <a
+                  href={macDownloadUrl}
+                  download
+                  onClick={() => trackInstallClick({ target: "macos", placement: "mac_section", targetUrl: macDownloadUrl })}
+                >
                   <Download className="h-5 w-5 transition-transform group-hover:translate-y-0.5" />
                   Download DMG
                 </a>
