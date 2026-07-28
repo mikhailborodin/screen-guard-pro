@@ -47,13 +47,30 @@
   @media (max-width: 720px) { .shell { padding-top: 28px; } .eyebrow { margin-top: 36px; } .grid, .bullets { grid-template-columns: 1fr; } }
 </style>
     
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PE695ZZE0F"></script>
-    <script>window.dataLayer = window.dataLayer || []; window.gtag = function gtag(){ window.dataLayer.push(arguments); }; window.gtag("js", new Date()); window.gtag("config", "G-PE695ZZE0F");</script>
+    <script>
+      window.addEventListener("load", () => {
+        const loadAnalytics = () => {
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function gtag(){ window.dataLayer.push(arguments); };
+          window.gtag("js", new Date());
+          window.gtag("config", "G-PE695ZZE0F");
+          const script = document.createElement("script");
+          script.async = true;
+          script.src = "https://www.googletagmanager.com/gtag/js?id=G-PE695ZZE0F";
+          document.head.appendChild(script);
+        };
+
+        if ("requestIdleCallback" in window) {
+          window.requestIdleCallback(loadAnalytics, { timeout: 4000 });
+        } else {
+          window.setTimeout(loadAnalytics, 1);
+        }
+      }, { once: true });
+    </script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Screen Privacy Blur","applicationCategory":"SecurityApplication","operatingSystem":"Chrome, macOS","description":"Local-first blur overlays for hiding sensitive information during browser screen sharing, demos, calls, and recordings.","downloadUrl":"https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
-    <script type="module" crossorigin src="/assets/index-Be2tdG7G.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-C3VKEHF6.css">
+    
   </head>
-  <body><div id="root"><main class="shell">
+  <body><main class="shell">
   <nav class="nav" aria-label="Primary">
     <a class="brand" href="/">Screen Privacy Blur</a>
     <div class="nav-links">
@@ -62,7 +79,7 @@
       <a href="/permissions/">Privacy</a>
       <a href="https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb">Add to Chrome</a>
     </div>
-  </nav><span class="eyebrow">Privacy-first Chrome extension and macOS app</span><h1>Blur sensitive information before screen sharing.</h1><p class="lead">Screen Privacy Blur helps you hide customer data, messages, API keys, notifications, and private browser fields before a live demo, call, recording, or support session.</p><div class="actions"><a class="button" href="https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb">Add to Chrome — Free</a><a class="button secondary" href="/downloads/ScreenPrivacyBlurMac.dmg" download>Download macOS app</a></div><section class="grid"><article class="card"><h2>For demos and calls</h2><p>Prepare adjustable blur overlays before sharing a dashboard, inbox, admin tool, or internal workspace with a customer or team.</p></article><article class="card"><h2>Local-first privacy</h2><p>Manual overlays and sensitive-field detection run locally, so the product does not need to upload your visible screen content.</p></article><article class="card"><h2>For recordings</h2><p>Hide predictable private details before recording a Loom, Zoom walkthrough, tutorial, or bug report to reduce retakes and editing.</p></article><article class="card"><h2>Browser and desktop</h2><p>Use the Chrome extension for browser tabs or the macOS app for adjustable Overlay Blur regions over desktop apps and windows.</p></article></section><section class="how"><h2>Start protecting your screen in seconds</h2><ol><li>Install Screen Privacy Blur in Chrome or download the macOS app.</li><li>Place an overlay over the sensitive area you expect to show.</li><li>Start sharing with the workflow visible and the private detail obscured.</li></ol></section><section><h2>Explore practical screen privacy workflows</h2><div class="grid"><article class="card"><a href="/use-cases/"><h3>Use cases for Google Meet, Zoom, Loom, and live debugging</h3><p>Learn how to prepare specific workflows for a screen share or recording.</p></a></article><article class="card"><a href="/alternatives/"><h3>Browser privacy alternatives</h3><p>Compare browser-first workflows for demos, calls, and recordings.</p></a></article></div></section>
+  </nav><span class="eyebrow">Privacy-first Chrome extension and macOS app</span><h1>Blur sensitive information before screen sharing.</h1><p class="lead">Screen Privacy Blur helps you hide customer data, messages, API keys, notifications, and private browser fields before a live demo, call, recording, or support session.</p><div class="actions"><a class="button" href="https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb">Add to Chrome — Free</a><a class="button secondary" href="/downloads/ScreenPrivacyBlurMac.dmg" download>Download macOS app</a><a class="button secondary" href="https://www.youtube.com/watch?v=pLqxd8KaClQ" target="_blank" rel="noopener noreferrer">Watch demo</a></div><section class="grid"><article class="card"><h2>For demos and calls</h2><p>Prepare adjustable blur overlays before sharing a dashboard, inbox, admin tool, or internal workspace with a customer or team.</p></article><article class="card"><h2>Local-first privacy</h2><p>Manual overlays and sensitive-field detection run locally, so the product does not need to upload your visible screen content.</p></article><article class="card"><h2>For recordings</h2><p>Hide predictable private details before recording a Loom, Zoom walkthrough, tutorial, or bug report to reduce retakes and editing.</p></article><article class="card"><h2>Browser and desktop</h2><p>Use the Chrome extension for browser tabs or the macOS app for adjustable Overlay Blur regions over desktop apps and windows.</p></article></section><section class="how"><h2>Start protecting your screen in seconds</h2><ol><li>Install Screen Privacy Blur in Chrome or download the macOS app.</li><li>Place an overlay over the sensitive area you expect to show.</li><li>Start sharing with the workflow visible and the private detail obscured.</li></ol></section><section><h2>Explore practical screen privacy workflows</h2><div class="grid"><article class="card"><a href="/use-cases/"><h3>Use cases for Google Meet, Zoom, Loom, and live debugging</h3><p>Learn how to prepare specific workflows for a screen share or recording.</p></a></article><article class="card"><a href="/alternatives/"><h3>Browser privacy alternatives</h3><p>Compare browser-first workflows for demos, calls, and recordings.</p></a></article></div></section>
   <footer class="footer">
     <span>© 2026 Screen Privacy Blur</span>
     <nav class="footer-links" aria-label="Footer">
@@ -72,5 +89,5 @@
       <a href="/permissions/">Permissions</a>
       <a href="/support/">Support</a>
     </nav>
-  </footer></main></div></body>
+  </footer></main></body>
 </html>
