@@ -48,24 +48,22 @@
 </style>
     
     <script>
-      window.addEventListener("load", () => {
-        const loadAnalytics = () => {
-          window.dataLayer = window.dataLayer || [];
-          window.gtag = function gtag(){ window.dataLayer.push(arguments); };
-          window.gtag("js", new Date());
-          window.gtag("config", "G-PE695ZZE0F");
-          const script = document.createElement("script");
-          script.async = true;
-          script.src = "https://www.googletagmanager.com/gtag/js?id=G-PE695ZZE0F";
-          document.head.appendChild(script);
-        };
-
-        if ("requestIdleCallback" in window) {
-          window.requestIdleCallback(loadAnalytics, { timeout: 4000 });
-        } else {
-          window.setTimeout(loadAnalytics, 1);
-        }
-      }, { once: true });
+      let analyticsStarted = false;
+      const analyticsEvents = ["pointerdown", "keydown", "scroll", "touchstart"];
+      const startAnalytics = () => {
+        if (analyticsStarted) return;
+        analyticsStarted = true;
+        analyticsEvents.forEach((eventName) => window.removeEventListener(eventName, startAnalytics));
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function gtag(){ window.dataLayer.push(arguments); };
+        window.gtag("js", new Date());
+        window.gtag("config", "G-PE695ZZE0F");
+        const script = document.createElement("script");
+        script.async = true;
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-PE695ZZE0F";
+        document.head.appendChild(script);
+      };
+      analyticsEvents.forEach((eventName) => window.addEventListener(eventName, startAnalytics, { passive: true }));
     </script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Screen Privacy Blur","applicationCategory":"SecurityApplication","operatingSystem":"Chrome, macOS","description":"Local-first blur overlays for hiding sensitive information during browser screen sharing, demos, calls, and recordings.","downloadUrl":"https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
     
