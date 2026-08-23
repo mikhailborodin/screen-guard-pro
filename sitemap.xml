@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://privacyblur.co/</loc><lastmod>2026-07-28</lastmod></url>
-  <url><loc>https://privacyblur.co/use-cases/</loc><lastmod>2026-07-28</lastmod></url>
-  <url><loc>https://privacyblur.co/alternatives/</loc><lastmod>2026-07-28</lastmod></url>
-  <url><loc>https://privacyblur.co/privacy-policy/</loc><lastmod>2026-07-28</lastmod></url>
-  <url><loc>https://privacyblur.co/terms/</loc><lastmod>2026-07-28</lastmod></url>
-  <url><loc>https://privacyblur.co/data-collection/</loc><lastmod>2026-07-28</lastmod></url>
-  <url><loc>https://privacyblur.co/permissions/</loc><lastmod>2026-07-28</lastmod></url>
-  <url><loc>https://privacyblur.co/use-cases/screen-sharing/</loc><lastmod>2026-07-28</lastmod></url>
-  <url><loc>https://privacyblur.co/use-cases/google-meet/</loc><lastmod>2026-07-28</lastmod></url>
-  <url><loc>https://privacyblur.co/use-cases/zoom/</loc><lastmod>2026-07-28</lastmod></url>
-  <url><loc>https://privacyblur.co/use-cases/loom-recording/</loc><lastmod>2026-07-28</lastmod></url>
-  <url><loc>https://privacyblur.co/use-cases/hide-api-keys/</loc><lastmod>2026-07-28</lastmod></url>
-  <url><loc>https://privacyblur.co/alternatives/safe-screen-share/</loc><lastmod>2026-07-28</lastmod></url>
-  <url><loc>https://privacyblur.co/alternatives/datablur/</loc><lastmod>2026-07-28</lastmod></url>
-  <url><loc>https://privacyblur.co/alternatives/privacy-blu/</loc><lastmod>2026-07-28</lastmod></url>
+  <url><loc>https://privacyblur.co/</loc></url>
+  <url><loc>https://privacyblur.co/privacy-policy</loc></url>
+  <url><loc>https://privacyblur.co/terms</loc></url>
+  <url><loc>https://privacyblur.co/support</loc></url>
+  <url><loc>https://privacyblur.co/data-collection</loc></url>
+  <url><loc>https://privacyblur.co/permissions</loc></url>
+  <url><loc>https://privacyblur.co/use-cases/screen-sharing</loc></url>
+  <url><loc>https://privacyblur.co/use-cases/google-meet</loc></url>
+  <url><loc>https://privacyblur.co/use-cases/zoom</loc></url>
+  <url><loc>https://privacyblur.co/use-cases/loom-recording</loc></url>
+  <url><loc>https://privacyblur.co/use-cases/hide-api-keys</loc></url>
+  <url><loc>https://privacyblur.co/alternatives/safe-screen-share</loc></url>
+  <url><loc>https://privacyblur.co/alternatives/datablur</loc></url>
+  <url><loc>https://privacyblur.co/alternatives/privacy-blu</loc></url>
 </urlset>
