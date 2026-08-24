@@ -1,3 +1,5 @@
+import Stripe from "npm:stripe@22.4.0";
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -8,9 +10,12 @@ type CheckoutRequest = {
   feature?: string;
   source?: string;
   extensionId?: string;
+  billingInterval?: string;
   successUrl?: string;
   cancelUrl?: string;
 };
+
+type BillingInterval = "month" | "year";
 
 const json = (body: unknown, init?: ResponseInit) =>
   new Response(JSON.stringify(body), {
@@ -30,6 +35,42 @@ const requiredString = (value: unknown, field: string) => {
   return value.trim();
 };
 
+const requiredBillingInterval = (value: unknown): BillingInterval => {
+  if (value !== "month" && value !== "year") {
+    throw new Error("billingInterval must be month or year");
+  }
+
+  return value;
+};
+
+const randomLetters = (length: number) => {
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  const bytes = crypto.getRandomValues(new Uint8Array(length));
+
+  return Array.from(bytes, (byte) => alphabet[byte % alphabet.length]).join("");
+};
+
+const createActivationToken = () => {
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  const binary = Array.from(bytes, (byte) => String.fromCharCode(byte)).join("");
+
+  return btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replace(/=+$/, "");
+};
+
+const sha256Hex = async (value: string) => {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+
+  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+};
+
+const activationSuccessUrl = (rawUrl: string, activationToken: string) => {
+  const url = new URL(rawUrl);
+  url.searchParams.set("session_id", "{CHECKOUT_SESSION_ID}");
+  url.hash = new URLSearchParams({ activation_token: activationToken }).toString();
+
+  return url.toString().replace("%7BCHECKOUT_SESSION_ID%7D", "{CHECKOUT_SESSION_ID}");
+};
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -41,9 +82,10 @@ Deno.serve(async (req) => {
 
   try {
     const stripeSecretKey = Deno.env.get("STRIPE_SECRET_KEY");
-    const stripePriceId = Deno.env.get("STRIPE_PRICE_ID");
+    const monthlyPriceId = Deno.env.get("STRIPE_MONTHLY_PRICE_ID") ?? Deno.env.get("STRIPE_PRICE_ID");
+    const yearlyPriceId = Deno.env.get("STRIPE_YEARLY_PRICE_ID");
 
-    if (!stripeSecretKey || !stripePriceId) {
+    if (!stripeSecretKey || !monthlyPriceId || !yearlyPriceId) {
       return json({ error: "Stripe billing is not configured" }, { status: 500 });
     }
 
@@ -51,6 +93,7 @@ Deno.serve(async (req) => {
     const feature = requiredString(body.feature, "feature");
     const source = requiredString(body.source, "source");
     const extensionId = requiredString(body.extensionId, "extensionId");
+    const billingInterval = requiredBillingInterval(body.billingInterval);
     const successUrl = requiredString(body.successUrl, "successUrl");
     const cancelUrl = requiredString(body.cancelUrl, "cancelUrl");
 
@@ -58,40 +101,41 @@ Deno.serve(async (req) => {
       return json({ error: "Unsupported feature" }, { status: 400 });
     }
 
-    const params = new URLSearchParams({
-      mode: "subscription",
-      "line_items[0][price]": stripePriceId,
-      "line_items[0][quantity]": "1",
-      success_url: successUrl,
-      cancel_url: cancelUrl,
-      client_reference_id: extensionId,
-      "metadata[feature]": feature,
-      "metadata[source]": source,
-      "metadata[extensionId]": extensionId,
-      "subscription_data[metadata][feature]": feature,
-      "subscription_data[metadata][source]": source,
-      "subscription_data[metadata][extensionId]": extensionId,
-    });
-
-    const stripeResponse = await fetch("https://api.stripe.com/v1/checkout/sessions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${stripeSecretKey}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: params,
-    });
-
-    const stripeBody = await stripeResponse.json();
-
-    if (!stripeResponse.ok) {
-      return json(
-        { error: stripeBody?.error?.message ?? "Unable to create checkout session" },
-        { status: stripeResponse.status },
-      );
+    if (!/^[a-p]{32}$/.test(extensionId)) {
+      return json({ error: "Invalid extensionId" }, { status: 400 });
     }
 
-    return json({ url: stripeBody.url });
+    const activationToken = createActivationToken();
+    const activationTokenHash = await sha256Hex(activationToken);
+    const priceId = billingInterval === "year" ? yearlyPriceId : monthlyPriceId;
+    const stripe = new Stripe(stripeSecretKey, { apiVersion: "2026-07-29.dahlia" });
+    const session = await stripe.checkout.sessions.create({
+      mode: "subscription",
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: activationSuccessUrl(successUrl, activationToken),
+      cancel_url: cancelUrl,
+      client_reference_id: extensionId,
+      allow_promotion_codes: true,
+      integration_identifier: `privacyblur_web_${randomLetters(8)}`,
+      metadata: {
+        feature,
+        source,
+        extensionId,
+        billingInterval,
+        activationTokenHash,
+      },
+      subscription_data: {
+        metadata: {
+          feature,
+          source,
+          extensionId,
+          billingInterval,
+          activationTokenHash,
+        },
+      },
+    });
+
+    return json({ url: session.url });
   } catch (error) {
     return json({ error: error instanceof Error ? error.message : "Unable to create checkout session" }, { status: 400 });
   }
