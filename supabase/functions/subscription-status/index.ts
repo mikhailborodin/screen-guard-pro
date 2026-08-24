@@ -14,6 +14,19 @@ const json = (body: unknown, init?: ResponseInit) =>
     },
   });
 
+const sha256Hex = async (value: string) => {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+
+  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+};
+
+const getActivationToken = (req: Request) => {
+  const authorization = req.headers.get("Authorization") ?? "";
+  const match = authorization.match(/^Bearer\s+([A-Za-z0-9_-]{32,128})$/);
+
+  return match?.[1];
+};
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -32,13 +45,20 @@ Deno.serve(async (req) => {
 
     const url = new URL(req.url);
     const extensionId = url.searchParams.get("extension_id")?.trim();
+    const activationToken = getActivationToken(req);
 
-    if (!extensionId) {
+    if (!extensionId || !/^[a-p]{32}$/.test(extensionId)) {
       return json({ active: false, status: "missing_extension_id" });
     }
 
+    if (!activationToken) {
+      return json({ active: false, status: "missing_activation_token" }, { status: 401 });
+    }
+
+    const activationTokenHash = await sha256Hex(activationToken);
+
     const params = new URLSearchParams({
-      query: `metadata["extensionId"]:"${extensionId}" AND status:"active"`,
+      query: `metadata["extensionId"]:"${extensionId}" AND metadata["activationTokenHash"]:"${activationTokenHash}" AND status:"active"`,
       limit: "1",
     });
 
