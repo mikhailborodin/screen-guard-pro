@@ -24,9 +24,10 @@ test("subscription status requires the matching bearer token", async () => {
 });
 
 test("payment success verifies Pro and activates the installed extension", async () => {
-  const [billing, page] = await Promise.all([
+  const [billing, page, staticCallback] = await Promise.all([
     read("src/lib/billing.ts"),
     read("src/pages/PaymentSuccess.tsx"),
+    read("public/payment-success/index.html"),
   ]);
 
   assert.match(billing, /Authorization: `Bearer \$\{activationToken\}`/);
@@ -34,4 +35,6 @@ test("payment success verifies Pro and activates the installed extension", async
   assert.match(billing, /active: true/);
   assert.match(page, /activateExtension\(extensionId, activationToken\)/);
   assert.match(page, /useEffect/);
+  assert.match(staticCallback, /pathname \+ search \+ hash/);
+  assert.match(staticCallback, /privacyblur:redirect/);
 });
