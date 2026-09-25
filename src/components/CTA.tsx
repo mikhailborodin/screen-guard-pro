@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Chrome, ArrowRight } from "lucide-react";
+import { trackInstallClick } from "@/lib/analytics";
 
 const extensionUrl = "https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb";
 
@@ -23,7 +24,12 @@ export const CTA = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild variant="hero" size="xl" className="group">
-              <a href={extensionUrl} target="_blank" rel="noopener noreferrer">
+              <a
+                href={extensionUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackInstallClick({ target: "chrome", placement: "cta", targetUrl: extensionUrl })}
+              >
                 <Chrome className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                 Add to Chrome - It's Free
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

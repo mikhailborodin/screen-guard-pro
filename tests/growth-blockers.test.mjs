@@ -54,6 +54,51 @@ test("hero Watch Demo button opens the YouTube demo in a modal", async () => {
   assert.doesNotMatch(hero, /demoUrl[\s\S]*target="_blank"/);
 });
 
+test("hero mentions the macOS desktop app", async () => {
+  const hero = await read("src/components/Hero.tsx");
+
+  assert.match(hero, /Chrome Extension \+ macOS App/);
+  assert.match(hero, /Download DMG/);
+  assert.match(hero, /\/downloads\/ScreenPrivacyBlurMac\.dmg/);
+  assert.match(hero, /browser tabs and desktop apps/);
+});
+
+test("install and download buttons send GA4 custom events", async () => {
+  const [analytics, hero, cta, desktopApp, growthPage] = await Promise.all([
+    read("src/lib/analytics.ts"),
+    read("src/components/Hero.tsx"),
+    read("src/components/CTA.tsx"),
+    read("src/components/MacDesktopApp.tsx"),
+    read("src/pages/GrowthPage.tsx"),
+  ]);
+
+  assert.match(analytics, /install_chrome_click/);
+  assert.match(analytics, /download_macos_click/);
+  assert.match(analytics, /target_url: targetUrl/);
+  assert.match(analytics, /transport_type: "beacon"/);
+
+  assert.match(hero, /trackInstallClick\(\{ target: "chrome", placement: "hero", targetUrl: extensionUrl \}\)/);
+  assert.match(hero, /trackInstallClick\(\{ target: "macos", placement: "hero", targetUrl: macDownloadUrl \}\)/);
+  assert.match(cta, /trackInstallClick\(\{ target: "chrome", placement: "cta", targetUrl: extensionUrl \}\)/);
+  assert.match(desktopApp, /trackInstallClick\(\{ target: "macos", placement: "mac_section", targetUrl: macDownloadUrl \}\)/);
+  assert.match(growthPage, /trackInstallClick\(\{ target: "chrome", placement: "growth_page", targetUrl: extensionUrl \}\)/);
+});
+
+test("homepage includes a macOS desktop app section", async () => {
+  const [index, desktopApp] = await Promise.all([
+    read("src/pages/Index.tsx"),
+    read("src/components/MacDesktopApp.tsx"),
+  ]);
+
+  assert.match(index, /import \{ MacDesktopApp \} from "@\/components\/MacDesktopApp";/);
+  assert.match(index, /<section id="mac-desktop">/);
+  assert.match(index, /<MacDesktopApp \/>/);
+  assert.match(desktopApp, /macOS desktop app/);
+  assert.match(desktopApp, /Overlay Blur/);
+  assert.match(desktopApp, /Attach overlays to a visible app window/);
+  assert.match(desktopApp, /\/downloads\/ScreenPrivacyBlurMac\.dmg/);
+});
+
 test("footer links point to real pages", async () => {
   const footer = await read("src/components/Footer.tsx");
 
@@ -86,6 +131,9 @@ test("sitemap routes have static GitHub Pages fallbacks", async () => {
     const html = await read(`public${path}/index.html`);
 
     assert.match(html, /Screen Privacy Blur/);
+    assert.match(html, /G-PE695ZZE0F/);
+    assert.match(html, /install_chrome_click/);
+    assert.match(html, /window\.trackInstallClick\(this\.href\)/);
     assert.doesNotMatch(html, /sessionStorage\.setItem/);
   }
 });

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import type { GrowthPage as GrowthPageContent } from "@/data/growthPages";
+import { trackInstallClick } from "@/lib/analytics";
 
 const extensionUrl = "https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb";
 
@@ -44,7 +45,12 @@ const GrowthPage = ({ page }: GrowthPageProps) => {
               </div>
 
               <Button asChild variant="hero" size="xl" className="group">
-                <a href={extensionUrl} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={extensionUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackInstallClick({ target: "chrome", placement: "growth_page", targetUrl: extensionUrl })}
+                >
                   <Chrome className="h-5 w-5 group-hover:rotate-12 transition-transform" />
                   Add to Chrome - Free
                 </a>

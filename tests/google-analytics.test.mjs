@@ -13,5 +13,6 @@ test("index.html includes the Google Analytics tag", async () => {
       `<script\\s+async\\s+src="https://www\\.googletagmanager\\.com/gtag/js\\?id=${measurementId}"></script>`
     )
   );
+  assert.match(html, /window\.gtag = function gtag\(\)/);
   assert.match(html, new RegExp(`gtag\\('config', '${measurementId}'\\);`));
 });
