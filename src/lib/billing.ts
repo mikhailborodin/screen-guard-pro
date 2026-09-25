@@ -4,6 +4,7 @@ const SUPABASE_AUTH_STORAGE_KEY = "sb-rqwssmxjpphxngrncjfb-auth-token";
 
 export const PRO_FEATURE = "smart-auto-blur";
 export const EXTENSION_SOURCE = "extension";
+export type BillingInterval = "month" | "year" | "lifetime";
 
 type CheckoutSessionResponse = {
   url?: string;
@@ -12,6 +13,7 @@ type CheckoutSessionResponse = {
 };
 
 type SubscriptionStatusResponse = {
+  plan?: BillingInterval;
   active?: boolean;
   subscribed?: boolean;
   status?: string;
@@ -23,10 +25,12 @@ type SubscriptionStatusResponse = {
 
 export type CheckoutParams = {
   extensionId: string;
+  billingInterval: BillingInterval;
 };
 
 export type SubscriptionStatus = {
   active: boolean;
+  plan?: BillingInterval;
 };
 
 const endpoint = (path: string) => `${SUPABASE_URL}/functions/v1/${path}`;
@@ -92,7 +96,7 @@ export const buildPaymentQuery = (extensionId: string) => {
 export const buildHostedRoute = (path: "/payment-success" | "/payment-cancelled", extensionId: string) =>
   `${SITE_URL}${path}?${buildPaymentQuery(extensionId)}`;
 
-export const createCheckoutSession = async ({ extensionId }: CheckoutParams) => {
+export const createCheckoutSession = async ({ extensionId, billingInterval }: CheckoutParams) => {
   const response = await fetch(endpoint("create-checkout-session"), {
     method: "POST",
     headers: {
@@ -103,6 +107,7 @@ export const createCheckoutSession = async ({ extensionId }: CheckoutParams) => 
       feature: PRO_FEATURE,
       source: EXTENSION_SOURCE,
       extensionId,
+      billingInterval,
       successUrl: buildHostedRoute("/payment-success", extensionId),
       cancelUrl: buildHostedRoute("/payment-cancelled", extensionId),
     }),
@@ -120,16 +125,18 @@ export const createCheckoutSession = async ({ extensionId }: CheckoutParams) => 
 
 const isActiveStatus = (status?: string) => status === "active" || status === "trialing";
 
-export const checkSubscriptionStatus = async (extensionId: string): Promise<SubscriptionStatus> => {
+export const checkSubscriptionStatus = async (extensionId: string, activationToken: string, sessionId?: string): Promise<SubscriptionStatus> => {
   const params = new URLSearchParams();
 
   if (extensionId) {
     params.set("extension_id", extensionId);
   }
 
+  if (sessionId) params.set("session_id", sessionId);
+
   const response = await fetch(`${endpoint("subscription-status")}?${params.toString()}`, {
     method: "GET",
-    headers: authHeaders(),
+    headers: { Authorization: `Bearer ${activationToken}` },
   });
 
   await requireOk(response);
@@ -142,5 +149,25 @@ export const checkSubscriptionStatus = async (extensionId: string): Promise<Subs
     body.subscription?.active === true ||
     isActiveStatus(body.subscription?.status);
 
-  return { active };
+  return { active, plan: body.plan };
+};
+
+// Preserve the deployed secure activation contract with the Chrome extension.
+export const activateExtension = async (extensionId: string, activationToken: string) => {
+  const runtime = (globalThis as typeof globalThis & {
+    chrome?: { runtime?: {
+      lastError?: { message?: string };
+      sendMessage: (id: string, message: unknown, callback: (response?: { success?: boolean; error?: string }) => void) => void;
+    } };
+  }).chrome?.runtime;
+  if (!runtime?.sendMessage) throw new Error("Open this page in Chrome with Screen Privacy Blur installed, then try again.");
+  await new Promise<void>((resolve, reject) => {
+    runtime.sendMessage(extensionId, {
+      action: "screenGuardProSubscription", subscriptionToken: activationToken, active: true, status: "active",
+    }, (response) => {
+      const error = runtime.lastError?.message ?? (!response?.success ? response?.error ?? "The extension did not accept the activation." : undefined);
+      if (error) reject(new Error(error));
+      else resolve();
+    });
+  });
 };

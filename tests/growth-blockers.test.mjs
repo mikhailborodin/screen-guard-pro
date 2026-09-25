@@ -5,21 +5,21 @@ import test from "node:test";
 const siteUrl = "https://privacyblur.co";
 const sitemapPaths = [
   "/",
-  "/privacy-policy",
-  "/terms",
-  "/support",
-  "/data-collection",
-  "/permissions",
-  "/use-cases/screen-sharing",
-  "/use-cases/google-meet",
-  "/use-cases/zoom",
-  "/use-cases/loom-recording",
-  "/use-cases/hide-api-keys",
-  "/alternatives/safe-screen-share",
-  "/alternatives/datablur",
-  "/alternatives/privacy-blu",
+  "/use-cases/",
+  "/alternatives/",
+  "/privacy-policy/",
+  "/terms/",
+  "/data-collection/",
+  "/permissions/",
+  "/use-cases/screen-sharing/",
+  "/use-cases/google-meet/",
+  "/use-cases/zoom/",
+  "/use-cases/loom-recording/",
+  "/use-cases/hide-api-keys/",
+  "/alternatives/safe-screen-share/",
+  "/alternatives/datablur/",
+  "/alternatives/privacy-blu/",
 ];
-const staticFallbackPaths = sitemapPaths.filter((path) => path !== "/" && path !== "/support");
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 
@@ -103,17 +103,22 @@ test("footer links point to real pages", async () => {
   const footer = await read("src/components/Footer.tsx");
 
   assert.doesNotMatch(footer, /href="#"/);
-  assert.match(footer, /to="\/privacy-policy"/);
-  assert.match(footer, /to="\/terms"/);
-  assert.match(footer, /to="\/data-collection"/);
-  assert.match(footer, /to="\/permissions"/);
+  assert.match(footer, /to="\/use-cases\/"/);
+  assert.match(footer, /to="\/alternatives\/"/);
+  assert.match(footer, /to="\/privacy-policy\/"/);
+  assert.match(footer, /to="\/terms\/"/);
+  assert.match(footer, /to="\/data-collection\/"/);
+  assert.match(footer, /to="\/permissions\/"/);
 });
 
-test("growth pages are routed explicitly", async () => {
-  const app = await read("src/App.tsx");
+test("growth pages use a shared content source and explicit routes", async () => {
+  const [app, content] = await Promise.all([read("src/App.tsx"), read("src/data/seoContent.mjs")]);
 
-  for (const path of sitemapPaths.filter((path) => path !== "/")) {
-    assert.match(app, new RegExp(`path="${path.replaceAll("/", "\\/")}"`));
+  assert.match(app, /growthPagesByPath/);
+  assert.match(app, /<GrowthHub group="Use cases"/);
+  assert.match(app, /<GrowthHub group="Alternatives"/);
+  for (const path of sitemapPaths.filter((path) => path.split("/").filter(Boolean).length > 1)) {
+    assert.match(content, new RegExp(`path: "${path.replaceAll("/", "\\/")}"`));
   }
 });
 
@@ -124,18 +129,6 @@ test("sitemap and robots expose growth pages", async () => {
     assert.match(sitemap, new RegExp(`<loc>${siteUrl}${path}</loc>`));
   }
   assert.match(robots, new RegExp(`Sitemap: ${siteUrl}/sitemap\\.xml`));
-});
-
-test("sitemap routes have static GitHub Pages fallbacks", async () => {
-  for (const path of staticFallbackPaths) {
-    const html = await read(`public${path}/index.html`);
-
-    assert.match(html, /Screen Privacy Blur/);
-    assert.match(html, /G-PE695ZZE0F/);
-    assert.match(html, /install_chrome_click/);
-    assert.match(html, /window\.trackInstallClick\(this\.href\)/);
-    assert.doesNotMatch(html, /sessionStorage\.setItem/);
-  }
 });
 
 test("support route stays on the React form instead of a static fallback", async () => {

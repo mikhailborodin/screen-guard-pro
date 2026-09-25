@@ -14,11 +14,13 @@ export const Footer = () => {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground md:justify-end">
-            <Link to="/privacy-policy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
-            <Link to="/data-collection" className="hover:text-foreground transition-colors">Data Collection</Link>
-            <Link to="/permissions" className="hover:text-foreground transition-colors">Permissions</Link>
-            <Link to="/support" className="hover:text-foreground transition-colors">Support</Link>
+            <Link to="/use-cases/" className="hover:text-foreground transition-colors">Use cases</Link>
+            <Link to="/alternatives/" className="hover:text-foreground transition-colors">Alternatives</Link>
+            <Link to="/privacy-policy/" className="hover:text-foreground transition-colors">Privacy Policy</Link>
+            <Link to="/terms/" className="hover:text-foreground transition-colors">Terms of Service</Link>
+            <Link to="/data-collection/" className="hover:text-foreground transition-colors">Data Collection</Link>
+            <Link to="/permissions/" className="hover:text-foreground transition-colors">Permissions</Link>
+            <Link to="/support/" className="hover:text-foreground transition-colors">Support</Link>
           </div>
 
           <p className="text-sm text-muted-foreground">
