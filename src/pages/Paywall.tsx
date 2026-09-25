@@ -5,7 +5,9 @@ import { Check, Chrome, Loader2, Sparkles, Wand2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { createCheckoutSession } from "@/lib/billing";
+import { Badge } from "@/components/ui/badge";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { type BillingInterval, createCheckoutSession } from "@/lib/billing";
 
 const benefits = [
   "Automatically detects sensitive fields",
@@ -14,8 +16,42 @@ const benefits = [
   "Manual blur remains free",
 ];
 
+const plans: Array<{
+  interval: BillingInterval;
+  name: string;
+  price: string;
+  cadence: string;
+  detail: string;
+  badge?: string;
+}> = [
+  {
+    interval: "month",
+    name: "Monthly",
+    price: "$5",
+    cadence: "/month",
+    detail: "Billed monthly. Cancel anytime.",
+  },
+  {
+    interval: "year",
+    name: "Yearly",
+    price: "$48",
+    cadence: "/year",
+    detail: "$4/month, billed yearly. Save $12.",
+    badge: "Save 20%",
+  },
+  {
+    interval: "lifetime",
+    name: "Lifetime",
+    price: "$59",
+    cadence: "once",
+    detail: "Pay once. Pro forever. No renewal.",
+    badge: "One-time",
+  },
+];
+
 const Paywall = () => {
   const location = useLocation();
+  const [billingInterval, setBillingInterval] = useState<BillingInterval>("year");
   const [isStartingCheckout, setIsStartingCheckout] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -29,7 +65,7 @@ const Paywall = () => {
     setError(null);
 
     try {
-      const checkoutUrl = await createCheckoutSession({ extensionId });
+      const checkoutUrl = await createCheckoutSession({ extensionId, billingInterval });
       window.location.assign(checkoutUrl);
     } catch (checkoutError) {
       setError(checkoutError instanceof Error ? checkoutError.message : "Unable to start checkout.");
@@ -69,7 +105,10 @@ const Paywall = () => {
                 onClick={startCheckout}
               >
                 {isStartingCheckout ? <Loader2 className="h-5 w-5 animate-spin" /> : <Chrome className="h-5 w-5" />}
-                {isStartingCheckout ? "Starting checkout..." : "Start Pro"}
+                {isStartingCheckout
+                  ? "Starting checkout..."
+                  : billingInterval === "lifetime" ? "Get lifetime Pro — $59"
+                  : `Start ${billingInterval === "year" ? "yearly" : "monthly"} Pro`}
               </Button>
               <Button asChild variant="glass" size="xl" className="w-full sm:w-auto">
                 <Link to={`/payment-success${location.search}`}>I already paid</Link>
@@ -86,12 +125,44 @@ const Paywall = () => {
 
           <Card className="glass overflow-hidden shadow-elevated">
             <CardContent className="space-y-7 p-6 md:p-8">
-              <div className="space-y-2">
-                <div className="flex items-baseline gap-2">
-                  <span className="font-display text-5xl font-bold">$5</span>
-                  <span className="text-muted-foreground">/month</span>
-                </div>
-                <p className="text-sm text-muted-foreground">Pro protection for Smart Auto Blur.</p>
+              <div className="space-y-3">
+                <p className="text-sm font-medium text-foreground">Choose your Pro plan</p>
+                <ToggleGroup
+                  type="single"
+                  variant="plan"
+                  value={billingInterval}
+                  onValueChange={(value) => {
+                    if (value === "month" || value === "year" || value === "lifetime") setBillingInterval(value);
+                  }}
+                  disabled={isStartingCheckout}
+                  className="grid grid-cols-1 items-stretch gap-3"
+                  aria-label="Pro plan"
+                >
+                  {plans.map((plan) => (
+                      <ToggleGroupItem
+                        key={plan.interval}
+                        value={plan.interval}
+                        aria-label={plan.name}
+                        className="relative h-auto flex-col items-stretch gap-2 p-4 text-left"
+                      >
+                        {plan.badge ? (
+                          <Badge className="absolute right-3 top-3">
+                            {plan.badge}
+                          </Badge>
+                        ) : null}
+                        <span className="block text-sm font-semibold">{plan.name}</span>
+                        <span className="flex items-baseline gap-1">
+                          <span className="font-display text-3xl font-bold">{plan.price}</span>
+                          <span className="text-sm text-muted-foreground">{plan.cadence}</span>
+                        </span>
+                        <span className="block text-xs leading-relaxed text-muted-foreground">{plan.detail}</span>
+                      </ToggleGroupItem>
+                  ))}
+                </ToggleGroup>
+                <p className="text-sm text-muted-foreground">All plans unlock every Smart Auto Blur Pro feature.</p>
+                {billingInterval === "lifetime" ? (
+                  <p className="text-xs text-muted-foreground">Already subscribed? Buying lifetime access does not cancel an existing subscription.</p>
+                ) : null}
               </div>
 
               <div className="space-y-4">
