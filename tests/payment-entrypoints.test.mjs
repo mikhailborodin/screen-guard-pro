@@ -7,8 +7,22 @@ import test from "node:test";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const dist = join(root, "dist");
+const publishedStaticRoutes = [
+  "alternatives/datablur",
+  "alternatives/privacy-blu",
+  "alternatives/safe-screen-share",
+  "data-collection",
+  "permissions",
+  "privacy-policy",
+  "terms",
+  "use-cases/google-meet",
+  "use-cases/hide-api-keys",
+  "use-cases/loom-recording",
+  "use-cases/screen-sharing",
+  "use-cases/zoom",
+];
 
-test("build preserves the React homepage and published payment entrypoints", async () => {
+test("build preserves every published Pages route", async () => {
   execFileSync("npm", ["run", "build"], { cwd: root, stdio: "pipe" });
 
   const home = await readFile(join(dist, "index.html"), "utf8");
@@ -19,6 +33,11 @@ test("build preserves the React homepage and published payment entrypoints", asy
   assert.match(home, /<div id="root"><\/div>/);
   assert.match(home, /gtag\('config', 'G-PE695ZZE0F'\)/);
 
+  for (const route of publishedStaticRoutes) {
+    const page = await readFile(join(dist, route, "index.html"), "utf8");
+    assert.match(page, /<!doctype html>/i, route);
+  }
+
   for (const route of ["paywall", "payment-success", "payment-cancelled"]) {
     const page = await readFile(join(dist, route, "index.html"), "utf8");
     assert.match(page, /<meta name="robots" content="noindex,nofollow" \/>/);
@@ -27,5 +46,9 @@ test("build preserves the React homepage and published payment entrypoints", asy
     assert.ok(page.includes(`href="${stylesheet}"`));
     assert.match(page, /<div id="root"><main class="shell">/);
     assert.match(page, /gtag\("config", "G-PE695ZZE0F"\)/);
+  }
+
+  for (const asset of ["404.html", "CNAME", "app-icon.png", "favicon.ico", "robots.txt", "sitemap.xml", "social-preview.png", "social-preview.svg"]) {
+    assert.ok((await readFile(join(dist, asset))).length > 0, asset);
   }
 });
