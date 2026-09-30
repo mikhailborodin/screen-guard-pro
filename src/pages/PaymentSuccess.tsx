@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { CheckCircle2, Chrome, Loader2, ShieldCheck } from "lucide-react";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { checkSubscriptionStatus } from "@/lib/billing";
+import { activateExtension, checkSubscriptionStatus } from "@/lib/billing";
 import { useLocation } from "react-router-dom";
 
 type VerificationState = "idle" | "active" | "processing" | "error";
@@ -20,22 +20,51 @@ const PaymentSuccess = () => {
     return params.get("extension_id") ?? "";
   }, [location.search]);
 
+  const [activationToken] = useState(() => {
+    const hashParams = new URLSearchParams(window.location.hash.slice(1));
+    const tokenFromUrl = hashParams.get("activation_token") ?? "";
+    const storageKey = extensionId ? `screen-privacy-blur-activation:${extensionId}` : "";
+
+    if (tokenFromUrl && storageKey) {
+      window.sessionStorage.setItem(storageKey, tokenFromUrl);
+      window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+      return tokenFromUrl;
+    }
+
+    return storageKey ? window.sessionStorage.getItem(storageKey) ?? "" : "";
+  });
+
   const extensionUrl = extensionId ? `chrome-extension://${extensionId}/popup.html` : "";
 
-  const verifySubscription = async () => {
+  const verifySubscription = useCallback(async () => {
     setIsChecking(true);
     setError(null);
 
     try {
-      const status = await checkSubscriptionStatus(extensionId);
-      setVerificationState(status.active ? "active" : "processing");
+      if (!extensionId || !activationToken) {
+        throw new Error("The secure activation link is incomplete. Return to the extension and start checkout again.");
+      }
+
+      const status = await checkSubscriptionStatus(extensionId, activationToken);
+
+      if (!status.active) {
+        setVerificationState("processing");
+        return;
+      }
+
+      await activateExtension(extensionId, activationToken);
+      setVerificationState("active");
     } catch (statusError) {
       setVerificationState("error");
       setError(statusError instanceof Error ? statusError.message : "Unable to check subscription status.");
     } finally {
       setIsChecking(false);
     }
-  };
+  }, [activationToken, extensionId]);
+
+  useEffect(() => {
+    void verifySubscription();
+  }, [verifySubscription]);
 
   return (
     <main className="min-h-screen bg-background px-4 py-10 text-foreground">
@@ -47,10 +76,13 @@ const PaymentSuccess = () => {
             </div>
 
             <div className="space-y-3">
-              <h1 className="font-display text-4xl font-bold md:text-5xl">Pro is active</h1>
+              <h1 className="font-display text-4xl font-bold md:text-5xl">
+                {verificationState === "active" ? "Pro is active" : "Activating Pro"}
+              </h1>
               <p className="mx-auto max-w-xl text-muted-foreground">
-                Return to the extension and enable Smart Auto Blur. It can now detect and blur sensitive fields while
-                you share or record your screen.
+                {verificationState === "active"
+                  ? "Smart Auto Blur has been enabled automatically in the extension."
+                  : "Keep this page open while we verify your payment and activate the extension."}
               </p>
             </div>
 
@@ -75,13 +107,13 @@ const PaymentSuccess = () => {
             </div>
 
             <p className="text-sm text-muted-foreground">
-              Open the extension popup and turn on Smart Auto Blur again.
+              After activation, open the extension popup to confirm that Smart Auto Blur is on.
             </p>
 
             {verificationState === "active" ? (
               <Alert className="border-primary/40 bg-primary/10 text-left">
                 <AlertTitle>Subscription verified</AlertTitle>
-                <AlertDescription>Your Pro subscription is active.</AlertDescription>
+                <AlertDescription>Your Pro subscription is active and Smart Auto Blur is enabled.</AlertDescription>
               </Alert>
             ) : null}
 
