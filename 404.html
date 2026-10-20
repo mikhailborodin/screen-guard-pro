@@ -6,9 +6,17 @@
     <title>Screen Privacy Blur</title>
     <script>
       const { origin, pathname, search, hash } = window.location;
-
+      const clean = pathname.replace(/\/+$/, "");
+      const redirectMap = {
+        "/alternatives/zeroblur": "/compare/zeroblur-alternative/",
+        "/alternatives/blurweb": "/compare/blurweb-alternative/",
+        "/alternatives/blurweb-app": "/compare/blurweb-alternative/",
+        "/alternatives/loom-blur": "/compare/loom-blur-alternative/",
+        "/alternatives/contextblur": "/compare/contextblur-alternative/",
+      };
+      const target = redirectMap[clean] || "/";
       window.sessionStorage.setItem("privacyblur:redirect", pathname + search + hash);
-      window.location.replace(origin + "/");
+      window.location.replace(origin + target + search + hash);
     </script>
   </head>
   <body></body>

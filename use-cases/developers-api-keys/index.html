@@ -124,6 +124,24 @@ body{background:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linea
   const nav = win.navigator;
   const media = win.matchMedia('(max-width: 767px)');
   const controls = [...root.querySelectorAll('[data-install-controls]')];
+  try {
+    const incoming = new URLSearchParams(win.location?.search || '');
+    const src = incoming.get('utm_source') || incoming.get('ref_source');
+    const med = incoming.get('utm_medium');
+    const cmp = incoming.get('utm_campaign');
+    if (src) win.sessionStorage?.setItem('privacyblur:utm_source', src);
+    if (med) win.sessionStorage?.setItem('privacyblur:utm_medium', med);
+    if (cmp) win.sessionStorage?.setItem('privacyblur:utm_campaign', cmp);
+    const savedSrc = src || win.sessionStorage?.getItem('privacyblur:utm_source');
+    const savedCmp = cmp || win.sessionStorage?.getItem('privacyblur:utm_campaign');
+    if (savedSrc) {
+      root.querySelectorAll('a[data-desktop-install]').forEach(link => {
+        const u = new URL(link.href);
+        u.searchParams.set('utm_term', savedCmp ? `${savedSrc}_${savedCmp}` : savedSrc);
+        link.href = u.href;
+      });
+    }
+  } catch { /* ignore storage/URL errors */ }
   const update = () => {
     const mobile = media.matches || /Android|iPhone|iPad|iPod|Mobile/i.test(nav.userAgent) || (nav.platform === 'MacIntel' && nav.maxTouchPoints > 1);
     const docEl = (root.ownerDocument || document).documentElement;
