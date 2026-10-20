@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Chrome, ArrowRight } from "lucide-react";
-import { trackInstallClick } from "@/lib/analytics";
 
-const extensionUrl = "https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb";
+import { useLocation } from "react-router-dom";
+import { installActionsHtml } from "@/data/conversion.mjs";
+import { MarketingSection } from "./MarketingSection";
 
 export const CTA = () => {
+  const { pathname } = useLocation();
   return (
     <section className="py-24 px-4 relative">
       {/* Background effects */}
@@ -23,18 +23,7 @@ export const CTA = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild variant="hero" size="xl" className="group">
-              <a
-                href={extensionUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackInstallClick({ target: "chrome", placement: "cta", targetUrl: extensionUrl })}
-              >
-                <Chrome className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-                Add to Chrome - It's Free
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </Button>
+            <MarketingSection html={installActionsHtml(pathname, "footer")} />
           </div>
 
           <p className="text-sm text-muted-foreground">

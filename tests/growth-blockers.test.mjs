@@ -44,29 +44,28 @@ test("landing page does not overstate social proof", async () => {
   assert.match(cta, /Protect your screen before your next demo, call, or recording\./);
 });
 
-test("hero Watch Demo button opens the YouTube demo in a modal", async () => {
-  const hero = await read("src/components/Hero.tsx");
-
-  assert.match(hero, /DialogTrigger asChild/);
-  assert.match(hero, /DialogTitle className="sr-only"/);
-  assert.match(hero, /https:\/\/www\.youtube\.com\/embed\/pLqxd8KaClQ/);
-  assert.match(hero, /title="Screen Privacy Blur demo"/);
-  assert.doesNotMatch(hero, /demoUrl[\s\S]*target="_blank"/);
+test("hero offers the requested video and interactive preview", async () => {
+  const { heroHtml, heroInstallUrl } = await import("../src/data/marketing.mjs");
+  const hero = heroHtml();
+  assert.match(hero, /https:\/\/www\.youtube\.com\/watch\?v=g2E4lR6M8Zc/);
+  assert.match(hero, /href="#interactive-demo"/);
+  assert.match(hero, /Add to Chrome — It's Free/);
+  const url = new URL(heroInstallUrl);
+  assert.equal(url.searchParams.get("utm_source"), "privacyblur_site");
+  assert.equal(url.searchParams.get("utm_medium"), "landing");
 });
 
-test("hero mentions the macOS desktop app", async () => {
-  const hero = await read("src/components/Hero.tsx");
-
-  assert.match(hero, /Chrome Extension \+ macOS App/);
-  assert.match(hero, /Download DMG/);
-  assert.match(hero, /\/downloads\/ScreenPrivacyBlurMac\.dmg/);
-  assert.match(hero, /browser tabs and desktop apps/);
+test("hero retains the macOS desktop download", async () => {
+  const { heroHtml } = await import("../src/data/marketing.mjs");
+  assert.match(heroHtml(), /Download DMG for macOS/);
+  assert.match(heroHtml(), /\/downloads\/ScreenPrivacyBlurMac\.dmg/);
+  assert.match(heroHtml(), /browser tabs and desktop apps/);
 });
 
 test("install and download buttons send GA4 custom events", async () => {
   const [analytics, hero, cta, desktopApp, growthPage] = await Promise.all([
     read("src/lib/analytics.ts"),
-    read("src/components/Hero.tsx"),
+    read("src/components/MarketingSection.tsx"),
     read("src/components/CTA.tsx"),
     read("src/components/MacDesktopApp.tsx"),
     read("src/pages/GrowthPage.tsx"),
@@ -77,11 +76,12 @@ test("install and download buttons send GA4 custom events", async () => {
   assert.match(analytics, /target_url: targetUrl/);
   assert.match(analytics, /transport_type: "beacon"/);
 
-  assert.match(hero, /trackInstallClick\(\{ target: "chrome", placement: "hero", targetUrl: extensionUrl \}\)/);
-  assert.match(hero, /trackInstallClick\(\{ target: "macos", placement: "hero", targetUrl: macDownloadUrl \}\)/);
-  assert.match(cta, /trackInstallClick\(\{ target: "chrome", placement: "cta", targetUrl: extensionUrl \}\)/);
+  assert.match(hero, /trackInstallClick/);
+  assert.match(hero, /link.dataset.install === 'macos'/);
+  assert.match(hero, /targetUrl: link.href/);
+  assert.match(cta, /installActionsHtml\(pathname, "footer"\)/);
   assert.match(desktopApp, /trackInstallClick\(\{ target: "macos", placement: "mac_section", targetUrl: macDownloadUrl \}\)/);
-  assert.match(growthPage, /trackInstallClick\(\{ target: "chrome", placement: "growth_page", targetUrl: extensionUrl \}\)/);
+  assert.match(growthPage, /installActionsHtml\(pathname/);
 });
 
 test("homepage includes a macOS desktop app section", async () => {

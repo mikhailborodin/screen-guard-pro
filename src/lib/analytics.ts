@@ -1,5 +1,5 @@
 type InstallTarget = "chrome" | "macos";
-type InstallPlacement = "hero" | "cta" | "mac_section" | "growth_page";
+export type InstallPlacement = "hero" | "navbar" | "pricing" | "comparison_table" | "footer" | "cta" | "mac_section" | "growth_page";
 
 type InstallClickPayload = {
   target: InstallTarget;

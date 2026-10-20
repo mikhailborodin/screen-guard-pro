@@ -6,8 +6,7 @@ const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const publicDir = join(root, "public");
 const siteUrl = "https://privacyblur.co";
 const measurementId = "G-PE695ZZE0F";
-const extensionUrl =
-  "https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb";
+import { installUrl } from "../src/data/conversion.mjs";
 
 const pages = [
   {
@@ -249,7 +248,7 @@ const render = ({ path, eyebrow, title, description }) => `<!doctype html>
       <h1>${escapeHtml(title)}</h1>
       <p>${escapeHtml(description)}</p>
       <div class="actions">
-        <a class="button" href="${extensionUrl}" onclick="window.trackInstallClick(this.href)">Add to Chrome - Free</a>
+        <a class="button" href="${installUrl(path, 'hero')}" onclick="window.trackInstallClick(this.href)">Add to Chrome - Free</a>
         <a class="link" href="/support">Contact support</a>
       </div>
       <footer>

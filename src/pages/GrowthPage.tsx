@@ -1,20 +1,26 @@
-import { ArrowLeft, CheckCircle2, Chrome, Shield } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowLeft, CheckCircle2, Shield } from "lucide-react";
+import { useLocation, Link } from "react-router-dom";
 
 import { Footer } from "@/components/Footer";
-import { Button } from "@/components/ui/button";
 import type { GrowthPage as GrowthPageContent } from "@/data/growthPages";
-import { trackInstallClick } from "@/lib/analytics";
 
-const extensionUrl = "https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb";
+import { installActionsHtml } from "@/data/conversion.mjs";
+import { faqsForPage } from "@/data/faq.mjs";
+import { comparisonTableHtml } from "@/data/marketing.mjs";
+import { marketingStyles } from "@/data/marketingStyles.mjs";
+import { FAQSection } from "@/components/FAQSection";
+import { MarketingSection } from "@/components/MarketingSection";
 
 type GrowthPageProps = {
   page: GrowthPageContent;
 };
 
 const GrowthPage = ({ page }: GrowthPageProps) => {
+  const { pathname } = useLocation();
+  const isUseCaseOrCompare = page.path.startsWith("/use-cases/") || page.path.startsWith("/compare/");
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <style>{marketingStyles}</style>
       <section className="relative isolate overflow-hidden px-4 py-8">
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:64px_64px]" />
 
@@ -44,20 +50,11 @@ const GrowthPage = ({ page }: GrowthPageProps) => {
                 <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">{page.description}</p>
               </div>
 
-              <Button asChild variant="hero" size="xl" className="group">
-                <a
-                  href={extensionUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackInstallClick({ target: "chrome", placement: "growth_page", targetUrl: extensionUrl })}
-                >
-                  <Chrome className="h-5 w-5 group-hover:rotate-12 transition-transform" />
-                  Add to Chrome - Free
-                </a>
-              </Button>
+              <MarketingSection html={installActionsHtml(pathname, page.group === "Compare" ? "comparison_table" : "hero", "Add to Chrome — Free")} />
             </div>
 
             <div className="space-y-5">
+              {page.sources?.map(source => <a key={source.url} href={source.url} className="block text-sm text-primary" target="_blank" rel="noopener noreferrer">Source: {source.label}</a>)}
               {page.sections.map((section) => (
                 <article key={section.title} className="rounded-xl border border-border/70 bg-card/60 p-5">
                   <h2 className="font-display text-xl font-semibold">{section.title}</h2>
@@ -75,8 +72,10 @@ const GrowthPage = ({ page }: GrowthPageProps) => {
               </div>
             </div>
           </div>
+          {isUseCaseOrCompare && <MarketingSection html={comparisonTableHtml(page)} />}
         </div>
       </section>
+      {isUseCaseOrCompare && <FAQSection faqs={faqsForPage(page)} />}
       <Footer />
     </main>
   );

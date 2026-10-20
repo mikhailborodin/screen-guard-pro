@@ -3,15 +3,34 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { extensionUrl, seoPages, siteUrl } from "../src/data/seoContent.mjs";
+import { getCopy, getLocaleMeta, localeList, localizedPath, nonDefaultLocales } from "../src/data/locales.mjs";
+import { heroTitle, heroDescription, heroHtml, featuresHtml, comparisonHtml, comparisonTableHtml, pricingHtml, trustHtml, stepsHtml, macDesktopHtml, finalCtaHtml, resourceLinksHtml, welcomeHtml, initializeDemo, compatibilityHtml, reviewsHtml } from "../src/data/marketing.mjs";
+import { marketingStyles } from "../src/data/marketingStyles.mjs";
+
+import { installActionsHtml, attributeInstallLinks, initializeConversion } from "../src/data/conversion.mjs";
+import { faqHtml, faqSchema, faqsForPage, getHomeFaqs } from "../src/data/faq.mjs";
+import { uninstallHtml, initializeRetention } from "../src/data/retention.mjs";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const distDir = join(root, "dist");
 const measurementId = "G-PE695ZZE0F";
-const contentUpdatedAt = "2026-07-28";
-const publicPaths = ["/", "/use-cases/", "/alternatives/", ...seoPages.map((page) => page.path)];
+const contentUpdatedAt = "2026-10-13";
+const localizedPublicPaths = nonDefaultLocales.flatMap((l) => [
+  localizedPath("/", l.code),
+  localizedPath("/welcome/", l.code),
+]);
+const publicPaths = [
+  "/",
+  "/welcome/",
+  "/compare/",
+  "/use-cases/",
+  "/alternatives/",
+  ...seoPages.map((page) => page.path),
+  ...localizedPublicPaths,
+];
 
 const escapeHtml = (value) =>
-  value
+  String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -29,7 +48,7 @@ const sharedStyles = `
   .shell { width: min(1120px, calc(100vw - 32px)); margin: 0 auto; padding: 48px 0 64px; }
   .nav, .footer { display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
   .brand { color: #e8fffa; font-weight: 800; text-decoration: none; }
-  .nav-links, .footer-links { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; }
+  .nav-links, .footer-links { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; align-items: center; }
   .nav-links a, .footer-links a { color: #b7d6d0; text-decoration: none; }
   .eyebrow { display: inline-flex; margin-top: 56px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 8px 14px; color: #9fe8d8; background: rgba(54,245,198,0.08); font-size: 14px; font-weight: 700; }
   h1 { max-width: 900px; margin: 24px 0 18px; font-size: clamp(42px, 7vw, 76px); line-height: .98; letter-spacing: -.03em; }
@@ -75,38 +94,98 @@ const deferredAnalytics = `
       analyticsEvents.forEach((eventName) => window.addEventListener(eventName, startAnalytics, { passive: true }));
     </script>`;
 
-const footer = () => `
-  <footer class="footer">
-    <span>© 2026 Screen Privacy Blur</span>
-    <nav class="footer-links" aria-label="Footer">
-      <a href="/use-cases/">Use cases</a>
-      <a href="/alternatives/">Alternatives</a>
-      <a href="/privacy-policy/">Privacy</a>
-      <a href="/permissions/">Permissions</a>
-      <a href="/support/">Support</a>
-    </nav>
-  </footer>`;
+const languageMenuHtml = (locale = "en", basePath = "/") => {
+  const n = getCopy(locale).nav;
+  const switchBase = ["/", "/welcome/", "/uninstall/"].includes(basePath) ? basePath : "/";
+  return `<details class="m-lang-menu"><summary aria-label="${escapeHtml(n.languageLabel)}">🌐 ${escapeHtml(locale.toUpperCase())}</summary><div class="m-lang-list">${localeList
+    .map(
+      (item) =>
+        `<a href="${localizedPath(switchBase, item.code)}" hreflang="${item.hreflang}"${item.code === locale ? ' aria-current="page"' : ""}>${escapeHtml(item.label)}</a>`
+    )
+    .join("")}</div></details>`;
+};
 
-const navigation = () => `
+const languageFooterHtml = (locale = "en", basePath = "/") => {
+  const n = getCopy(locale).nav;
+  const switchBase = ["/", "/welcome/", "/uninstall/"].includes(basePath) ? basePath : "/";
+  return `<nav class="m-lang-footer" aria-label="${escapeHtml(n.languageLabel)}">${localeList
+    .map(
+      (item) =>
+        `<a href="${localizedPath(switchBase, item.code)}" hreflang="${item.hreflang}"${item.code === locale ? ' aria-current="page"' : ""}>${escapeHtml(item.label)}</a>`
+    )
+    .join("")}</nav>`;
+};
+
+const footer = (locale = "en", basePath = "/") => {
+  const n = getCopy(locale).nav;
+  const homePath = localizedPath("/", locale);
+  const welcomePath = localizedPath("/welcome/", locale);
+  return `
+  <footer class="footer">
+    <span>${escapeHtml(n.rights)}</span>
+    <nav class="footer-links" aria-label="Footer">
+      <a data-placement="footer" href="${extensionUrl}">${escapeHtml(n.addToChromeFree)}</a>
+      <a href="${homePath}#pricing">${escapeHtml(n.pricing)}</a>
+      <a href="/compare/">${escapeHtml(n.compare)}</a>
+      <a href="${welcomePath}">${escapeHtml(n.welcomeSandbox)}</a>
+      <a href="/use-cases/">${escapeHtml(n.useCases)}</a>
+      <a href="/alternatives/">${escapeHtml(n.alternatives)}</a>
+      <a href="/privacy-policy/">${escapeHtml(n.privacy)}</a>
+      <a href="/permissions/">Permissions</a>
+      <a href="/support/">${escapeHtml(n.support)}</a>
+    </nav>
+    ${resourceLinksHtml()}
+    ${languageFooterHtml(locale, basePath)}
+  </footer>`;
+};
+
+const navigation = (locale = "en", basePath = "/") => {
+  const n = getCopy(locale).nav;
+  const homePath = localizedPath("/", locale);
+  return `
   <nav class="nav" aria-label="Primary">
-    <a class="brand" href="/">Screen Privacy Blur</a>
+    <a class="brand" href="${homePath}">Screen Privacy Blur</a>
     <div class="nav-links">
-      <a href="/use-cases/">Use cases</a>
-      <a href="/alternatives/">Alternatives</a>
-      <a href="/permissions/">Privacy</a>
-      <a href="${extensionUrl}">Add to Chrome</a>
+      <a href="${homePath}#pricing">${escapeHtml(n.pricing)}</a>
+      <a href="/compare/">${escapeHtml(n.compare)}</a>
+      <a href="${homePath}#features">${escapeHtml(n.features)}</a>
+      <a href="${homePath}#how-it-works">${escapeHtml(n.howItWorks)}</a>
+      <a href="${homePath}#privacy">${escapeHtml(n.privacy)}</a>
+      <a data-placement="navbar" href="${extensionUrl}">${escapeHtml(n.addToChrome)}</a>
+      ${languageMenuHtml(locale, basePath)}
     </div>
   </nav>`;
+};
 
-const document = ({ title, description, path, body, jsonLd = [], appAssets = "", analyticsScript = analytics, robots = "index,follow" }) => `<!doctype html>
-<html lang="en">
+const hreflangLinksHtml = (alternateBasePath) => {
+  if (!alternateBasePath) return "";
+  const links = localeList.map(
+    (item) => `<link rel="alternate" hreflang="${item.hreflang}" href="${absoluteUrl(localizedPath(alternateBasePath, item.code))}" />`
+  );
+  links.push(`<link rel="alternate" hreflang="x-default" href="${absoluteUrl(localizedPath(alternateBasePath, "en"))}" />`);
+  return `\n    ${links.join("\n    ")}`;
+};
+
+const document = ({
+  title,
+  description,
+  path,
+  body,
+  jsonLd = [],
+  appAssets = "",
+  analyticsScript = analytics,
+  robots = "index,follow",
+  locale = "en",
+  alternateBasePath = null,
+}) => `<!doctype html>
+<html lang="${getLocaleMeta(locale).hreflang}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="${robots}" />
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
-    <link rel="canonical" href="${absoluteUrl(path)}" />
+    <link rel="canonical" href="${absoluteUrl(path)}" />${hreflangLinksHtml(alternateBasePath)}
     <link rel="icon" type="image/png" href="/app-icon.png" sizes="128x128" />
     <link rel="apple-touch-icon" href="/app-icon.png" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -115,16 +194,21 @@ const document = ({ title, description, path, body, jsonLd = [], appAssets = "",
     <meta property="og:type" content="website" />
     <meta property="og:url" content="${absoluteUrl(path)}" />
     <meta property="og:image" content="${siteUrl}/social-preview.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Before: leaked customer PII. After: readable, auto-replaced demo data in Screen Privacy Blur." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(title)}" />
     <meta name="twitter:description" content="${escapeHtml(description)}" />
     <meta name="twitter:image" content="${siteUrl}/social-preview.png" />
-    <style>${sharedStyles}</style>
+    <meta name="twitter:image:alt" content="Before: leaked customer PII. After: auto-replaced demo data." />
+    <style>${sharedStyles}${marketingStyles}
+body{background:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px),radial-gradient(circle at 80% 5%,#2dd4bf12,transparent 35%),#080f1c;background-size:64px 64px,64px 64px,auto,auto}.home-nav{padding-top:24px}.home-nav .nav{padding:16px 20px;background:#172136cc;border:1px solid #ffffff16;border-radius:16px}.home-footer{padding-block:32px 48px}.home-nav+main .m-hero{padding-top:72px}@media(max-width:600px){.home-nav+main .m-hero{padding-top:36px}}.m-hero h1{max-width:none}.m-demo .m-dashboard h2{font-size:21px}html{scroll-behavior:smooth}section[id]{scroll-margin-top:24px}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style>
     ${analyticsScript}
     ${jsonLd.map((entry) => `<script type="application/ld+json">${asJsonLd(entry)}</script>`).join("\n    ")}
     ${appAssets}
   </head>
-  <body>${body}</body>
+  <body>${attributeInstallLinks(body, path)}${appAssets ? "" : `<script>(${initializeConversion.toString()})();</script>`}</body>
 </html>`;
 
 const breadcrumb = (page) => ({
@@ -144,9 +228,10 @@ const productSchema = {
   "@type": "SoftwareApplication",
   name: "Screen Privacy Blur",
   applicationCategory: "SecurityApplication",
-  operatingSystem: "Chrome, macOS",
+  operatingSystem: "Chrome, Edge, Brave, Chromium",
+  aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", ratingCount: "8" },
   description:
-    "Local-first blur overlays for hiding sensitive information during browser screen sharing, demos, calls, and recordings.",
+    "Local browser blur, automatic pattern detection, and synthetic data replacement for calls and demos.",
   downloadUrl: extensionUrl,
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
 };
@@ -158,13 +243,14 @@ const relatedPages = (page) =>
 
 const renderPage = (page) => {
   const related = relatedPages(page);
+  const faqs = page.path.startsWith("/use-cases/") || page.path.startsWith("/compare/") ? faqsForPage(page) : [];
   const content = `
     <main class="shell">
-      ${navigation()}
+      ${navigation("en", page.path)}
       <span class="eyebrow">${escapeHtml(page.eyebrow)}</span>
       <h1>${escapeHtml(page.title)}</h1>
       <p class="lead">${escapeHtml(page.description)}</p>
-      <div class="actions"><a class="button" href="${extensionUrl}">Add to Chrome — Free</a><a class="button secondary" href="/support/">Contact support</a></div>
+      <div class="actions">${installActionsHtml(page.path, page.group === "Compare" ? "comparison_table" : "hero", "Add to Chrome — Free")}<a class="button secondary" href="/support/">Contact support</a></div>
       <section class="grid" aria-label="Details">
         ${page.sections
           .map(
@@ -173,9 +259,12 @@ const renderPage = (page) => {
           .join("")}
       </section>
       <ul class="bullets">${page.bullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join("")}</ul>
+      ${page.sources?.length ? `<aside><p>Sources checked October 13, 2026: ${page.sources.map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.label)}</a>`).join(" · ")}</p></aside>` : ""}
       <section class="how"><h2>How to prepare before sharing</h2><ol><li>Open the browser tab or desktop context you plan to present.</li><li>Place blur overlays over the private fields that can appear during the walkthrough.</li><li>Review the visible area, then start the call or recording.</li></ol></section>
+      ${faqs.length ? comparisonTableHtml(page) : ""}
       ${related.length ? `<section><h2>Related resources</h2><div class="grid">${related.map((item) => `<article class="card"><a href="${item.path}"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p></a></article>`).join("")}</div></section>` : ""}
-      ${footer()}
+      ${faqs.length ? faqHtml(faqs) : ""}
+      ${footer("en", page.path)}
     </main>`;
 
   return document({
@@ -183,7 +272,7 @@ const renderPage = (page) => {
     description: page.description,
     path: page.path,
     body: content,
-    jsonLd: [breadcrumb(page)],
+    jsonLd: [breadcrumb(page), ...(faqs.length ? [faqSchema(faqs)] : [])],
   });
 };
 
@@ -193,20 +282,57 @@ const renderHub = ({ path, group, title, description }) => {
     title: `${title} | Screen Privacy Blur`,
     description,
     path,
-    body: `<main class="shell">${navigation()}<span class="eyebrow">Screen Privacy Blur</span><h1>${escapeHtml(title)}</h1><p class="lead">${escapeHtml(description)}</p><section class="grid">${pages.map((page) => `<article class="card"><a href="${page.path}"><p>${escapeHtml(page.eyebrow)}</p><h2>${escapeHtml(page.title)}</h2><p>${escapeHtml(page.description)}</p></a></article>`).join("")}</section>${footer()}</main>`,
+    body: `<main class="shell">${navigation("en", path)}<span class="eyebrow">Screen Privacy Blur</span><h1>${escapeHtml(title)}</h1><p class="lead">${escapeHtml(description)}</p><div class="actions">${installActionsHtml(path, "hero", "Add to Chrome — Free")}</div><section class="grid">${pages.map((page) => `<article class="card"><a href="${page.path}"><p>${escapeHtml(page.eyebrow)}</p><h2>${escapeHtml(page.title)}</h2><p>${escapeHtml(page.description)}</p></a></article>`).join("")}</section>${footer("en", path)}</main>`,
   });
 };
 
-const renderHome = () =>
-  document({
-    title: "Screen Privacy Blur | Blur Sensitive Information During Screen Sharing",
-    description:
-      "Blur sensitive data in Chrome and on macOS before screen sharing, demos, calls, and recordings. Local-first privacy overlays for tabs and desktop apps.",
-    path: "/",
+const renderHome = (locale = "en") => {
+  const copy = getCopy(locale);
+  const path = localizedPath("/", locale);
+  const faqs = getHomeFaqs(locale);
+  return document({
+    title: `${copy.hero.title} | Screen Privacy Blur`,
+    description: copy.hero.description,
+    path,
+    locale,
+    alternateBasePath: "/",
     analyticsScript: deferredAnalytics,
-    jsonLd: [productSchema],
-    body: `<main class="shell">${navigation()}<span class="eyebrow">Privacy-first Chrome extension and macOS app</span><h1>Blur sensitive information before screen sharing.</h1><p class="lead">Screen Privacy Blur helps you hide customer data, messages, API keys, notifications, and private browser fields before a live demo, call, recording, or support session.</p><div class="actions"><a class="button" href="${extensionUrl}">Add to Chrome — Free</a><a class="button secondary" href="/downloads/ScreenPrivacyBlurMac.dmg" download>Download macOS app</a><a class="button secondary" href="https://www.youtube.com/watch?v=pLqxd8KaClQ" target="_blank" rel="noopener noreferrer">Watch demo</a></div><section class="grid"><article class="card"><h2>For demos and calls</h2><p>Prepare adjustable blur overlays before sharing a dashboard, inbox, admin tool, or internal workspace with a customer or team.</p></article><article class="card"><h2>Local-first privacy</h2><p>Manual overlays and sensitive-field detection run locally, so the product does not need to upload your visible screen content.</p></article><article class="card"><h2>For recordings</h2><p>Hide predictable private details before recording a Loom, Zoom walkthrough, tutorial, or bug report to reduce retakes and editing.</p></article><article class="card"><h2>Browser and desktop</h2><p>Use the Chrome extension for browser tabs or the macOS app for adjustable Overlay Blur regions over desktop apps and windows.</p></article></section><section class="how"><h2>Start protecting your screen in seconds</h2><ol><li>Install Screen Privacy Blur in Chrome or download the macOS app.</li><li>Place an overlay over the sensitive area you expect to show.</li><li>Start sharing with the workflow visible and the private detail obscured.</li></ol></section><section><h2>Explore practical screen privacy workflows</h2><div class="grid"><article class="card"><a href="/use-cases/"><h3>Use cases for Google Meet, Zoom, Loom, and live debugging</h3><p>Learn how to prepare specific workflows for a screen share or recording.</p></a></article><article class="card"><a href="/alternatives/"><h3>Browser privacy alternatives</h3><p>Compare browser-first workflows for demos, calls, and recordings.</p></a></article></div></section>${footer()}</main>`,
+    jsonLd: [productSchema, faqSchema(faqs)],
+    body: `<header class="m-wrap home-nav">${navigation(locale, "/")}</header><main>${heroHtml(locale)}${compatibilityHtml(locale)}${comparisonHtml(locale)}${featuresHtml(locale)}${pricingHtml(locale)}${macDesktopHtml(locale)}${stepsHtml(locale)}${trustHtml(locale)}${reviewsHtml(locale)}${faqHtml(faqs, locale)}${finalCtaHtml(path, locale)}</main><div class="m-wrap home-footer">${footer(locale, "/")}</div><script>(${initializeDemo.toString()})();
+  document.querySelectorAll('a[data-install], a[data-placement]').forEach(link => link.addEventListener('click', () => {
+    if (typeof window.gtag === 'function') window.gtag('event', link.dataset.install === 'macos' ? 'download_macos_click' : 'install_chrome_click', {placement:link.dataset.placement || 'hero', target_url:link.href, transport_type:'beacon'});
+  }));</script>`,
   });
+};
+
+const renderWelcome = (locale = "en") => {
+  const w = getCopy(locale).welcome;
+  const path = localizedPath("/welcome/", locale);
+  return document({
+    title: w.metaTitle,
+    description: w.metaDescription,
+    path,
+    locale,
+    alternateBasePath: "/welcome/",
+    analyticsScript: deferredAnalytics,
+    body: `<header class="m-wrap home-nav">${navigation(locale, "/welcome/")}</header><main>${welcomeHtml(locale)}</main><div class="m-wrap home-footer">${footer(locale, "/welcome/")}</div><script>(${initializeDemo.toString()})();</script>`,
+  });
+};
+
+const renderUninstall = (locale = "en") => {
+  const u = getCopy(locale).uninstall;
+  const path = localizedPath("/uninstall/", locale);
+  return document({
+    title: u.metaTitle,
+    description: u.metaDescription,
+    path,
+    locale,
+    alternateBasePath: "/uninstall/",
+    robots: "noindex,follow",
+    analyticsScript: deferredAnalytics,
+    body: `<header class="m-wrap home-nav">${navigation(locale, "/uninstall/")}</header><main>${uninstallHtml(locale)}</main><div class="m-wrap home-footer">${footer(locale, "/uninstall/")}</div><script>(${initializeRetention.toString()})();</script>`,
+  });
+};
 
 const renderNoindexApp = (path, appAssets) =>
   document({
@@ -228,11 +354,36 @@ if (!appAssets) {
 }
 
 await Promise.all([
-  writeFile(join(distDir, "index.html"), renderHome()),
+  writeFile(join(distDir, "index.html"), renderHome("en")),
+  (async () => { const target = outputPath("/uninstall/"); await mkdir(dirname(target), { recursive: true }); await writeFile(target, renderUninstall("en")); })(),
+  (async () => { const target = outputPath("/welcome/"); await mkdir(dirname(target), { recursive: true }); await writeFile(target, renderWelcome("en")); })(),
+  ...nonDefaultLocales.flatMap((l) => [
+    (async () => {
+      const target = outputPath(localizedPath("/", l.code));
+      await mkdir(dirname(target), { recursive: true });
+      await writeFile(target, renderHome(l.code));
+    })(),
+    (async () => {
+      const target = outputPath(localizedPath("/welcome/", l.code));
+      await mkdir(dirname(target), { recursive: true });
+      await writeFile(target, renderWelcome(l.code));
+    })(),
+    (async () => {
+      const target = outputPath(localizedPath("/uninstall/", l.code));
+      await mkdir(dirname(target), { recursive: true });
+      await writeFile(target, renderUninstall(l.code));
+    })(),
+  ]),
   (async () => {
     const target = outputPath("/support/");
     await mkdir(dirname(target), { recursive: true });
-    await writeFile(target, appShell);
+    await writeFile(target, appShell
+      .replace(/<title>[^<]*<\/title>/, '<title>Support | Screen Privacy Blur</title>')
+      .replaceAll('content="https://privacyblur.co/"', 'content="https://privacyblur.co/support/"')
+      .replace('href="https://privacyblur.co/"', 'href="https://privacyblur.co/support/"')
+      .replace(/(<meta property="og:title" content=")[^"]+/, '$1Support | Screen Privacy Blur')
+      .replace(/(<meta name="twitter:title" content=")[^"]+/, '$1Support | Screen Privacy Blur'));
+
   })(),
   ...seoPages.map(async (page) => {
     const target = outputPath(page.path);
@@ -240,6 +391,7 @@ await Promise.all([
     await writeFile(target, renderPage(page));
   }),
   ...[
+    { path: "/compare/", group: "Compare", title: "Compare browser privacy tools", description: "Compare local blur, automation, and synthetic demo data workflows." },
     {
       path: "/use-cases/",
       group: "Use cases",
@@ -262,6 +414,7 @@ await Promise.all([
     await mkdir(dirname(target), { recursive: true });
     await writeFile(target, renderNoindexApp(path, appAssets));
   }),
+  writeFile(join(distDir, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`),
   writeFile(
     join(distDir, "sitemap.xml"),
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${publicPaths

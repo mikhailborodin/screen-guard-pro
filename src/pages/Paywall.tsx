@@ -12,6 +12,7 @@ import { type BillingInterval, createCheckoutSession } from "@/lib/billing";
 const benefits = [
   "Automatically detects sensitive fields",
   "Blurs emails, passwords, phone numbers, card fields, API keys",
+  "Live Data Replacement (Auto-Replace) with realistic mock data & role presets",
   "Works during screen sharing and recordings",
   "Manual blur remains free",
 ];

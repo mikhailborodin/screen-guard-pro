@@ -1,9 +1,11 @@
+import { upgradeSeoPages } from "./upgradeSeoPages.mjs";
 export const siteUrl = "https://privacyblur.co";
 
 export const extensionUrl =
-  "https://chromewebstore.google.com/detail/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=item-share-cb";
+  "https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm";
 
 export const seoPages = [
+  ...upgradeSeoPages,
   {
     path: "/privacy-policy/",
     group: "Trust",
@@ -25,7 +27,7 @@ export const seoPages = [
       {
         title: "Support and billing",
         body:
-          "If you contact support or purchase Pro, the information you submit for that workflow is handled only to respond to your request, complete checkout, or verify subscription status.",
+          "If you contact support or purchase Pro, the information you submit for that workflow is handled only to respond to your request, complete checkout, or verify subscription status. The website uninstall survey sends your selected reason and an optional, explicitly submitted website domain to website analytics; the entered URL path, query, and fragment are removed.",
       },
     ],
     bullets: [
@@ -82,7 +84,7 @@ export const seoPages = [
       {
         title: "Website analytics",
         body:
-          "The marketing site may use Google Analytics to understand aggregate page visits. This does not give the extension access to your screen content.",
+          "The marketing site may use Google Analytics to understand page visits. The optional uninstall survey sends your selected reason and, only if you submit it, a website domain to website analytics. Paths, query strings, and fragments from that optional URL are removed. This does not give the extension access to your screen content.",
       },
       {
         title: "Support requests",

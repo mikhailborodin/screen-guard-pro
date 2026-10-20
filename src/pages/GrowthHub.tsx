@@ -1,19 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ArrowLeft, Shield } from "lucide-react";
 
+import { Footer } from "@/components/Footer";
+import { MarketingSection } from "@/components/MarketingSection";
+import { installActionsHtml } from "@/data/conversion.mjs";
 import { seoPages } from "@/data/growthPages";
+import { marketingStyles } from "@/data/marketingStyles.mjs";
 
 type GrowthHubProps = {
-  group: "Use cases" | "Alternatives";
+  group: "Use cases" | "Alternatives" | "Compare";
   title: string;
   description: string;
 };
 
 const GrowthHub = ({ group, title, description }: GrowthHubProps) => {
+  const { pathname } = useLocation();
   const pages = seoPages.filter((page) => page.group === group);
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <style>{marketingStyles}</style>
       <section className="px-4 py-12 md:py-20">
         <div className="mx-auto max-w-5xl">
           <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
@@ -27,6 +33,7 @@ const GrowthHub = ({ group, title, description }: GrowthHubProps) => {
             </span>
             <h1 className="font-display text-4xl font-bold leading-tight md:text-6xl">{title}</h1>
             <p className="text-lg leading-relaxed text-muted-foreground">{description}</p>
+            <MarketingSection html={installActionsHtml(pathname, "hero", "Add to Chrome — Free")} />
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-2">
             {pages.map((page) => (
@@ -43,6 +50,7 @@ const GrowthHub = ({ group, title, description }: GrowthHubProps) => {
           </div>
         </div>
       </section>
+      <Footer />
     </main>
   );
 };

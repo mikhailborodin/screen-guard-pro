@@ -2,8 +2,14 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import Uninstall from "./pages/Uninstall";
+import { initializeConversion } from "./data/conversion.mjs";
+import { getCopy, getLocaleMeta, localeFromPath, localizedPath, nonDefaultLocales, stripLocalePrefix } from "./data/locales.mjs";
+import { initializeRetention } from "./data/retention.mjs";
+import Welcome from "./pages/Welcome";
+import { upgradeSeoPages } from "./data/upgradeSeoPages.mjs";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Paywall from "./pages/Paywall";
@@ -16,15 +22,17 @@ import { growthPagesByPath } from "./data/growthPages";
 
 const queryClient = new QueryClient();
 const siteUrl = "https://privacyblur.co";
-const defaultDescription =
-  "Blur sensitive data in Chrome and on macOS before screen sharing, demos, calls, and recordings. Local-first privacy overlays for tabs and desktop apps.";
 
 // Align router base with Vite's base URL when the app is hosted below a subpath.
 const routerBase = import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const RouteMetadata = () => {
   const { pathname } = useLocation();
+  const locale = localeFromPath(pathname);
+  const copy = getCopy(locale);
   const canonicalPath = pathname === "/" ? "/" : `${pathname.replace(/\/+$/, "")}/`;
+  const rawBase = stripLocalePrefix(pathname);
+  const baseCanonical = rawBase === "/" ? "/" : `${rawBase.replace(/\/+$/, "")}/`;
   const growthPage = growthPagesByPath[pathname] ?? growthPagesByPath[pathname.replace(/\/+$/, "")];
   const hub =
     canonicalPath === "/use-cases/"
@@ -38,18 +46,37 @@ const RouteMetadata = () => {
             description: "Compare browser-first privacy workflows for demos, calls, recordings, and remote collaboration.",
           }
         : undefined;
-  const isTransactional = ["/paywall/", "/payment-success/", "/payment-cancelled/"].includes(canonicalPath);
+  const standalonePage = baseCanonical === "/welcome/"
+    ? { title: copy.welcome.metaTitle, description: copy.welcome.metaDescription }
+    : baseCanonical === "/uninstall/"
+      ? { title: copy.uninstall.metaTitle, description: copy.uninstall.metaDescription }
+    : canonicalPath === "/compare/"
+      ? { title: "Compare browser privacy tools | Screen Privacy Blur", description: "Compare local blur, automation, and synthetic demo data workflows." }
+      : undefined;
+  const isTransactional = ["/paywall/", "/payment-success/", "/payment-cancelled/"].includes(canonicalPath) || baseCanonical === "/uninstall/";
   const title = growthPage
     ? `${growthPage.title} | Screen Privacy Blur`
-    : hub?.title ?? "Screen Privacy Blur | Blur Sensitive Information During Screen Sharing";
-  const description = growthPage?.description ?? hub?.description ?? defaultDescription;
+    : hub?.title ?? standalonePage?.title ?? `${copy.hero.title} | Screen Privacy Blur`;
+  const description = growthPage?.description ?? hub?.description ?? standalonePage?.description ?? copy.hero.description;
 
   useEffect(() => {
+    document.documentElement.lang = getLocaleMeta(locale).hreflang;
     document.title = title;
     document.querySelector('meta[name="description"]')?.setAttribute("content", description);
     document.querySelector('link[rel="canonical"]')?.setAttribute("href", `${siteUrl}${canonicalPath}`);
+    for (const [selector, value] of [
+      ['meta[property="og:title"]', title], ['meta[property="og:description"]', description],
+      ['meta[property="og:url"]', `${siteUrl}${canonicalPath}`], ['meta[name="twitter:title"]', title],
+      ['meta[name="twitter:description"]', description],
+    ]) document.querySelector(selector)?.setAttribute("content", value);
     document.querySelector('meta[name="robots"]')?.setAttribute("content", isTransactional ? "noindex,nofollow" : "index,follow");
-  }, [canonicalPath, description, isTransactional, title]);
+  }, [canonicalPath, description, isTransactional, locale, title]);
+
+  useEffect(() => {
+    const cleanupConversion = initializeConversion();
+    const cleanupRetention = initializeRetention();
+    return () => { cleanupConversion(); cleanupRetention(); };
+  }, [pathname]);
 
   return null;
 };
@@ -63,6 +90,17 @@ const App = () => (
         <Sonner />
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/uninstall/*" element={<Uninstall />} />
+          <Route path="/welcome/*" element={<Welcome />} />
+          {nonDefaultLocales.map((l) => (
+            <Fragment key={l.code}>
+              <Route path={`${localizedPath("/", l.code)}*`} element={<Index />} />
+              <Route path={`${localizedPath("/welcome/", l.code)}*`} element={<Welcome />} />
+              <Route path={`${localizedPath("/uninstall/", l.code)}*`} element={<Uninstall />} />
+            </Fragment>
+          ))}
+          <Route path="/compare" element={<GrowthHub group="Compare" title="Compare browser privacy tools" description="Compare local blur, automation, and synthetic demo data workflows." />} />
+          {upgradeSeoPages.map(page => <Route key={page.path} path={`${page.path}*`} element={<GrowthPage page={page} />} />)}
           <Route path="/paywall" element={<Paywall />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/payment-cancelled" element={<PaymentCancelled />} />

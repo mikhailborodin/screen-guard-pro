@@ -11,6 +11,7 @@ export type GrowthPage = {
     body: string;
   }>;
   bullets: string[];
+  sources?: Array<{ label: string; url: string }>;
 };
 
 export { seoPages };
