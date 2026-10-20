@@ -63,6 +63,18 @@ export function initializeRetention(root = document) {
       finished:'Thanks for using us for your demo. Your next recording can start with free manual overlays and a saved layout. Save the reinstall link below for later.',
     };
     tip.textContent = tips[reason];
+    if (reason === 'finished') {
+      const reviewLink = (root.ownerDocument || document).createElement('a');
+      reviewLink.href = 'https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm/reviews';
+      reviewLink.target = '_blank';
+      reviewLink.rel = 'noopener noreferrer';
+      reviewLink.className = 'm-text-link';
+      reviewLink.style.display = 'inline-block';
+      reviewLink.style.marginTop = '8px';
+      reviewLink.textContent = '★ Saved your presentation? Leave a quick 5-star rating on the Chrome Web Store →';
+      tip.appendChild((root.ownerDocument || document).createElement('br'));
+      tip.appendChild(reviewLink);
+    }
     if (lastReason !== reason) {
       track('uninstall_feedback', {reason});
       submitGoogleForm(reason);
