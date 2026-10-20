@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index,follow" />
+    <title>Floutez ou remplacez automatiquement vos données sensibles avant de partager votre écran | Screen Privacy Blur</title>
+    <meta name="description" content="Protégez e-mails, numéros de téléphone, clés API et données financières sur Zoom, Meet et Loom. Floutez manuellement des éléments, détectez les motifs par masque ou remplacez les vraies données clients par des données de démo propres en un clic." />
+    <link rel="canonical" href="https://privacyblur.co/fr/" />
+    <link rel="alternate" hreflang="en" href="https://privacyblur.co/" />
+    <link rel="alternate" hreflang="de" href="https://privacyblur.co/de/" />
+    <link rel="alternate" hreflang="es" href="https://privacyblur.co/es/" />
+    <link rel="alternate" hreflang="pt-BR" href="https://privacyblur.co/pt-br/" />
+    <link rel="alternate" hreflang="fr" href="https://privacyblur.co/fr/" />
+    <link rel="alternate" hreflang="it" href="https://privacyblur.co/it/" />
+    <link rel="alternate" hreflang="nl" href="https://privacyblur.co/nl/" />
+    <link rel="alternate" hreflang="pl" href="https://privacyblur.co/pl/" />
+    <link rel="alternate" hreflang="ru" href="https://privacyblur.co/ru/" />
+    <link rel="alternate" hreflang="tr" href="https://privacyblur.co/tr/" />
+    <link rel="alternate" hreflang="ja" href="https://privacyblur.co/ja/" />
+    <link rel="alternate" hreflang="ko" href="https://privacyblur.co/ko/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://privacyblur.co/zh-cn/" />
+    <link rel="alternate" hreflang="zh-TW" href="https://privacyblur.co/zh-tw/" />
+    <link rel="alternate" hreflang="hi" href="https://privacyblur.co/hi/" />
+    <link rel="alternate" hreflang="id" href="https://privacyblur.co/id/" />
+    <link rel="alternate" hreflang="x-default" href="https://privacyblur.co/" />
+    <link rel="icon" type="image/png" href="/app-icon.png" sizes="128x128" />
+    <link rel="apple-touch-icon" href="/app-icon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <meta property="og:title" content="Floutez ou remplacez automatiquement vos données sensibles avant de partager votre écran | Screen Privacy Blur" />
+    <meta property="og:description" content="Protégez e-mails, numéros de téléphone, clés API et données financières sur Zoom, Meet et Loom. Floutez manuellement des éléments, détectez les motifs par masque ou remplacez les vraies données clients par des données de démo propres en un clic." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://privacyblur.co/fr/" />
+    <meta property="og:image" content="https://privacyblur.co/social-preview.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Before: leaked customer PII. After: readable, auto-replaced demo data in Screen Privacy Blur." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Floutez ou remplacez automatiquement vos données sensibles avant de partager votre écran | Screen Privacy Blur" />
+    <meta name="twitter:description" content="Protégez e-mails, numéros de téléphone, clés API et données financières sur Zoom, Meet et Loom. Floutez manuellement des éléments, détectez les motifs par masque ou remplacez les vraies données clients par des données de démo propres en un clic." />
+    <meta name="twitter:image" content="https://privacyblur.co/social-preview.png" />
+    <meta name="twitter:image:alt" content="Before: leaked customer PII. After: auto-replaced demo data." />
+    <style>
+  :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #061211; color: #f4fffc; }
+  * { box-sizing: border-box; }
+  body { min-height: 100vh; margin: 0; background: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px), radial-gradient(circle at 80% 5%, rgba(54, 245, 198, 0.16), transparent 32%), #061211; background-size: 64px 64px, 64px 64px, auto, auto; }
+  a { color: #8ff7df; }
+  .shell { width: min(1120px, calc(100vw - 32px)); margin: 0 auto; padding: 48px 0 64px; }
+  .nav, .footer { display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .brand { color: #e8fffa; font-weight: 800; text-decoration: none; }
+  .nav-links, .footer-links { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; align-items: center; }
+  .nav-links a, .footer-links a { color: #b7d6d0; text-decoration: none; }
+  .eyebrow { display: inline-flex; margin-top: 56px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 8px 14px; color: #9fe8d8; background: rgba(54,245,198,0.08); font-size: 14px; font-weight: 700; }
+  h1 { max-width: 900px; margin: 24px 0 18px; font-size: clamp(42px, 7vw, 76px); line-height: .98; letter-spacing: -.03em; }
+  h2 { margin: 0; font-size: 24px; }
+  p { color: #b8d1cc; font-size: 18px; line-height: 1.65; }
+  .lead { max-width: 760px; font-size: 21px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; margin: 32px 0 52px; }
+  .button { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; border-radius: 14px; padding: 0 20px; background: #73edd4; color: #04201b; font-weight: 800; text-decoration: none; }
+  .button.secondary { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16); color: #e8fffa; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .card { border: 1px solid rgba(255,255,255,.12); border-radius: 18px; padding: 24px; background: rgba(8, 31, 28, .72); }
+  .card p { margin-bottom: 0; font-size: 16px; }
+  .card a { color: inherit; text-decoration: none; }
+  .bullets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 20px 0 48px; padding: 0; list-style: none; }
+  .bullets li { border: 1px solid rgba(115,237,212,.22); border-radius: 12px; padding: 14px; color: #dffdf7; background: rgba(115,237,212,.06); }
+  .how { margin: 48px 0; padding: 28px; border-radius: 18px; background: rgba(115,237,212,.07); }
+  .how ol { color: #dffdf7; line-height: 1.8; }
+  .footer { border-top: 1px solid rgba(255,255,255,.12); padding-top: 28px; color: #91aaa5; font-size: 14px; }
+  @media (max-width: 720px) { .shell { padding-top: 28px; } .eyebrow { margin-top: 36px; } .grid, .bullets { grid-template-columns: 1fr; } }
+
+[hidden]{display:none!important}.m-install-controls{min-width:0;width:100%}.m-install-controls>.m-button{width:100%}.m-mobile-actions{display:none;flex-direction:column;gap:10px}.m-mobile-actions button{font-family:inherit;cursor:pointer;border:0}.m-mobile-actions .m-secondary{border:1px solid #ffffff22}.m-install-controls[data-mobile=true]>[data-desktop-install]{display:none}.m-install-controls[data-mobile=true] .m-mobile-actions{display:flex}.m-install-controls .m-action-status:empty{display:none}.m-action-status:not(:empty){padding:12px;border:1px solid #2dd4bf44;border-radius:10px;background:#2dd4bf14;color:#b6fff0!important}.m-install-controls>.m-note{margin:10px 0}.m-manual-copy{font-size:12px;color:#a9b9c9}.m-manual-copy input,.m-uninstall input[type=url]{display:block;width:100%;padding:12px;margin:12px 0;border:1px solid #ffffff30;background:#080f1c;border-radius:8px;color:#e2e8f0;font:inherit}.m-plan .m-install-controls{margin-top:auto}.m-plan .m-mobile-actions .m-button{margin-top:0}.m-safety,.m-faq details{border:1px solid #2dd4bf30;background:#2dd4bf07;border-radius:12px;padding:20px;margin-top:20px}.m-safety summary,.m-faq summary{cursor:pointer;font-size:16px;line-height:1.6;color:#e2e8f0;font-weight:600}.m-safety p,.m-faq p{margin-bottom:0}.m-faq{max-width:900px;margin:auto}.m-faq details{margin-top:12px;background:#17213666;border-color:#ffffff20}.m-faq summary:focus-visible,.m-safety summary:focus-visible{outline:2px solid #5eead4;outline-offset:5px}.m-compatibility{text-align:center;padding:24px;border-block:1px solid #ffffff16;color:#a9b9c9;line-height:2}.m-compatibility>p{font-size:12px;margin:0 0 8px}.m-compatibility div{font-size:14px;color:#e2e8f0}.m-compatibility span{padding-inline:8px;color:#5eead4}.m-review{margin:0;display:flex;flex-direction:column;justify-content:space-between}.m-review blockquote{margin:0 0 24px;font-size:18px;line-height:1.6;color:#f4fffc}.m-review figcaption{display:grid;gap:8px;font-size:13px;color:#94a3b8}.m-rating{display:inline-block;border:1px solid #2dd4bf40;border-radius:12px;padding:12px 18px;text-decoration:none;font-size:14px}.m-uninstall{max-width:820px}.m-survey{padding:0;border:0;margin:32px 0 16px}.m-survey legend{margin-bottom:16px;font-weight:600}.m-survey>label{display:flex;align-items:start;gap:14px;padding:20px;border:1px solid #ffffff20;border-radius:12px;margin:12px 0;font-size:16px;line-height:1.5;background:#17213666;cursor:pointer}.m-survey input{margin-top:5px;accent-color:#2dd4bf}.m-survey label:has(input:checked){border-color:#2dd4bf;background:#2dd4bf12}.m-uninstall [data-retention-tip]{line-height:1.8;margin-block:24px}.m-uninstall form{margin-block:24px}
+@media(max-width:767px){.m-install-controls .m-mobile-actions{display:flex}}
+
+.m-wrap{width:min(1152px,calc(100% - 32px));margin-inline:auto}.m-hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:48px;padding-block:140px 72px}.m-hero>div{min-width:0}.m-hero h1{font-size:clamp(36px,4.2vw,58px);line-height:1.08;letter-spacing:-.035em;margin:24px 0;color:#f4fffc}.m-badge{display:inline-block;font-size:12px;line-height:1.7;padding:8px 12px;border:1px solid #2dd4bf44;border-radius:20px;color:#8ff7df;background:#2dd4bf0a;text-decoration:none}.m-lead{font-size:18px;line-height:1.75;color:#a9b9c9;max-width:720px}.m-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:28px 0 20px}.m-button{display:inline-flex;align-items:center;justify-content:center;text-align:center;padding:14px 20px;border-radius:12px;background:linear-gradient(135deg,#2dd4bf,#0ea5e9);color:#06121f!important;font-size:14px;font-weight:750;text-decoration:none;min-height:48px}.m-secondary{background:#ffffff06;border:1px solid #ffffff22;color:#f1f5f9!important}.m-button:hover{filter:brightness(1.12)}.m-text-link,.m-wrap a:not(.m-button):not(.m-badge){color:#5eead4}.m-note{font-size:12px!important;line-height:1.7;color:#9cacc0!important}.m-demo{border:1px solid #ffffff20;border-radius:20px;background:linear-gradient(145deg,#192339,#0d1422);box-shadow:0 24px 80px #0005;overflow:hidden;scroll-margin-top:110px}.m-browser{display:flex;align-items:center;gap:16px;justify-content:space-between;padding:14px 18px;background:#ffffff05;font-size:11px;color:#a9b9c9;border-bottom:1px solid #ffffff12}.m-browser>span:first-child{color:#8a7a7b;letter-spacing:3px;white-space:nowrap}.m-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin:16px 16px 0;padding:4px;background:#050b16;border-radius:12px}.m-tabs button{appearance:none;font:inherit;cursor:pointer;border:1px solid transparent;background:transparent;color:#a9b9c9;border-radius:9px;padding:10px 4px;font-size:11px;line-height:1.5}.m-tabs small{display:block;font-size:9px}.m-tabs button[aria-pressed=true]{color:#5eead4;background:#2dd4bf18;border-color:#2dd4bf44}.m-tabs button:focus-visible,.m-button:focus-visible{outline:2px solid #5eead4;outline-offset:3px}.m-dashboard{padding:24px}.m-dashboard-heading{display:flex;justify-content:space-between;align-items:center}.m-dashboard h2{font-size:21px;margin:6px 0 18px}.m-dashboard small,.m-kicker{font-size:11px;font-weight:700;letter-spacing:.12em;color:#5eead4}.m-avatar{padding:10px;background:#2dd4bf15;border:1px solid #2dd4bf30;border-radius:50%;font-size:12px;color:#5eead4}.m-demo-status{padding:9px 12px;background:#2dd4bf10;border:1px solid #2dd4bf25;border-radius:8px;color:#5eead4;font-size:11px;min-height:36px}[data-demo-mode=original] .m-demo-status{background:#f8717110;color:#fca5a5;border-color:#f8717133}.m-dashboard dl{margin:16px 0}.m-data-row{padding:15px 0;border-bottom:1px solid #ffffff0d;min-height:72px}.m-data-row dt{font-size:11px;color:#94a3b8;margin-bottom:7px}.m-data-row dd{margin:0;font-size:14px;font-family:ui-monospace,monospace;color:#f1f5f9;overflow-wrap:anywhere}.m-blurred{filter:blur(6px);user-select:none}.m-section{padding-block:56px;scroll-margin-top:90px}.m-section-heading{max-width:720px;margin:0 auto 36px;text-align:center}.m-section h2{font-size:clamp(27px,3vw,38px);line-height:1.2;margin:12px 0 16px}.m-section h3{font-size:20px;line-height:1.4;margin:12px 0}.m-section p{color:#a9b9c9;font-size:16px;line-height:1.75}.m-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.m-three{grid-template-columns:repeat(3,minmax(0,1fr))}.m-card{padding:28px;border:1px solid #ffffff16;border-radius:18px;background:linear-gradient(145deg,#172136cc,#0d1422cc);min-width:0}.m-highlight{border-color:#2dd4bf65;background:linear-gradient(145deg,#17373788,#0d1422)}.m-icon{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;background:#2dd4bf15;color:#5eead4;border-radius:10px;font-size:25px}.m-comparison-row{display:flex;flex-direction:column;gap:8px;padding:16px 0;border-bottom:1px solid #ffffff12;font-size:12px;overflow-wrap:anywhere}.m-comparison-row>span:first-child{color:#94a3b8}.m-comparison-row>span:last-child{font-family:ui-monospace,monospace}.m-price{font-size:40px!important;font-weight:700;color:#f1f5f9!important;margin:14px 0}.m-price small{font-size:14px;color:#94a3b8;font-weight:400}.m-plan{display:flex;flex-direction:column;align-items:start}.m-plan .m-button{margin-top:auto;width:100%}.m-checks{padding:0;list-style:none;display:grid;gap:16px;margin:24px 0 32px;color:#cbd5e1;font-size:14px}.m-checks li{display:flex;gap:10px;line-height:1.6}.m-checks span{color:#5eead4}.m-resource-links{display:flex;flex-wrap:wrap;gap:14px;margin:24px 0;font-size:12px}.m-welcome-title{font-size:clamp(32px,5vw,56px)!important;line-height:1.12!important;max-width:900px;margin:24px 0}.m-toolbar{border:1px solid #ffffff25;border-radius:12px;background:#0a1020;margin-top:24px;padding:16px;font-size:12px}.m-toolbar>div:first-child{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}.m-toolbar span{color:#5eead4}.m-extension-menu{margin:16px 0 0 auto;border:1px solid #ffffff20;padding:14px;border-radius:8px;max-width:320px}.m-extension-menu div{display:flex;justify-content:space-between;gap:16px;margin-top:18px}.m-instructions{padding-left:20px;color:#cbd5e1;font-size:14px;line-height:1.8}.m-instructions li{margin-block:14px}.m-table-scroll{max-width:100%;overflow-x:auto;border:1px solid #ffffff20;border-radius:12px}.m-table{border-collapse:collapse;width:100%;text-align:left;font-size:13px;white-space:nowrap}.m-table caption{text-align:left;padding:16px;color:#94a3b8;font-size:12px}.m-table th,.m-table td{padding:18px;border-top:1px solid #ffffff12}.m-table th{background:#2dd4bf10;color:#5eead4}.m-table td{color:#e2e8f0}.m-table tbody tr:nth-child(even){background:#ffffff03}
+@media(max-width:900px){.m-hero{grid-template-columns:1fr;max-width:700px;padding-top:120px;gap:32px}.m-three{grid-template-columns:repeat(2,minmax(0,1fr))}.m-hero h1{max-width:650px}.m-hero .m-demo{width:100%}}@media(max-width:600px){.m-grid,.m-three{grid-template-columns:1fr}.m-hero{padding-top:112px;padding-bottom:24px}.m-section{padding-block:36px}.m-card{padding:22px}.m-dashboard{padding:18px}.m-browser{gap:8px;font-size:10px}.m-tabs{margin:12px 12px 0}.m-tabs button{font-size:10px}.m-data-row dd{font-size:12px}.m-hero .m-actions{align-items:stretch;flex-direction:column}.m-badge{font-size:10px}.m-section h2{font-size:28px}}
+.m-matrix{margin-top:24px}.m-matrix .m-table{white-space:normal}.m-matrix .m-table td,.m-matrix .m-table th{vertical-align:top;min-width:160px}.m-sandbox-controls{border:1px solid #ffffff20;border-radius:16px;background:#0d1422cc;padding:16px;margin:16px 0}.m-sandbox-controls .m-tabs{margin:0 0 12px}.m-preset-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:12px}.m-preset-chip{appearance:none;font:inherit;font-size:12px;cursor:pointer;padding:6px 12px;border-radius:999px;border:1px solid #ffffff22;background:#ffffff08;color:#cbd5e1}.m-preset-chip[aria-pressed=true]{border-color:#2dd4bf88;background:#2dd4bf22;color:#5eead4;font-weight:600}.m-video-modal{width:min(920px,calc(100vw - 24px));border:1px solid #ffffff26;border-radius:18px;padding:0;background:#080f1c;color:#f4fffc;box-shadow:0 32px 96px #000a}.m-video-modal::backdrop{background:#020612cc;backdrop-filter:blur(6px)}.m-video-shell{padding:18px}.m-video-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.m-video-frame{aspect-ratio:16/9;width:100%;border-radius:12px;overflow:hidden;background:#000}.m-video-frame iframe{width:100%;height:100%;border:0;display:block}.m-cta-box{text-align:center;max-width:860px;margin-inline:auto}.m-cta-actions{max-width:420px;margin:24px auto 12px}.m-lang-menu{position:relative;display:inline-block}.m-lang-menu summary{list-style:none;cursor:pointer;padding:6px 10px;border-radius:8px;border:1px solid #ffffff22;background:#ffffff08;color:#e2e8f0;font-size:12px;font-weight:600;user-select:none}.m-lang-menu summary::-webkit-details-marker{display:none}.m-lang-list{position:absolute;right:0;top:calc(100% + 8px);z-index:80;display:grid;grid-template-columns:repeat(2,minmax(120px,1fr));gap:4px;padding:8px;border-radius:12px;border:1px solid #ffffff26;background:#0b1324f5;box-shadow:0 16px 48px #0009;min-width:260px}.m-lang-list a{padding:6px 10px;border-radius:6px;font-size:12px;color:#cbd5e1!important;text-decoration:none;white-space:nowrap}.m-lang-list a:hover,.m-lang-list a[aria-current=page]{background:#2dd4bf22;color:#5eead4!important;font-weight:600}.m-lang-footer{display:flex;flex-wrap:wrap;gap:10px 14px;width:100%;padding-top:12px;border-top:1px solid #ffffff12;font-size:12px}.m-lang-footer a{color:#94a3b8!important;text-decoration:none}.m-lang-footer a[aria-current=page]{color:#5eead4!important;font-weight:700}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+
+body{background:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px),radial-gradient(circle at 80% 5%,#2dd4bf12,transparent 35%),#080f1c;background-size:64px 64px,64px 64px,auto,auto}.home-nav{padding-top:24px}.home-nav .nav{padding:16px 20px;background:#172136cc;border:1px solid #ffffff16;border-radius:16px}.home-footer{padding-block:32px 48px}.home-nav+main .m-hero{padding-top:72px}@media(max-width:600px){.home-nav+main .m-hero{padding-top:36px}}.m-hero h1{max-width:none}.m-demo .m-dashboard h2{font-size:21px}html{scroll-behavior:smooth}section[id]{scroll-margin-top:24px}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style>
+    
+    <script>
+      let analyticsStarted = false;
+      const analyticsEvents = ["pointerdown", "keydown", "scroll", "touchstart"];
+      const startAnalytics = () => {
+        if (analyticsStarted) return;
+        analyticsStarted = true;
+        analyticsEvents.forEach((eventName) => window.removeEventListener(eventName, startAnalytics));
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function gtag(){ window.dataLayer.push(arguments); };
+        window.gtag("js", new Date());
+        window.gtag("config", "G-PE695ZZE0F");
+        const script = document.createElement("script");
+        script.async = true;
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-PE695ZZE0F";
+        document.head.appendChild(script);
+      };
+      analyticsEvents.forEach((eventName) => window.addEventListener(eventName, startAnalytics, { passive: true }));
+    </script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Screen Privacy Blur","applicationCategory":"SecurityApplication","operatingSystem":"Chrome, Edge, Brave, Chromium","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","ratingCount":"8"},"description":"Local browser blur, automatic pattern detection, and synthetic data replacement for calls and demos.","downloadUrl":"https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Screen Privacy Blur fonctionne-t-il avec les applications de bureau Zoom, Microsoft Teams ou OBS ?","acceptedAnswer":{"@type":"Answer","text":"Oui, lorsque ces applications capturent votre onglet Chrome protégé, votre fenêtre de navigateur ou votre écran. Le flou et le remplacement étant rendus directement dans Chrome, la vue partagée inclut la protection. Pour les autres fenêtres natives, utilisez notre application macOS."}},{"@type":"Question","name":"Quelle est la différence entre Smart Auto-Blur et Auto-Replace ?","acceptedAnswer":{"@type":"Answer","text":"Smart Auto-Blur masque les e-mails, téléphones, clés et motifs détectés avec un effet de verre dépoli. Auto-Replace remplace le texte sensible par des données fictives réalistes pour que l’interface reste lisible pendant les démos. Tous deux sont des fonctionnalités Pro ; le flou manuel est gratuit."}},{"@type":"Question","name":"Comment notre équipe de sécurité peut-elle vérifier qu’aucune donnée de page ne quitte le navigateur ?","acceptedAnswer":{"@type":"Answer","text":"La détection et le remplacement s’exécutent localement dans l’extension Manifest V3. Ouvrez Chrome DevTools → onglet Network (Réseau) et activez la protection pour inspecter le trafic : le moteur de protection ne téléverse aucun contenu de page. Consultez aussi notre page Permissions."}},{"@type":"Question","name":"Comment cela se compare-t-il à la fonction de flou intégrée de Loom ?","acceptedAnswer":{"@type":"Answer","text":"Loom réserve sa fonction de flou aux forfaits payants Business et Enterprise au sein de son extension Chrome. Screen Privacy Blur protège la page source avant le partage sur Zoom, Meet, Teams, Loom ou OBS, avec flou manuel gratuit, dispositions sauvegardées et remplacement local des données."}},{"@type":"Question","name":"Auto-Replace est-il sûr pour les CRM de production et les formulaires en direct ?","acceptedAnswer":{"@type":"Answer","text":"Auto-Replace modifie uniquement l’affichage local du navigateur pour la présentation sans mettre à jour votre base de données backend. Comme la soumission d’un formulaire web peut envoyer les valeurs affichées, évitez d’enregistrer des formulaires lorsque le remplacement de démo est actif."}}]}</script>
+    
+  </head>
+  <body><header class="m-wrap home-nav">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="/fr/">Screen Privacy Blur</a>
+    <div class="nav-links">
+      <a href="/fr/#pricing">Tarifs</a>
+      <a href="/compare/">Comparer</a>
+      <a href="/fr/#features">Fonctionnalités</a>
+      <a href="/fr/#how-it-works">Fonctionnement</a>
+      <a href="/fr/#privacy">Confidentialité</a>
+      <a data-placement="navbar" href="https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=privacyblur_site&amp;utm_medium=landing&amp;utm_campaign=fr&amp;utm_content=navbar&amp;hl=fr">Ajouter à Chrome</a>
+      <details class="m-lang-menu"><summary aria-label="Langue">🌐 FR</summary><div class="m-lang-list"><a href="/" hreflang="en">English</a><a href="/de/" hreflang="de">Deutsch</a><a href="/es/" hreflang="es">Español</a><a href="/pt-br/" hreflang="pt-BR">Português (BR)</a><a href="/fr/" hreflang="fr" aria-current="page">Français</a><a href="/it/" hreflang="it">Italiano</a><a href="/nl/" hreflang="nl">Nederlands</a><a href="/pl/" hreflang="pl">Polski</a><a href="/ru/" hreflang="ru">Русский</a><a href="/tr/" hreflang="tr">Türkçe</a><a href="/ja/" hreflang="ja">日本語</a><a href="/ko/" hreflang="ko">한국어</a><a href="/zh-cn/" hreflang="zh-CN">简体中文</a><a href="/zh-tw/" hreflang="zh-TW">繁體中文</a><a href="/hi/" hreflang="hi">हिन्दी</a><a href="/id/" hreflang="id">Indonesia</a></div></details>
+    </div>
+  </nav></header><main><section class="m-hero m-wrap"><div><a class="m-badge" href="https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm/reviews">Manifest V3 • Traitement 100 % local • Noté 4,9★ sur le Chrome Web Store</a><h1>Floutez ou remplacez automatiquement vos données sensibles avant de partager votre écran</h1><p class="m-lead">Protégez e-mails, numéros de téléphone, clés API et données financières sur Zoom, Meet et Loom. Floutez manuellement des éléments, détectez les motifs par masque ou remplacez les vraies données clients par des données de démo propres en un clic.</p><div class="m-actions"><div class="m-install-controls" data-install-controls data-browser-caption-default="Compatible avec votre navigateur • Installation gratuite en 2 clics • Sans inscription">
+    <a class="m-button" data-desktop-install data-install="chrome" data-placement="hero" href="https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=privacyblur_site&amp;utm_medium=landing&amp;utm_campaign=fr&amp;utm_content=hero&amp;hl=fr" target="_blank" rel="noopener noreferrer">Ajouter à Chrome — C’est Gratuit</a>
+    <div class="m-mobile-actions"><button type="button" class="m-button" data-copy-desktop>Copier le lien pour ordinateur</button><button type="button" class="m-button m-secondary" data-share-desktop>Partager / Enregistrer pour PC</button></div>
+    <p class="m-note" data-browser-caption>Compatible avec votre navigateur • Installation gratuite en 2 clics • Sans inscription</p>
+    <p class="m-action-status m-note" role="status" aria-live="polite" data-install-status></p>
+    <label class="m-manual-copy" hidden>Lien d’installation sur ordinateur <input readonly aria-label="Lien d’installation sur ordinateur" /></label>
+  </div><a class="m-button m-secondary" href="#interactive-demo">Essayer la démo interactive ci-dessous ↓</a></div><p class="m-note">Aucun compte requis pour le floutage manuel. Les données de vos pages restent sur votre appareil.</p><a class="m-text-link" href="https://www.youtube.com/watch?v=g2E4lR6M8Zc" data-video-open target="_blank" rel="noopener noreferrer">▶ Voir la démo de 45 s</a><p class="m-note">Aussi disponible pour les onglets du navigateur et les applications de bureau : <a href="/downloads/ScreenPrivacyBlurMac.dmg" data-install="macos" download>Télécharger le DMG pour macOS</a></p></div><div id="interactive-demo" class="m-demo" data-demo-mode="replace">
+  <div class="m-browser"><span aria-hidden="true">● ● ●</span><span>⌑ secure-bank.com/dashboard</span></div>
+  <div class="m-tabs" role="group" aria-label="Dashboard privacy mode">
+    <button type="button" data-mode="original" aria-pressed="false">👁️ Original (Exposé)</button>
+    <button type="button" data-mode="blur" aria-pressed="false">🔒 Smart Auto-Blur</button>
+    <button type="button" data-mode="replace" aria-pressed="true">✨ Auto-Replace <small>(Mode Démo Pro)</small></button>
+  </div>
+  <div class="m-dashboard"><div class="m-dashboard-heading"><div><small>APERÇU CLIENT</small><h2>Tableau de bord</h2></div><span class="m-avatar" aria-hidden="true">SC</span></div>
+  <div class="m-demo-status" role="status">✨ Remplacé par des données fictives — L’interface reste propre !</div>
+  <dl><div class="m-data-row"><dt>E-mail client</dt><dd data-original="sarah.connor@acme-corp.io" data-replacement="demo.user@example-company.com">demo.user@example-company.com</dd></div><div class="m-data-row"><dt>Numéro de téléphone</dt><dd data-original="+1 (415) 890-4321" data-replacement="+1 (555) 019-2834">+1 (555) 019-2834</dd></div><div class="m-data-row"><dt>Clé secrète API</dt><dd data-original="sk_live_98a7f6d5e4c3b2a1" data-replacement="sk_test_••••••••••••••••">sk_test_••••••••••••••••</dd></div><div class="m-data-row"><dt>Solde du compte</dt><dd data-original="$124,589.00" data-replacement="$45,000.00">$45,000.00</dd></div></dl>
+  <p class="m-note">Aperçu interactif · Défile automatiquement jusqu’au clic · Toutes les valeurs sont fictives.</p></div></div><dialog class="m-video-modal" data-video-modal aria-label="45s product demo"><div class="m-video-shell"><div class="m-video-bar"><strong>Screen Privacy Blur — Démo 45 s</strong><button type="button" class="m-button m-secondary" data-video-close>Fermer ✕</button></div><div class="m-video-frame" data-video-frame></div></div></dialog></section><section class="m-wrap m-compatibility" aria-label="Platform compatibility"><p>Protège votre écran sur</p><div>Zoom <span>•</span> Google Meet <span>•</span> Loom <span>•</span> Microsoft Teams <span>•</span> OBS Studio <span>•</span> Stripe <span>•</span> HubSpot <span>•</span> AWS Console</div><p class="m-note">Protégez la vue du navigateur que vous partagez. Protection locale pour vos présentations.</p></section><section class="m-section m-wrap" id="blur-vs-replace"><div class="m-section-heading"><span class="m-kicker">VOTRE DÉMO. SANS LES DÉTAILS PRIVÉS.</span><h2>Pourquoi simplement flouter quand vous pouvez remplacer automatiquement ?</h2><p>Pour les ingénieurs commerciaux, fondateurs SaaS et formateurs qui veulent garder l’attention sur le produit.</p></div><div class="m-grid"><article class="m-card"><span class="m-kicker">APPELS RAPIDES</span><h3>Floutage standard</h3><div class="m-comparison-row"><span>E-mail client</span><span class="m-blurred" aria-label="Blurred customer email">sarah.connor@acme-corp.io</span></div><div class="m-comparison-row"><span>Solde</span><span class="m-blurred" aria-label="Blurred balance">$124,589.00</span></div><p>Parfait pour les appels rapides. Cependant, les zones floutées peuvent donner un aspect censuré lors de démonstrations commerciales importantes.</p></article><article class="m-card m-highlight"><span class="m-kicker">DÉMOS EN DIRECT SOIGNÉES · PRO</span><h3>Remplacement de données en direct</h3><div class="m-comparison-row"><span>E-mail client</span><span>demo.user@example-company.com</span></div><div class="m-comparison-row"><span>Solde</span><span>$45,000.00</span></div><p>Détectez localement les e-mails, téléphones et masques personnalisés, puis remplacez-les par des données fictives réalistes. Votre CRM ou Stripe ressemble à un environnement de démo propre.</p></article></div><div class="m-table-scroll m-matrix" tabindex="0" role="region" aria-label="Comparison of protection modes"><table class="m-table"><caption>Comparer Floutage Manuel vs Smart Auto-Blur par masque vs Remplacement de données en direct</caption><thead><tr><th scope="col">Capacité</th><th scope="col">Floutage Manuel (Gratuit)</th><th scope="col">Smart Auto-Blur (Pro)</th><th scope="col">Auto-Replace Données (Pro)</th></tr></thead><tbody><tr><td>Ciblage des données</td><td>Clic sur un élément DOM exact ou zone libre</td><td>Masques regex locaux (e-mails, téléphones, clés, cartes)</td><td>Masques locaux + règles CRM/tableaux de bord personnalisées</td></tr><tr><td>Rendu pendant l’appel</td><td>Effet verre dépoli personnalisable</td><td>Verre dépoli automatique sur les PII détectées</td><td>Interface propre et naturelle avec données synthétiques réalistes</td></tr><tr><td>Idéal pour</td><td>Appels internes rapides et zones ponctuelles</td><td>Débogage en direct, streams de code et support</td><td>Démos commerciales clients, tutoriels Loom et revues Stripe/CRM</td></tr><tr><td>Préréglages métier</td><td>Mises en page enregistrées par site</td><td>Profils Dev / Streamer et masques PII</td><td>Scénarios SaaS Sales Demo, FinTech / Stripe et Dev / Streamer</td></tr><tr><td>Confidentialité</td><td>100 % local dans le navigateur</td><td>100 % local dans le navigateur</td><td>100 % local dans le navigateur (ne modifie jamais la base de données)</td></tr></tbody></table></div><details class="m-safety" open><summary>Auto-Replace est-il sûr pour les CRM de production et les formulaires en direct ?</summary><p>Le remplacement visuel s’effectue uniquement dans l’affichage local de votre navigateur pour les présentations. Le moteur ne met pas à jour votre base de données et n’envoie aucun contenu à des serveurs externes.</p><p>Les sites web peuvent toutefois réagir aux modifications et l’envoi d’un formulaire peut transmettre les valeurs affichées. Utilisez un flux en lecture seule et évitez d’enregistrer des formulaires pendant que le remplacement est actif.</p></details></section><section class="m-section m-wrap" id="features"><div class="m-section-heading"><span class="m-kicker">CONÇU POUR VOS VRAIS FLUX DE TRAVAIL</span><h2>Tout ce qu’il faut pour la confidentialité de votre écran</h2><p>D’un appel rapide à une démonstration produit soignée, choisissez comment vos données privées apparaissent.</p></div><div class="m-grid m-three"><article class="m-card"><span class="m-icon" aria-hidden="true">⌕</span><h3>Smart Auto-Blur par masque</h3><p>Détectez et floutez automatiquement e-mails, téléphones, cartes, clés API et motifs regex personnalisés en local.</p></article><article class="m-card"><span class="m-icon" aria-hidden="true">✧</span><h3>Remplacement de données en direct</h3><p>Remplacez les vrais e-mails, téléphones, noms et montants par des données synthétiques réalistes pour vos démos.</p></article><article class="m-card"><span class="m-icon" aria-hidden="true">↗</span><h3>Sélection d’éléments DOM et de zones</h3><p>Cliquez sur n’importe quel élément HTML pour verrouiller le flou au défilement ou tracez des zones libres.</p></article><article class="m-card"><span class="m-icon" aria-hidden="true">▧</span><h3>Configurations sauvegardées par site</h3><p>Configurez votre protection une fois pour Stripe, HubSpot, Gmail ou AWS — elle se charge automatiquement à la prochaine visite.</p></article><article class="m-card"><span class="m-icon" aria-hidden="true">⌘</span><h3>Panneau latéral Chrome et raccourcis</h3><p>Gérez les flous actifs, les masques et le mode présentation depuis le panneau latéral de Chrome.</p></article><article class="m-card"><span class="m-icon" aria-hidden="true">◇</span><h3>100 % local et zéro télémétrie</h3><p>La détection et le remplacement DOM s’exécutent dans la mémoire de votre navigateur. Aucun envoi de contenu d’écran.</p></article></div></section><section class="m-section m-wrap" id="pricing"><div class="m-section-heading"><span class="m-kicker">COMMENCEZ GRATUITEMENT. AUTOMATISEZ SELON VOS BESOINS.</span><h2>Une confidentialité simple. Deux façons de travailler.</h2><p>La protection manuelle est gratuite à vie. Débloquez la détection automatique et les données de démo dans l’extension.</p></div><div class="m-grid"><article class="m-card m-plan"><h3>Gratuit pour toujours</h3><p class="m-price">$0 <small>à vie</small></p><p class="m-note">Aucun compte ni clé de licence requis pour commencer</p><ul class="m-checks"><li><span aria-hidden="true">✓</span>Zones de floutage manuel illimitées</li><li><span aria-hidden="true">✓</span>Sélection exacte d’éléments DOM</li><li><span aria-hidden="true">✓</span>Intensité du flou, opacité, couleur et effet verre réglables</li><li><span aria-hidden="true">✓</span>Sauvegarde de la disposition par site web</li><li><span aria-hidden="true">✓</span>Mode Présentation pleine page</li></ul><div class="m-install-controls" data-install-controls data-browser-caption-default="Compatible avec votre navigateur • Installation gratuite en 2 clics • Sans inscription">
+    <a class="m-button" data-desktop-install data-install="chrome" data-placement="pricing" href="https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=privacyblur_site&amp;utm_medium=landing&amp;utm_campaign=fr&amp;utm_content=pricing&amp;hl=fr" target="_blank" rel="noopener noreferrer">Ajouter à Chrome — Gratuit</a>
+    <div class="m-mobile-actions"><button type="button" class="m-button" data-copy-desktop>Copier le lien pour ordinateur</button><button type="button" class="m-button m-secondary" data-share-desktop>Partager / Enregistrer pour PC</button></div>
+    <p class="m-note" data-browser-caption>Compatible avec votre navigateur • Installation gratuite en 2 clics • Sans inscription</p>
+    <p class="m-action-status m-note" role="status" aria-live="polite" data-install-status></p>
+    <label class="m-manual-copy" hidden>Lien d’installation sur ordinateur <input readonly aria-label="Lien d’installation sur ordinateur" /></label>
+  </div></article><article class="m-card m-highlight m-plan"><span class="m-kicker">POUR L’AUTOMATISATION ET LES DÉMOS EN DIRECT</span><h3>Smart Auto Blur Pro</h3><p class="m-price">$4 <small>/ mois · facturé annuellement (48 $/an)</small></p><p class="m-note">Ou 5 $/mois facturé mensuellement · 59 $ paiement unique à vie (Lifetime)</p><ul class="m-checks"><li><span aria-hidden="true">✓</span>Masques locaux automatiques : E-mails, téléphones, clés API, cartes</li><li><span aria-hidden="true">✓</span>Remplacement de données en direct — remplacez les PII par des données fictives</li><li><span aria-hidden="true">✓</span>Règles de masques personnalisées pour tableaux de bord et CRM</li><li><span aria-hidden="true">✓</span>Profils d’auto-protection sur tout le site en un clic</li><li><span aria-hidden="true">✓</span>Support prioritaire</li></ul><div class="m-install-controls" data-install-controls data-browser-caption-default="Compatible avec votre navigateur • Installation gratuite en 2 clics • Sans inscription">
+    <a class="m-button" data-desktop-install data-install="chrome" data-placement="pricing" href="https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=privacyblur_site&amp;utm_medium=landing&amp;utm_campaign=fr&amp;utm_content=pricing&amp;hl=fr" target="_blank" rel="noopener noreferrer">Installer et débloquer Pro dans l’extension</a>
+    <div class="m-mobile-actions"><button type="button" class="m-button" data-copy-desktop>Copier le lien pour ordinateur</button><button type="button" class="m-button m-secondary" data-share-desktop>Partager / Enregistrer pour PC</button></div>
+    <p class="m-note" data-browser-caption>Compatible avec votre navigateur • Installation gratuite en 2 clics • Sans inscription</p>
+    <p class="m-action-status m-note" role="status" aria-live="polite" data-install-status></p>
+    <label class="m-manual-copy" hidden>Lien d’installation sur ordinateur <input readonly aria-label="Lien d’installation sur ordinateur" /></label>
+  </div></article></div></section><section class="m-section m-wrap" id="mac-desktop"><div class="m-card"><span class="m-kicker">APPLICATION BUREAU MACOS</span><h2>Protégez bien plus que votre navigateur avec les calques de flou macOS</h2><p>Screen Privacy Blur pour macOS apporte le même flux local aux applications natives. Ajoutez des zones de flou ajustables sur vos fenêtres, terminaux, documents ou applications de réunion.</p><div class="m-grid m-three"><article class="m-card"><h3>Flou de superposition manuel</h3><p>Placez des zones de flou exactement là où les données sensibles apparaissent sur votre bureau.</p></article><article class="m-card"><h3>Ancrage aux fenêtres</h3><p>Attachez les superpositions à une fenêtre d’application visible pour suivre son contexte.</p></article><article class="m-card"><h3>Mode verrouillé</h3><p>Gardez les calques transparents aux clics pendant que vous présentez ou enregistrez.</p></article></div><div class="m-actions"><a class="m-button" href="/downloads/ScreenPrivacyBlurMac.dmg" data-install="macos" data-placement="mac_section" download>Télécharger le DMG pour macOS</a><span class="m-note">Installateur DMG · Fonctionne localement ; aucun compte requis.</span></div></div></section><section class="m-section m-wrap" id="how-it-works"><div class="m-section-heading"><h2>Prêt avant votre prochain partage d’écran</h2></div><div class="m-grid m-three"><article class="m-card"><span class="m-kicker">01 · INSTALLER</span><h3>Ajoutez à Chrome et épinglez</h3><p>Gardez Screen Privacy Blur à portée de main dans la barre d’outils Chrome.</p></article><article class="m-card"><span class="m-kicker">02 · PROTÉGER</span><h3>Choisissez votre mode</h3><p>Sélectionnez un élément, tracez une zone de flou ou utilisez les masques Pro et scénarios de remplacement.</p></article><article class="m-card"><span class="m-kicker">03 · PRÉSENTER</span><h3>Vérifiez, puis partagez</h3><p>Contrôlez la page avant de présenter sur Zoom, Meet, Teams, Loom ou OBS.</p></article></div><div class="m-actions"><a class="m-button m-secondary" href="/fr/welcome/">Essayer le bac à sable d’accueil →</a></div></section><section class="m-section m-wrap" id="privacy"><div class="m-card"><span class="m-kicker">NOTRE PROMESSE DE CONFIDENTIALITÉ</span><h2>Vos données privées restent sur votre appareil.</h2><div class="m-grid m-three"><article><h3>Aucune collecte de données d’écran</h3><p>Nous ne collectons jamais le contenu de vos pages, valeurs de formulaires, captures d’écran ou historique.</p></article><article><h3>Traitement local uniquement</h3><p>La détection et le remplacement tournent dans votre navigateur. Le contenu n’est jamais envoyé sur un serveur.</p></article><article><h3>Architecture locale vérifiable</h3><p>Inspectez nos permissions Manifest V3 et notre architecture locale. La facturation et le support sont documentés séparément.</p><a href="/permissions/">Vérifier les permissions →</a></article></div></div></section><section class="m-section m-wrap" id="reviews"><div class="m-section-heading"><span class="m-kicker">TÉMOIGNAGES</span><h2>Petite extension. Vraie tranquillité d’esprit.</h2><a class="m-rating" href="https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm/reviews" target="_blank" rel="noopener noreferrer">★★★★★ <strong>4.9 / 5.0</strong> · 8 avis sur le Chrome Web Store</a></div><div class="m-grid m-three"><figure class="m-card m-review"><blockquote>“Excellent extension! Screen Privacy Blur makes it incredibly easy to protect sensitive information during screen sharing and presentations. Simple, lightweight, and works exactly as expected.”</blockquote><figcaption><strong>Kate Litlonn</strong><span>June 11, 2026 · Chrome Web Store</span><a href="https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm/reviews" target="_blank" rel="noopener noreferrer">Lire l’avis →</a></figcaption></figure><figure class="m-card m-review"><blockquote>“I use that all the time when I’m sharing my screen, and it’s honestly could be a lifesaver. It’s very easy to turn on, and in a couple of seconds you can hide anything you don’t want others to see”</blockquote><figcaption><strong>EMILIANO CHEHIN</strong><span>December 17, 2025 · Chrome Web Store</span><a href="https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm/reviews" target="_blank" rel="noopener noreferrer">Lire l’avis →</a></figcaption></figure><figure class="m-card m-review"><blockquote>“It's a great tool, but I would like to see automatically blurred confidential blocks”</blockquote><figcaption><strong>Karina Noa</strong><span>December 22, 2025 · Chrome Web Store · Inspired Smart Auto-Blur Pro</span><a href="https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm/reviews" target="_blank" rel="noopener noreferrer">Lire l’avis →</a></figcaption></figure></div><p class="m-note">Extraits authentiques d’avis publics sur le Chrome Web Store. Vérifié le 13 octobre 2026.</p></section><section class="m-section m-wrap" id="faq"><div class="m-section-heading"><span class="m-kicker">RÉPONSES AVANT D’INSTALLER</span><h2>Questions fréquentes</h2></div><div class="m-faq"><details><summary>Screen Privacy Blur fonctionne-t-il avec les applications de bureau Zoom, Microsoft Teams ou OBS ?</summary><p>Oui, lorsque ces applications capturent votre onglet Chrome protégé, votre fenêtre de navigateur ou votre écran. Le flou et le remplacement étant rendus directement dans Chrome, la vue partagée inclut la protection. Pour les autres fenêtres natives, utilisez notre application macOS.</p></details><details><summary>Quelle est la différence entre Smart Auto-Blur et Auto-Replace ?</summary><p>Smart Auto-Blur masque les e-mails, téléphones, clés et motifs détectés avec un effet de verre dépoli. Auto-Replace remplace le texte sensible par des données fictives réalistes pour que l’interface reste lisible pendant les démos. Tous deux sont des fonctionnalités Pro ; le flou manuel est gratuit.</p></details><details><summary>Comment notre équipe de sécurité peut-elle vérifier qu’aucune donnée de page ne quitte le navigateur ?</summary><p>La détection et le remplacement s’exécutent localement dans l’extension Manifest V3. Ouvrez Chrome DevTools → onglet Network (Réseau) et activez la protection pour inspecter le trafic : le moteur de protection ne téléverse aucun contenu de page. Consultez aussi notre page Permissions.</p></details><details><summary>Comment cela se compare-t-il à la fonction de flou intégrée de Loom ?</summary><p>Loom réserve sa fonction de flou aux forfaits payants Business et Enterprise au sein de son extension Chrome. Screen Privacy Blur protège la page source avant le partage sur Zoom, Meet, Teams, Loom ou OBS, avec flou manuel gratuit, dispositions sauvegardées et remplacement local des données.</p></details><details><summary>Auto-Replace est-il sûr pour les CRM de production et les formulaires en direct ?</summary><p>Auto-Replace modifie uniquement l’affichage local du navigateur pour la présentation sans mettre à jour votre base de données backend. Comme la soumission d’un formulaire web peut envoyer les valeurs affichées, évitez d’enregistrer des formulaires lorsque le remplacement de démo est actif.</p></details></div><p class="m-note">Plus d’infos sur <a href="/permissions/">les permissions de l’extension</a> · <a href="https://support.atlassian.com/loom/docs/blur-sensitive-information" target="_blank" rel="noopener noreferrer">la documentation du flou Loom</a></p></section><section class="m-section m-wrap" id="cta"><div class="m-card m-highlight m-cta-box"><h2>Protégez votre confidentialité dès aujourd’hui</h2><p>Sécurisez votre écran avant votre prochaine démo, réunion ou vidéo.</p><div class="m-cta-actions"><div class="m-install-controls" data-install-controls data-browser-caption-default="Compatible avec votre navigateur • Installation gratuite en 2 clics • Sans inscription">
+    <a class="m-button" data-desktop-install data-install="chrome" data-placement="footer" href="https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=privacyblur_site&amp;utm_medium=landing&amp;utm_campaign=fr&amp;utm_content=footer&amp;hl=fr" target="_blank" rel="noopener noreferrer">Ajouter à Chrome — C’est Gratuit</a>
+    <div class="m-mobile-actions"><button type="button" class="m-button" data-copy-desktop>Copier le lien pour ordinateur</button><button type="button" class="m-button m-secondary" data-share-desktop>Partager / Enregistrer pour PC</button></div>
+    <p class="m-note" data-browser-caption>Compatible avec votre navigateur • Installation gratuite en 2 clics • Sans inscription</p>
+    <p class="m-action-status m-note" role="status" aria-live="polite" data-install-status></p>
+    <label class="m-manual-copy" hidden>Lien d’installation sur ordinateur <input readonly aria-label="Lien d’installation sur ordinateur" /></label>
+  </div></div><p class="m-note">Fonctionne avec Chrome, Brave, Edge, Arc et tous les navigateurs Chromium</p></div></section></main><div class="m-wrap home-footer">
+  <footer class="footer">
+    <span>© 2026 Screen Privacy Blur. Tous droits réservés.</span>
+    <nav class="footer-links" aria-label="Footer">
+      <a data-placement="footer" href="https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=privacyblur_site&amp;utm_medium=landing&amp;utm_campaign=fr&amp;utm_content=footer&amp;hl=fr">Ajouter à Chrome — Gratuit</a>
+      <a href="/fr/#pricing">Tarifs</a>
+      <a href="/compare/">Comparer</a>
+      <a href="/fr/welcome/">Bac à sable</a>
+      <a href="/use-cases/">Cas d’usage</a>
+      <a href="/alternatives/">Alternatives</a>
+      <a href="/privacy-policy/">Confidentialité</a>
+      <a href="/permissions/">Permissions</a>
+      <a href="/support/">Support</a>
+    </nav>
+    <nav class="m-resource-links" aria-label="Comparisons and use cases"><a href="/compare/blurweb-alternative/">Screen Privacy Blur vs. BlurWeb</a><a href="/compare/zeroblur-alternative/">A Manifest V3 alternative to ZeroBlur</a><a href="/compare/loom-blur-alternative/">A browser-wide alternative to Loom blur</a><a href="/compare/contextblur-alternative/">Screen Privacy Blur vs. ContextBlur</a><a href="/use-cases/sales-demos-crm/">Replace customer data during live CRM demos</a><a href="/use-cases/developers-api-keys/">Hide API keys during screen sharing and coding streams</a><a href="/use-cases/stripe-fintech-dashboards/">Hide balances and customer PII in financial dashboards</a></nav>
+    <nav class="m-lang-footer" aria-label="Langue"><a href="/" hreflang="en">English</a><a href="/de/" hreflang="de">Deutsch</a><a href="/es/" hreflang="es">Español</a><a href="/pt-br/" hreflang="pt-BR">Português (BR)</a><a href="/fr/" hreflang="fr" aria-current="page">Français</a><a href="/it/" hreflang="it">Italiano</a><a href="/nl/" hreflang="nl">Nederlands</a><a href="/pl/" hreflang="pl">Polski</a><a href="/ru/" hreflang="ru">Русский</a><a href="/tr/" hreflang="tr">Türkçe</a><a href="/ja/" hreflang="ja">日本語</a><a href="/ko/" hreflang="ko">한국어</a><a href="/zh-cn/" hreflang="zh-CN">简体中文</a><a href="/zh-tw/" hreflang="zh-TW">繁體中文</a><a href="/hi/" hreflang="hi">हिन्दी</a><a href="/id/" hreflang="id">Indonesia</a></nav>
+  </footer></div><script>(function initializeDemo(root = document) {
+  const win = root.ownerDocument?.defaultView || window;
+  const cleanups = [];
+  root.querySelectorAll('[data-demo-mode]').forEach(demo => {
+    const buttons = [...demo.querySelectorAll('[data-mode]')];
+    const presetButtons = [...demo.querySelectorAll('[data-preset]')];
+    const applyState = (mode, preset = demo.dataset.rolePreset || 'all') => {
+      demo.dataset.demoMode = mode;
+      demo.dataset.rolePreset = preset;
+      buttons.forEach(item => item.setAttribute('aria-pressed', String(item.dataset.mode === mode)));
+      presetButtons.forEach(item => item.setAttribute('aria-pressed', String(item.dataset.preset === preset)));
+      demo.querySelectorAll('[data-original]').forEach(value => {
+        const matchesPreset = preset === 'all' || !value.dataset.field || value.dataset.field === preset;
+        const activeMode = matchesPreset ? mode : 'original';
+        value.textContent = activeMode === 'replace' ? value.dataset.replacement : value.dataset.original;
+        value.classList.toggle('m-blurred', activeMode === 'blur');
+        if (activeMode === 'blur') value.setAttribute('aria-label', 'Sensitive value blurred');
+        else value.removeAttribute('aria-label');
+      });
+      const status = demo.querySelector('[role="status"]');
+      if (status) {
+        const presetLabel = preset === 'sales' ? ' (SaaS Sales Demo preset)' : preset === 'fintech' ? ' (FinTech / Stripe preset)' : preset === 'dev' ? ' (Dev / Streamer preset)' : '';
+        status.textContent = mode === 'original' ? '⚠️ PII Exposed' : mode === 'blur' ? `🔒 Local Mask Active${presetLabel}` : `✨ Replaced with Mock Data — UI stays clean!${presetLabel}`;
+      }
+    };
+    let timer = null;
+    const stopCycle = () => {
+      if (timer) {
+        win.clearInterval(timer);
+        timer = null;
+      }
+    };
+    if (demo.id === 'interactive-demo' && !win.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches) {
+      const order = ['replace', 'original', 'blur'];
+      timer = win.setInterval(() => {
+        const next = order[(order.indexOf(demo.dataset.demoMode) + 1) % order.length];
+        applyState(next);
+      }, 3500);
+    }
+    const onClick = (event) => {
+      const modeBtn = event.target.closest('[data-mode]');
+      if (modeBtn && demo.contains(modeBtn)) {
+        stopCycle();
+        applyState(modeBtn.dataset.mode, demo.dataset.rolePreset || 'all');
+        return;
+      }
+      const presetBtn = event.target.closest('[data-preset]');
+      if (presetBtn && demo.contains(presetBtn)) {
+        stopCycle();
+        const nextMode = demo.dataset.demoMode === 'original' ? 'replace' : demo.dataset.demoMode;
+        applyState(nextMode, presetBtn.dataset.preset);
+      }
+    };
+    demo.addEventListener('click', onClick);
+    cleanups.push(() => {
+      stopCycle();
+      demo.removeEventListener('click', onClick);
+    });
+  });
+
+  const modal = root.querySelector('[data-video-modal]');
+  const openBtn = root.querySelector('[data-video-open]');
+  if (modal && openBtn && typeof modal.showModal === 'function') {
+    const frame = modal.querySelector('[data-video-frame]');
+    const close = () => {
+      if (frame) frame.innerHTML = '';
+      if (modal.open) modal.close();
+    };
+    const onOpen = (event) => {
+      event.preventDefault();
+      if (frame) {
+        frame.innerHTML = '<iframe src="/tutorial-player.html" title="Screen Privacy Blur 45s Demo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen"></iframe>';
+      }
+      modal.showModal();
+    };
+    const onModalClick = (event) => {
+      if (event.target === modal || event.target.closest('[data-video-close]')) close();
+    };
+    openBtn.addEventListener('click', onOpen);
+    modal.addEventListener('click', onModalClick);
+    modal.addEventListener('close', close);
+    cleanups.push(() => {
+      openBtn.removeEventListener('click', onOpen);
+      modal.removeEventListener('click', onModalClick);
+      modal.removeEventListener('close', close);
+    });
+  }
+
+  return () => cleanups.forEach(fn => fn());
+})();
+  document.querySelectorAll('a[data-install], a[data-placement]').forEach(link => link.addEventListener('click', () => {
+    if (typeof window.gtag === 'function') window.gtag('event', link.dataset.install === 'macos' ? 'download_macos_click' : 'install_chrome_click', {placement:link.dataset.placement || 'hero', target_url:link.href, transport_type:'beacon'});
+  }));</script><script>(function initializeConversion(root = document) {
+  const win = root.ownerDocument?.defaultView || window;
+  const nav = win.navigator;
+  const media = win.matchMedia('(max-width: 767px)');
+  const controls = [...root.querySelectorAll('[data-install-controls]')];
+  const update = () => {
+    const mobile = media.matches || /Android|iPhone|iPad|iPod|Mobile/i.test(nav.userAgent) || (nav.platform === 'MacIntel' && nav.maxTouchPoints > 1);
+    const docEl = (root.ownerDocument || document).documentElement;
+    const isArc = Boolean(docEl && win.getComputedStyle?.(docEl)?.getPropertyValue('--arc-palette-title'));
+    const chromium = !!nav.brave || isArc || /Chrome\/|Chromium\/|Edg\/|Arc\//i.test(nav.userAgent) || nav.userAgentData?.brands?.some(item => /Chromium|Google Chrome|Microsoft Edge|Brave|Arc/i.test(item.brand));
+    controls.forEach(control => {
+      control.dataset.mobile = String(mobile);
+      const defaultCaption = control.dataset.browserCaptionDefault || 'Compatible with your browser • Free install in 2 clicks • No signup required';
+      control.querySelector('[data-browser-caption]').textContent = mobile ? 'Save this link and install on your desktop browser. No signup required.' : chromium ? defaultCaption : 'Install on desktop Chrome, Brave, Edge, Arc, or another Chromium browser.';
+    });
+  };
+  update();
+  media.addEventListener('change', update);
+  const copy = async (control) => {
+    const url = control.querySelector('[data-desktop-install]').href;
+    const status = control.querySelector('[data-install-status]');
+    try {
+      if (!nav.clipboard?.writeText) throw new Error('Clipboard unavailable');
+      await nav.clipboard.writeText(url);
+      control.querySelector('.m-manual-copy').hidden = true;
+      status.textContent = 'Link copied! Open it on your desktop browser';
+    } catch {
+      const fallback = control.querySelector('.m-manual-copy');
+      fallback.hidden = false;
+      const input = fallback.querySelector('input');
+      input.value = url;
+      input.focus();
+      input.select();
+      status.textContent = 'Copy the link below and open it on your desktop browser.';
+    }
+  };
+  const onClick = async (event) => {
+    const button = event.target.closest('[data-copy-desktop], [data-share-desktop]');
+    if (!button || !root.contains(button)) return;
+    const control = button.closest('[data-install-controls]');
+    if (button.hasAttribute('data-copy-desktop') || typeof nav.share !== 'function') { await copy(control); return; }
+    try {
+      await nav.share({title:'Screen Privacy Blur — install on desktop', text:'Save this desktop install link for your next screen share.', url:control.querySelector('[data-desktop-install]').href});
+      control.querySelector('[data-install-status]').textContent = 'Shared! Open the link on your desktop browser.';
+    } catch (error) {
+      if (error.name !== 'AbortError') await copy(control);
+    }
+  };
+  root.addEventListener('click', onClick);
+  return () => { media.removeEventListener('change', update); root.removeEventListener('click', onClick); };
+})();</script></body>
+</html>
