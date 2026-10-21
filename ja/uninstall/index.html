@@ -24,9 +24,9 @@
     <link rel="alternate" hreflang="hi" href="https://privacyblur.co/hi/uninstall/" />
     <link rel="alternate" hreflang="id" href="https://privacyblur.co/id/uninstall/" />
     <link rel="alternate" hreflang="x-default" href="https://privacyblur.co/uninstall/" />
-    <link rel="icon" type="image/png" href="/app-icon.png" sizes="128x128" />
-    <link rel="apple-touch-icon" href="/app-icon.png" />
-    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/app-icon.png?v=20261021" sizes="128x128" />
+    <link rel="apple-touch-icon" href="/app-icon.png?v=20261021" />
+    <link rel="shortcut icon" href="/favicon.ico?v=20261021" sizes="any" />
     <meta property="og:title" content="Screen Privacy Blurをお試しいただきありがとうございました" />
     <meta property="og:description" content="改善点をお知らせいただくか、次のデモに向けてScreen Privacy Blurを再インストールできます。" />
     <meta property="og:type" content="website" />
@@ -47,7 +47,8 @@
   a { color: #8ff7df; }
   .shell { width: min(1120px, calc(100vw - 32px)); margin: 0 auto; padding: 48px 0 64px; }
   .nav, .footer { display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
-  .brand { color: #e8fffa; font-weight: 800; text-decoration: none; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; color: #e8fffa; font-weight: 800; text-decoration: none; }
+  .brand-icon { width: 28px; height: 28px; border-radius: 7px; display: block; }
   .nav-links, .footer-links { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; align-items: center; }
   .nav-links a, .footer-links a { color: #b7d6d0; text-decoration: none; }
   .eyebrow { display: inline-flex; margin-top: 56px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 8px 14px; color: #9fe8d8; background: rgba(54,245,198,0.08); font-size: 14px; font-weight: 700; }
@@ -102,17 +103,18 @@ body{background:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linea
   </head>
   <body><header class="m-wrap home-nav">
   <nav class="nav" aria-label="Primary">
-    <a class="brand" href="/ja/">Screen Privacy Blur</a>
+    <a class="brand" href="/ja/"><img class="brand-icon" src="/app-icon.png?v=20261021" width="28" height="28" alt="" /><span>Screen Privacy Blur</span></a>
     <div class="nav-links">
       <a href="/ja/#pricing">料金プラン</a>
       <a href="/compare/">比較</a>
       <a href="/ja/#features">機能</a>
       <a href="/ja/#how-it-works">使い方</a>
       <a href="/ja/#privacy">プライバシー</a>
+      <a href="/support/">サポート</a>
       <a data-placement="navbar" href="https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=privacyblur_site&amp;utm_medium=landing&amp;utm_campaign=ja-uninstall&amp;utm_content=navbar&amp;hl=ja">Chromeに追加</a>
       <details class="m-lang-menu"><summary aria-label="言語">🌐 JA</summary><div class="m-lang-list"><a href="/uninstall/" hreflang="en">English</a><a href="/de/uninstall/" hreflang="de">Deutsch</a><a href="/es/uninstall/" hreflang="es">Español</a><a href="/pt-br/uninstall/" hreflang="pt-BR">Português (BR)</a><a href="/fr/uninstall/" hreflang="fr">Français</a><a href="/it/uninstall/" hreflang="it">Italiano</a><a href="/nl/uninstall/" hreflang="nl">Nederlands</a><a href="/pl/uninstall/" hreflang="pl">Polski</a><a href="/ru/uninstall/" hreflang="ru">Русский</a><a href="/tr/uninstall/" hreflang="tr">Türkçe</a><a href="/ja/uninstall/" hreflang="ja" aria-current="page">日本語</a><a href="/ko/uninstall/" hreflang="ko">한국어</a><a href="/zh-cn/uninstall/" hreflang="zh-CN">简体中文</a><a href="/zh-tw/uninstall/" hreflang="zh-TW">繁體中文</a><a href="/hi/uninstall/" hreflang="hi">हिन्दी</a><a href="/id/uninstall/" hreflang="id">Indonesia</a></div></details>
     </div>
-  </nav></header><main><section class="m-section m-wrap m-uninstall"><span class="m-kicker">ご利用ありがとうございました</span><h1 class="m-welcome-title">アンインストールされました。</h1><p class="m-lead">改善のため、理由を1クリックでお聞かせください。いつでもまたご利用いただけます。</p><fieldset class="m-survey" data-uninstall-survey><legend>アンインストールした理由は何ですか？</legend><label><input type="radio" name="uninstall-reason" value="website" /><span>特定のWebサイトで自動ぼかしやデータ置換がうまく動かなかった</span></label><label><input type="radio" name="uninstall-reason" value="pattern" /><span>必要なマスクやデータパターンが含まれていなかった</span></label><label><input type="radio" name="uninstall-reason" value="free" /><span>100%無料の自動ぼかしツールを探していた</span></label><label><input type="radio" name="uninstall-reason" value="finished" /><span>1回限りのデモ・録画が終わったため</span></label></fieldset><p class="m-note">理由を選択すると、Webサイトの分析に匿名で送信されます。メールアドレスやアカウントは不要です。</p><div data-retention-tip class="m-card m-highlight" hidden></div><form data-website-feedback class="m-card" hidden><label for="feedback-website">どのWebサイトですか？ <small>(任意)</small></label><input id="feedback-website" type="url" placeholder="https://example.com" inputmode="url" /><p class="m-note">ドメイン名のみが送信され、パスやパラメータは削除されます。社内の非公開ホスト名は入力しないでください。</p><button class="m-button m-secondary" type="submit">サイトドメインを共有</button><p class="m-note" role="status" data-website-status></p></form><p role="status" data-survey-status class="m-note"></p><noscript><p>To send feedback, enable JavaScript or <a href="/support/">contact support</a>. You can still reinstall below.</p></noscript><div class="m-section"><h2>次のデモでまた必要ですか？</h2><p>手動オーバーレイ、DOM要素選択、サイト別レイアウト保存は永久に無料で使えます。</p><div class="m-install-controls" data-install-controls data-browser-caption-default="お使いのブラウザに対応 • 2クリックで無料インストール • 登録不要">
+  </nav></header><main><section class="m-section m-wrap m-uninstall"><span class="m-kicker">ご利用ありがとうございました</span><h1 class="m-welcome-title">アンインストールされました。</h1><p class="m-lead">改善のため、理由を1クリックでお聞かせください。いつでもまたご利用いただけます。</p><fieldset class="m-survey" data-uninstall-survey><legend>アンインストールした理由は何ですか？</legend><label><input type="radio" name="uninstall-reason" value="website" /><span>特定のWebサイトで自動ぼかしやデータ置換がうまく動かなかった</span></label><label><input type="radio" name="uninstall-reason" value="pattern" /><span>必要なマスクやデータパターンが含まれていなかった</span></label><label><input type="radio" name="uninstall-reason" value="free" /><span>100%無料の自動ぼかしツールを探していた</span></label><label><input type="radio" name="uninstall-reason" value="finished" /><span>1回限りのデモ・録画が終わったため</span></label></fieldset><p class="m-note">理由を選択すると、Webサイトの分析に匿名で送信されます。メールアドレスやアカウントは不要です。</p><div data-retention-tip class="m-card m-highlight" hidden></div><form data-website-feedback class="m-card" hidden><label for="feedback-website">どのWebサイトですか？ <small>(任意)</small></label><input id="feedback-website" type="url" placeholder="https://example.com" inputmode="url" /><p class="m-note">ドメイン名のみが送信され、パスやパラメータは削除されます。社内の非公開ホスト名は入力しないでください。</p><button class="m-button m-secondary" type="submit">サイトドメインを共有</button><p class="m-note" role="status" data-website-status></p></form><p role="status" data-survey-status class="m-note"></p><noscript><p>To send feedback, enable JavaScript or <a href="/support/">contact support</a>. You can still reinstall below.</p></noscript><div class="m-section"><h2>次のデモでまた必要ですか？</h2><p>手動オーバーレイ、DOM要素選択、サイト別レイアウト保存は永久に無料で使えます。</p><div class="m-install-controls" data-install-controls data-browser-caption-default="お使いのブラウザに対応 • 2クリックで無料インストール • 登録不要" data-caption-mobile="このリンクを保存し、PCのブラウザからインストールしてください（登録不要）。" data-caption-non-chromium="PC版の Chrome、Brave、Edge、Arc などの Chromium ブラウザでインストールしてください。" data-status-copied="リンクをコピーしました！PCのブラウザで開いてください" data-status-copy-fallback="以下のリンクをコピーして、PCのブラウザで開いてください。" data-status-shared="共有しました！PCのブラウザでリンクを開いてください。">
     <a class="m-button" data-desktop-install data-install="chrome" data-placement="footer" href="https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=privacyblur_site&amp;utm_medium=landing&amp;utm_campaign=ja-uninstall&amp;utm_content=footer&amp;hl=ja" target="_blank" rel="noopener noreferrer">Chrome ウェブストアから再インストール</a>
     <div class="m-mobile-actions"><button type="button" class="m-button" data-copy-desktop>PC用インストールリンクをコピー</button><button type="button" class="m-button m-secondary" data-share-desktop>PC用に共有 / 保存</button></div>
     <p class="m-note" data-browser-caption>お使いのブラウザに対応 • 2クリックで無料インストール • 登録不要</p>
@@ -120,7 +122,7 @@ body{background:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linea
     <label class="m-manual-copy" hidden>デスクトップ用インストールリンク <input readonly aria-label="デスクトップ用インストールリンク" /></label>
   </div><a class="m-text-link" href="/support/">特定サイトやカスタムパターンのサポートを受ける →</a></div></section></main><div class="m-wrap home-footer">
   <footer class="footer">
-    <span>© 2026 Screen Privacy Blur. All rights reserved.</span>
+    <a class="brand" href="/ja/"><img class="brand-icon" src="/app-icon.png?v=20261021" width="24" height="24" alt="" /><span>© 2026 Screen Privacy Blur. All rights reserved.</span></a>
     <nav class="footer-links" aria-label="Footer">
       <a data-placement="footer" href="https://chromewebstore.google.com/detail/screen-privacy-blur/pfngjkakgncabcfjdknjacpnbidjlldm?utm_source=privacyblur_site&amp;utm_medium=landing&amp;utm_campaign=ja-uninstall&amp;utm_content=footer&amp;hl=ja">Chromeに追加 — 無料</a>
       <a href="/ja/#pricing">料金プラン</a>
@@ -253,7 +255,9 @@ body{background:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linea
     controls.forEach(control => {
       control.dataset.mobile = String(mobile);
       const defaultCaption = control.dataset.browserCaptionDefault || 'Compatible with your browser • Free install in 2 clicks • No signup required';
-      control.querySelector('[data-browser-caption]').textContent = mobile ? 'Save this link and install on your desktop browser. No signup required.' : chromium ? defaultCaption : 'Install on desktop Chrome, Brave, Edge, Arc, or another Chromium browser.';
+      const mobileCaption = control.dataset.captionMobile || 'Save this link and install on your desktop browser. No signup required.';
+      const nonChromiumCaption = control.dataset.captionNonChromium || 'Install on desktop Chrome, Brave, Edge, Arc, or another Chromium browser.';
+      control.querySelector('[data-browser-caption]').textContent = mobile ? mobileCaption : chromium ? defaultCaption : nonChromiumCaption;
     });
   };
   update();
@@ -265,7 +269,7 @@ body{background:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linea
       if (!nav.clipboard?.writeText) throw new Error('Clipboard unavailable');
       await nav.clipboard.writeText(url);
       control.querySelector('.m-manual-copy').hidden = true;
-      status.textContent = 'Link copied! Open it on your desktop browser';
+      status.textContent = control.dataset.statusCopied || 'Link copied! Open it on your desktop browser';
     } catch {
       const fallback = control.querySelector('.m-manual-copy');
       fallback.hidden = false;
@@ -273,7 +277,7 @@ body{background:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linea
       input.value = url;
       input.focus();
       input.select();
-      status.textContent = 'Copy the link below and open it on your desktop browser.';
+      status.textContent = control.dataset.statusCopyFallback || 'Copy the link below and open it on your desktop browser.';
     }
   };
   const onClick = async (event) => {
@@ -283,7 +287,7 @@ body{background:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linea
     if (button.hasAttribute('data-copy-desktop') || typeof nav.share !== 'function') { await copy(control); return; }
     try {
       await nav.share({title:'Screen Privacy Blur — install on desktop', text:'Save this desktop install link for your next screen share.', url:control.querySelector('[data-desktop-install]').href});
-      control.querySelector('[data-install-status]').textContent = 'Shared! Open the link on your desktop browser.';
+      control.querySelector('[data-install-status]').textContent = control.dataset.statusShared || 'Shared! Open the link on your desktop browser.';
     } catch (error) {
       if (error.name !== 'AbortError') await copy(control);
     }
