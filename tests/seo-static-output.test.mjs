@@ -44,9 +44,10 @@ test("production build emits crawlable canonical HTML for every sitemap URL", as
     assert.match(html, new RegExp(`<link rel="canonical" href="${siteUrl}${path.replaceAll("/", "\\/")}"`));
     assert.equal((html.match(/<h1/g) ?? []).length, 1, `${path} should have one H1`);
     assert.ok(html.length > 2_000, `${path} should contain meaningful static HTML`);
-    for (const name of ['og:title', 'og:description', 'og:image', 'og:image:alt']) {
+    for (const name of ['og:title', 'og:description', 'og:image', 'og:image:alt', 'og:locale']) {
       assert.ok(html.includes(`property="${name}" content="`), `${path} needs ${name}`);
     }
+    assert.match(html, /name="google-site-verification" content="9rDZaP0kVIQxWtRRJZTv-rAc1SpX033cjjhn6wP84fE"/);
     assert.match(html, /name="twitter:card" content="summary_large_image"/);
     for (const match of html.matchAll(/<a\b[^>]*href="(https:\/\/chromewebstore.google.com[^" ]+)"/g)) {
       const url = new URL(match[1].replaceAll('&amp;', '&'));
@@ -59,7 +60,7 @@ test("production build emits crawlable canonical HTML for every sitemap URL", as
     const schemas = [...html.matchAll(/<script type="application\/ld\+json">([^<]+)<\/script>/g)].map(match => JSON.parse(match[1]));
     const faq = schemas.find(schema => schema['@type'] === 'FAQPage');
     const page = seoPages.find(page => page.path === path);
-    const expectedFaqs = basePath === '/' ? getHomeFaqs(locale) : page && (path.startsWith('/compare/') || path.startsWith('/use-cases/')) ? faqsForPage(page) : null;
+    const expectedFaqs = basePath === '/' ? getHomeFaqs(locale) : page && (path.startsWith('/compare/') || path.startsWith('/use-cases/') || path.startsWith('/alternatives/')) ? faqsForPage(page) : null;
     if (expectedFaqs) {
       assert.deepEqual(faq.mainEntity.map(entity => [entity.name, entity.acceptedAnswer.text]), expectedFaqs.map(item => [item.question, item.answer]));
       for (const {question,answer} of expectedFaqs) {

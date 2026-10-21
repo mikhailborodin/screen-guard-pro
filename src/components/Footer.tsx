@@ -51,7 +51,7 @@ export const Footer = () => {
             {nav.rights}
           </p>
         </div>
-        <nav aria-label="Comparisons and use cases" className="mt-8 flex flex-wrap justify-center gap-4 text-xs text-muted-foreground">{seoPages.filter(page => page.group === "Compare" || ["sales-demos-crm", "developers-api-keys", "stripe-fintech-dashboards"].some(slug => page.path.includes(slug))).map(page => <a key={page.path} href={page.path}>{page.title}</a>)}</nav>
+        <nav aria-label="Comparisons and use cases" className="mt-8 flex flex-wrap justify-center gap-4 text-xs text-muted-foreground">{seoPages.filter(page => page.group !== "Trust").map(page => <a key={page.path} href={page.path}>{page.title}</a>)}</nav>
         <nav aria-label={nav.languageLabel} className="m-lang-footer mt-6 justify-center">
           {localeList.map((item) => (
             <a

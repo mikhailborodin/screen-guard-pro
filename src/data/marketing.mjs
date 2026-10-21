@@ -100,7 +100,7 @@ export const finalCtaHtml = (path = '/', locale = localeFromPath(path)) => {
   return `<section class="m-section m-wrap" id="cta"><div class="m-card m-highlight m-cta-box"><h2>${escapeHtml(c.title)}</h2><p>${escapeHtml(c.description)}</p><div class="m-cta-actions">${installActionsHtml(path, 'footer')}</div><p class="m-note">${escapeHtml(c.note)}</p></div></section>`;
 };
 
-export const resourceLinksHtml = () => `<nav class="m-resource-links" aria-label="Comparisons and use cases">${seoPages.filter(p => p.group === 'Compare' || ['sales-demos-crm','developers-api-keys','stripe-fintech-dashboards'].some(slug => p.path.includes(slug))).map(p => `<a href="${p.path}">${p.title}</a>`).join('')}</nav>`;
+export const resourceLinksHtml = () => `<nav class="m-resource-links" aria-label="Comparisons and use cases">${seoPages.filter(p => p.group !== 'Trust').map(p => `<a href="${p.path}">${p.title}</a>`).join('')}</nav>`;
 export const welcomeRows = [
   [
     ['Sarah Connor', 'Maya Lin (Acme Demo)'],

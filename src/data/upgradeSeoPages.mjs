@@ -72,4 +72,24 @@ export const upgradeSeoPages = [
       {title: 'Protect the full walkthrough', body: 'Save the per-website layout, open the side panel, and test scrolling and detail views. Replacement affects visible browser content, not transactions or the stored ledger. Do not submit synthetic values into production forms.'},
     ], bullets: ['Blur account balances', 'Replace visible contact details', 'Custom amount rules', 'Per-site layouts for repeat demos'],
   },
+  {
+    path: '/use-cases/microsoft-teams/', group: 'Use cases', eyebrow: 'Microsoft Teams',
+    title: 'Blur sensitive data in Microsoft Teams screen sharing',
+    description: 'Hide customer emails, balances, and internal fields in Chrome before sharing your screen or browser window in Microsoft Teams.',
+    sections: [
+      {title: 'Prepare your browser tab before joining Teams', body: 'Open the web dashboard, CRM, or admin console in Chrome and apply manual blur overlays, local PII pattern masks, or Live Data Replacement before starting your Microsoft Teams screen share.'},
+      {title: 'Consistent protection across tabs and windows', body: 'Because Screen Privacy Blur modifies the rendered page locally inside Chrome, Teams participants and meeting recordings only see your blurred or replaced view when you share that browser tab or window.'},
+      {title: 'Save layouts for recurring enterprise meetings', body: 'Pin your privacy rules per domain so internal portals, Azure dashboards, and CRM tables load with protection ready before your next Microsoft Teams call.'},
+    ], bullets: ['Works with Teams tab & window sharing', 'Saved per-domain layouts', 'Local PII auto-blur in Pro', 'Clean mock data replacement in Pro'],
+  },
+  {
+    path: '/use-cases/obs-streaming/', group: 'Use cases', eyebrow: 'OBS Studio & streaming',
+    title: 'Hide API keys and PII in OBS Studio & live streams',
+    description: 'Protect browser tabs captured in OBS Studio, Twitch, or YouTube coding streams with local blur overlays, regex masks, and mock data.',
+    sections: [
+      {title: 'Stream browser workflows without leaking secrets', body: 'When OBS Studio captures a Chrome window or display, any accidental reveal of an API token, customer email, or billing balance is broadcast live. Use Screen Privacy Blur to mask sensitive DOM elements beforehand.'},
+      {title: 'Dev / Streamer preset and custom token masks', body: 'Enable Smart Auto-Blur Pro masks for API keys, bearer tokens, emails, and cards, or lock manual frosted-glass overlays onto specific dashboard panels so they stay hidden as you scroll.'},
+      {title: 'Combine browser and macOS desktop overlays', body: 'Use the Chrome extension for web consoles (AWS, Stripe, GitHub, Vercel) and pair it with the macOS desktop app to place click-through blur regions over native terminals or code editors.'},
+    ], bullets: ['Built for OBS Window & Display Capture', 'Local API key & token detection', 'Click-to-blur DOM locking', 'Zero performance lag on stream'],
+  },
 ];
