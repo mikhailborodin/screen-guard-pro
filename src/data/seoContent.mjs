@@ -30,6 +30,11 @@ export const seoPages = [
         body:
           "If you contact support or purchase Pro, the information you submit for that workflow is handled only to respond to your request, complete checkout, or verify subscription status. The website uninstall survey sends your selected reason and an optional, explicitly submitted website domain to website analytics; the entered URL path, query, and fragment are removed.",
       },
+      {
+        title: "Data retention, user controls, and enterprise compliance",
+        body:
+          "Saved blur coordinates, selected CSS selectors, custom regex masks, and Live Data Replacement dictionaries are stored exclusively inside your local browser profile via chrome.storage.local. Uninstalling the extension or clicking Clear All Rules inside the Chrome Side Panel permanently deletes those local rules from your device. Because Screen Privacy Blur never ingests or proxies customer PII onto external servers, security and compliance teams evaluating the extension for SOC 2, HIPAA, GDPR, or ISO 27001 workflows can deploy it without signing a third-party data processing addendum for screen content.",
+      },
     ],
     bullets: [
       "No screen recording or screenshot upload",
@@ -61,6 +66,11 @@ export const seoPages = [
         title: "Availability",
         body:
           "The extension is provided as-is. We may improve, modify, or discontinue features, while local privacy-preserving processing remains a core product constraint.",
+      },
+      {
+        title: "License scope, presenter responsibility, and billing terms",
+        body:
+          "Your free or Smart Auto Blur Pro license grants a non-exclusive right to install and use the Chrome extension and optional macOS desktop overlay for legitimate business presentations, customer support calls, software development reviews, and educational recordings. Because modern web applications frequently change their DOM structure and dynamic notifications can appear outside the browser window, the presenter remains solely responsible for visually inspecting the active tab or desktop display prior to initiating a live broadcast or publishing a recorded video.",
       },
     ],
     bullets: [
@@ -94,6 +104,11 @@ export const seoPages = [
         body:
           "When you submit the support form, we receive the name, email, topic, message, page URL, and browser user agent you submit so we can reply.",
       },
+      {
+        title: "Strict separation between browser extension and marketing site",
+        body:
+          "The packaged Chrome extension operates under a strict Manifest V3 Content Security Policy with zero third-party analytics trackers, zero remote script execution, and zero telemetry payloads reporting which websites you visit or which DOM elements you blur. All pattern matching for emails, phone numbers, credit cards, API tokens, and synthetic Live Data Replacement happens synchronously in isolated browser memory on your computer and is discarded as soon as the tab closes.",
+      },
     ],
     bullets: [
       "Extension blur processing stays in the browser",
@@ -125,6 +140,11 @@ export const seoPages = [
         title: "Network calls",
         body:
           "The extension may contact billing or support endpoints for Pro checkout and subscription verification. It does not upload screen content for blur processing.",
+      },
+      {
+        title: "Manifest V3 technical breakdown for security reviewers",
+        body:
+          "Screen Privacy Blur requests only four Chrome Manifest V3 permissions: activeTab to target the specific tab you are preparing for a screen share, scripting to inject the local CSS backdrop-filter and text-masking styles into the active page, storage to persist your per-domain blur rules inside chrome.storage.local, and sidePanel to render the dedicated control panel alongside your workspace without cluttering the viewport or appearing inside tab-only screen captures.",
       },
     ],
     bullets: [

@@ -2933,7 +2933,7 @@ Object.assign(translations, {
       note: 'Chrome, Brave, Edge, Arc और सभी Chromium ब्राउज़रों के साथ काम करता है',
     },
     welcome: {
-      metaTitle: 'स्वागत है और गोपनीयता सैंडबॉक्स | Screen Privacy Blur',
+      metaTitle: 'टेस्ट सैंडबॉक्स | Screen Privacy Blur',
       metaDescription: 'Screen Privacy Blur पिन करें और ग्राहक तालिका पर मैन्युअल ब्लर, लोकल मास्क व डेमो डेटा परखें।',
       kicker: 'सुरक्षित रूप से स्क्रीन शेयर करने के लिए तैयार',
       title: 'Screen Privacy Blur में आपका स्वागत है! यहाँ 10 सेकंड में इसका परीक्षण करें।',

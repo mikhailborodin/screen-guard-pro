@@ -367,9 +367,55 @@ const renderPage = (page) => {
   });
 };
 
+const hubExtraByGroup = {
+  Compare: {
+    heading: "How to evaluate browser privacy tools side by side",
+    intro:
+      "When evaluating browser redaction extensions and screen-sharing utilities, engineering, sales, and compliance teams compare four critical dimensions: whether data processing stays 100% local on-device, whether rules persist across page reloads, whether synthetic demo data can replace ugly blur boxes, and whether native desktop apps outside Chrome can also be covered.",
+    paragraphs: [
+      "Traditional screen-blur extensions only apply a manual CSS filter when you click an element, forcing presenters to rebuild their privacy setup from scratch every time a customer dashboard refreshes or a single-page React route changes. Screen Privacy Blur combines persistent per-domain CSS and area overlays with Smart Auto-Blur regex detection and Live Data Replacement inside a dedicated Chrome Manifest V3 Side Panel.",
+      "Use the head-to-head comparison guides above to verify how Screen Privacy Blur stacks up against BlurWeb, Blipshot, Privacy Extension for WhatsApp Web, and ZeroBlur across real-world Zoom, Google Meet, Microsoft Teams, Loom, and OBS Studio workflows before standardizing your team on a presenter privacy tool.",
+    ],
+    steps: [
+      "<strong>Audit local-only processing (Compare step 1):</strong> Verify that the extension never uploads DOM text, screenshots, or video frames to external cloud servers during live calls.",
+      "<strong>Test dynamic route persistence (Compare step 2):</strong> Navigate between CRM records, Stripe payouts, and admin tables to confirm that saved blur rules and regex masks apply automatically.",
+      "<strong>Compare visual polish for buyers (Compare step 3):</strong> Test Live Data Replacement alongside frosted-glass blur to see which mode keeps your product walkthrough cleanest for prospects.",
+    ],
+  },
+  "Use cases": {
+    heading: "How to prepare your browser workspace before going live",
+    intro:
+      "Every live screen share and recorded walkthrough carries a different exposure profile: sales engineers risk leaking real customer names and ARR figures in HubSpot or Salesforce, founders risk exposing Stripe payout balances, and developers risk flashing production API keys or bearer tokens while debugging in Chrome DevTools.",
+    paragraphs: [
+      "Instead of maintaining expensive staging environments populated with fake records or spending hours blurring video timelines in post-production, you can prepare any live web application in under thirty seconds. Open the Screen Privacy Blur Side Panel, enable a role preset tailored to your workflow, and click any remaining confidential widgets before starting your broadcast.",
+      "Explore the scenario guides above for step-by-step checklists covering Zoom, Google Meet, Microsoft Teams, Loom async videos, CRM sales demos, and live developer debugging sessions, and test your configuration safely inside our interactive sandbox before joining your next call.",
+    ],
+    steps: [
+      "<strong>Select your presentation workflow (Use-case step 1):</strong> Open the exact CRM, billing portal, or cloud console tab you plan to present in Zoom, Google Meet, Teams, or Loom.",
+      "<strong>Activate role presets and custom masks (Use-case step 2):</strong> Toggle automatic detection for emails, phone numbers, credit cards, and API secrets, or swap real PII with synthetic demo values.",
+      "<strong>Verify hotkeys before sharing (Use-case step 3):</strong> Practice the Alt+B and Alt+X keyboard shortcuts so you can instantly pause or clear overlays during live audience Q&A.",
+    ],
+  },
+  Alternatives: {
+    heading: "Why teams switch to a Side Panel + macOS privacy workflow",
+    intro:
+      "Many presenters start with basic one-click element hiders, video post-production editors, or legacy Chrome extensions that inject floating toolbars directly into the webpage DOM—only to discover that floating toolbars get captured in client recordings and manual click-to-blur breaks on dynamic web apps.",
+    paragraphs: [
+      "Screen Privacy Blur was architected from the ground up on Chrome Manifest V3 using the native Chrome Side Panel API. Your privacy controls, saved domain rules, custom regular expressions, and Live Data Replacement dictionaries live outside the webpage canvas so viewers only ever see a clean, natural product interface during your presentation.",
+      "When your presentation moves beyond the browser into native macOS apps, terminal windows, or desktop notifications, the companion Screen Privacy Blur macOS desktop overlay app adds click-through frosted-glass regions anywhere on your display. Review the alternative guides above to pick the fastest migration path for your team.",
+    ],
+    steps: [
+      "<strong>Replace in-page floating toolbars (Alternative step 1):</strong> Move your blur controls into Chrome's native Side Panel so your extension UI never clutters the shared browser tab.",
+      "<strong>Upgrade from static click-blur to automation (Alternative step 2):</strong> Combine free manual element and area blur with Pro regex masks and Live Data Replacement for zero-edit Loom and Zoom sessions.",
+      "<strong>Extend protection to macOS windows (Alternative step 3):</strong> Pair the Chrome extension with the native macOS desktop app whenever you share your full display instead of a single tab.",
+    ],
+  },
+};
+
 const renderHub = ({ path, group, title, seoTitle, description }) => {
   const pages = seoPages.filter((page) => page.group === group);
   const pageTitle = seoTitle || formatPageTitle(title);
+  const extra = hubExtraByGroup[group] || hubExtraByGroup.Compare;
   const hubBreadcrumb = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -383,7 +429,7 @@ const renderHub = ({ path, group, title, seoTitle, description }) => {
     description,
     path,
     jsonLd: [hubBreadcrumb],
-    body: `<main class="shell">${navigation("en", path)}<span class="eyebrow">Screen Privacy Blur</span><h1>${escapeHtml(title)}</h1><p class="lead">${escapeHtml(description)}</p><div class="actions">${installActionsHtml(path, "hero", "Add to Chrome — Free")}</div><section class="grid">${pages.map((page) => `<article class="card"><span class="m-kicker">${escapeHtml(page.eyebrow)}</span><h2><a href="${page.path}">${escapeHtml(page.title)}</a></h2><p>${escapeHtml(page.bullets.join(" · "))}</p></article>`).join("")}</section><section class="how"><h2>How to choose the right protection mode</h2><p>Explore <strong>${escapeHtml(title)}</strong> (${escapeHtml(pageTitle)}) to compare how Screen Privacy Blur protects sensitive browser tabs locally before you share your screen or record a product walkthrough.</p><ol><li><strong>Manual Blur (Free):</strong> Click any exact DOM element or draw a resizable frosted-glass region over predictable private areas, and save your layout per website.</li><li><strong>Smart Auto-Blur by Mask (Pro):</strong> Automatically detect and blur emails, phone numbers, credit cards, SSNs, API keys, and custom regex patterns locally inside Chrome.</li><li><strong>Live Data Replacement (Pro):</strong> Swap real customer PII and balances with realistic synthetic demo data so your CRM or financial dashboard stays clean and readable during live calls.</li></ol></section>${footer("en", path)}</main>`,
+    body: `<main class="shell">${navigation("en", path)}<span class="eyebrow">Screen Privacy Blur</span><h1>${escapeHtml(title)}</h1><p class="lead">${escapeHtml(description)}</p><div class="actions">${installActionsHtml(path, "hero", "Add to Chrome — Free")}</div><section class="grid">${pages.map((page) => `<article class="card"><span class="m-kicker">${escapeHtml(page.eyebrow)}</span><h2><a href="${page.path}">${escapeHtml(page.title)}</a></h2><p>${escapeHtml(page.bullets.join(" · "))}</p></article>`).join("")}</section><section class="how"><h2>${escapeHtml(extra.heading)}</h2><p>${escapeHtml(extra.intro)}</p>${extra.paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join("")}<ol>${extra.steps.map((s) => `<li>${s}</li>`).join("")}</ol></section>${footer("en", path)}</main>`,
   });
 };
 
@@ -437,13 +483,13 @@ const renderUninstall = (locale = "en") => {
 
 const renderSupport = (appAssets) => {
   const supportTitle = "Customer Support & Help | Screen Privacy Blur";
-  const supportDesc = "Contact Screen Privacy Blur customer support for help with Chrome extension installation, custom auto-blur regex masks, Live Data Replacement rules, or Pro billing.";
+  const supportDesc = "Contact Screen Privacy Blur support for help with Chrome installation, custom auto-blur masks, Live Data Replacement rules, or Pro billing.";
   return document({
     title: supportTitle,
     description: supportDesc,
     path: "/support/",
     appAssets,
-    body: `<div id="root"><main class="shell">${navigation("en", "/support/")}<span class="eyebrow">Customer Support</span><h1>Customer Support &amp; Help for Screen Privacy Blur</h1><p class="lead">${escapeHtml(supportDesc)}</p><section class="grid" aria-label="Support topics"><article class="card"><h2>Installation &amp; Side Panel Setup</h2><p>Need help pinning the Screen Privacy Blur extension in Chrome, Brave, Edge, or Arc? Open our interactive sandbox or reach out below for step-by-step guidance on manual DOM element blur and saved per-website layouts.</p></article><article class="card"><h2>Custom Regex Masks &amp; Live Data Replacement</h2><p>If an internal CRM, financial dashboard, or developer console uses a custom identifier format, send us the non-sensitive field structure and we will help you configure a local Smart Auto-Blur mask or Auto-Replace rule.</p></article><article class="card"><h2>Pro Billing &amp; Subscription Help</h2><p>Questions about monthly, annual, or lifetime Smart Auto Blur Pro access, invoice receipts, or restoring your license on a new Chromium browser profile? Our support team responds within one business day.</p></article><article class="card"><h2>macOS Desktop Overlay App</h2><p>Get help installing the Screen Privacy Blur macOS DMG, attaching click-through blur regions to native desktop windows, or combining browser and desktop protection for Zoom, Meet, Teams, Loom, and OBS Studio.</p></article></section>${footer("en", "/support/")}</main></div>`,
+    body: `<div id="root"><main class="shell">${navigation("en", "/support/")}<span class="eyebrow">Customer Support</span><h1>Customer Support &amp; Help for Screen Privacy Blur</h1><p class="lead">${escapeHtml(supportDesc)}</p><section class="grid" aria-label="Support topics"><article class="card"><h2>Installation &amp; Side Panel Setup</h2><p>Need help pinning the Screen Privacy Blur extension in Chrome, Brave, Edge, or Arc? Open our interactive sandbox or reach out below for step-by-step guidance on manual DOM element blur and saved per-website layouts.</p></article><article class="card"><h2>Custom Regex Masks &amp; Live Data Replacement</h2><p>If an internal CRM, financial dashboard, or developer console uses a custom identifier format, send us the non-sensitive field structure and we will help you configure a local Smart Auto-Blur mask or Auto-Replace rule.</p></article><article class="card"><h2>Pro Billing &amp; Subscription Help</h2><p>Questions about monthly, annual, or lifetime Smart Auto Blur Pro access, invoice receipts, or restoring your license on a new Chromium browser profile? Our support team responds within one business day.</p></article><article class="card"><h2>macOS Desktop Overlay App</h2><p>Get help installing the Screen Privacy Blur macOS DMG, attaching click-through blur regions to native desktop windows, or combining browser and desktop protection for Zoom, Meet, Teams, Loom, and OBS Studio.</p></article></section><section class="how"><h2>Quick Troubleshooting Before You Reach Out</h2><p>Most setup questions can be resolved in seconds right inside your Chromium browser. If an overlay does not appear immediately after installing from the Chrome Web Store, refresh any tabs that were already open prior to installation so the Manifest V3 content script can initialize cleanly, and note that Chrome blocks all extensions from running on internal chrome:// and Chrome Web Store pages.</p><p>When submitting a support request through the interactive form on this page, include the domain or web application workflow you are preparing to share (without pasting any real customer PII, passwords, or secret API tokens) along with your browser version and whether you are using Manual Blur, Smart Auto-Blur by Mask, Live Data Replacement, or the macOS desktop app.</p></section>${footer("en", "/support/")}</main></div>`,
   });
 };
 
