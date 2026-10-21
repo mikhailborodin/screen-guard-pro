@@ -114,12 +114,17 @@ test("production build emits crawlable canonical HTML for every sitemap URL", as
   assert.match(home, /class="m-lang-menu"/);
   assert.match(home, /class="m-lang-footer"/);
   assert.match(home, /hreflang="x-default" href="https:\/\/privacyblur\.co\/"/);
+  assert.match(home, /href="\/app-icon\.png\?v=20261021"/);
+  assert.match(home, /href="\/favicon\.ico\?v=20261021"/);
+  assert.match(home, /<img class="brand-icon" src="\/app-icon\.png\?v=20261021"/);
 
   for (const l of localeList) {
     const locHomePath = localizedPath("/", l.code);
     const locHomeHtml = documents.find(({ path }) => path === locHomePath).html;
     assert.match(locHomeHtml, new RegExp(`<html lang="${l.hreflang}">`), `${locHomePath} should declare lang="${l.hreflang}"`);
     assert.ok(locHomeHtml.includes(getCopy(l.code).hero.title), `${locHomePath} should render localized hero title`);
+    assert.match(locHomeHtml, /data-status-original="/, `${locHomePath} should include localized demo status attributes`);
+    assert.match(locHomeHtml, /data-caption-mobile="/, `${locHomePath} should include localized mobile conversion attributes`);
     assert.match(home, new RegExp(`hreflang="${l.hreflang}" href="https://privacyblur\\.co${locHomePath}"`));
 
     const locUninstallPath = localizedPath("/uninstall/", l.code);

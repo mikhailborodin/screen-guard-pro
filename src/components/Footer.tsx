@@ -1,4 +1,3 @@
-import { Shield } from "lucide-react";
 import { seoPages } from "@/data/seoContent.mjs";
 import { installUrl } from "@/data/conversion.mjs";
 import { getCopy, localeFromPath, localeList, localizedPath, stripLocalePrefix } from "@/data/locales.mjs";
@@ -20,9 +19,7 @@ export const Footer = () => {
       <div className="container max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-              <Shield className="w-4 h-4 text-primary" />
-            </div>
+            <img src="/app-icon.png?v=20261021" alt="" width={32} height={32} className="w-8 h-8 rounded-lg" />
             <span className="font-display font-semibold">Screen Privacy Blur</span>
           </div>
 

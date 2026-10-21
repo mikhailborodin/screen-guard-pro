@@ -16,10 +16,30 @@ export const freeFeatures = getCopy('en').pricing.freeBullets;
 export const proFeatures = getCopy('en').pricing.proBullets;
 const bullets = (items) => `<ul class="m-checks">${items.map(item => `<li><span aria-hidden="true">✓</span>${escapeHtml(item)}</li>`).join('')}</ul>`;
 
+const demoStatusByLocale = {
+  en: { original: '⚠️ PII Exposed', blur: '🔒 Local Mask Active' },
+  de: { original: '⚠️ Personenbezogene Daten sichtbar', blur: '🔒 Lokale Maske aktiv' },
+  es: { original: '⚠️ Datos personales expuestos', blur: '🔒 Máscara local activa' },
+  'pt-br': { original: '⚠️ Dados pessoais expostos', blur: '🔒 Máscara local ativa' },
+  fr: { original: '⚠️ Données personnelles exposées', blur: '🔒 Masque local actif' },
+  it: { original: '⚠️ Dati personali esposti', blur: '🔒 Maschera locale attiva' },
+  nl: { original: '⚠️ Persoonsgegevens zichtbaar', blur: '🔒 Lokaal masker actief' },
+  pl: { original: '⚠️ Dane osobowe odsłonięte', blur: '🔒 Lokalna maska aktywna' },
+  ru: { original: '⚠️ Персональные данные открыты', blur: '🔒 Локальная маска активна' },
+  tr: { original: '⚠️ Kişisel veriler açıkta', blur: '🔒 Yerel maske etkin' },
+  ja: { original: '⚠️ 個人情報が露出しています', blur: '🔒 ローカルマスク有効' },
+  ko: { original: '⚠️ 개인정보 노출됨', blur: '🔒 로컬 마스크 활성화됨' },
+  'zh-cn': { original: '⚠️ 敏感数据已暴露', blur: '🔒 本地遮罩已激活' },
+  'zh-tw': { original: '⚠️ 敏感資料已外露', blur: '🔒 本機遮罩已啟用' },
+  hi: { original: '⚠️ संवेदनशील डेटा खुला है', blur: '🔒 लोकल मास्क सक्रिय' },
+  id: { original: '⚠️ Data pribadi terekspos', blur: '🔒 Masker lokal aktif' },
+};
+
 export const demoHtml = (locale = 'en') => {
   const h = getCopy(locale).hero;
+  const st = demoStatusByLocale[locale] || demoStatusByLocale.en;
   const rows = demoRows.map(([label, original, replacement], idx) => [h.demoLabels?.[idx] || label, original, replacement]);
-  return `<div id="interactive-demo" class="m-demo" data-demo-mode="replace">
+  return `<div id="interactive-demo" class="m-demo" data-demo-mode="replace" data-status-original="${escapeHtml(st.original)}" data-status-blur="${escapeHtml(st.blur)}" data-status-replace="${escapeHtml(h.statusReplaced)}">
   <div class="m-browser"><span aria-hidden="true">● ● ●</span><span>⌑ secure-bank.com/dashboard</span></div>
   <div class="m-tabs" role="group" aria-label="Dashboard privacy mode">
     <button type="button" data-mode="original" aria-pressed="false">${escapeHtml(h.tabOriginal)}</button>
@@ -111,9 +131,10 @@ export const welcomeHtml = (locale = 'en') => {
   const copy = getCopy(locale);
   const w = copy.welcome;
   const h = copy.hero;
+  const st = demoStatusByLocale[locale] || demoStatusByLocale.en;
   const welcomePath = localizedPath('/welcome/', locale);
   const pricingPath = `${localizedPath('/', locale)}#pricing`;
-  return `<section class="m-section m-wrap" data-sandbox data-demo-mode="original" data-role-preset="all"><span class="m-kicker">${escapeHtml(w.kicker)}</span><h1 class="m-welcome-title">${escapeHtml(w.title)}</h1><p class="m-lead">${escapeHtml(w.lead)}</p><div class="m-grid"><article class="m-card"><h2>${escapeHtml(w.step1Title)}</h2><div class="m-toolbar" role="img" aria-label="Chrome toolbar: click the puzzle piece Extensions icon, find Screen Privacy Blur, and click Pin"><div>Chrome toolbar <span>☆ &nbsp; 🧩 ← Click Extensions</span></div><div class="m-extension-menu"><strong>Extensions</strong><div>◇ Screen Privacy Blur <span>📌 Pin →</span></div></div></div><p>${w.step1BodyHtml}</p></article><article class="m-card"><h2>${escapeHtml(w.step2Title)}</h2><ol class="m-instructions">${w.step2ItemsHtml.map(item => `<li>${item}</li>`).join('')}</ol><p class="m-note">${escapeHtml(w.step2Note)}</p></article></div><section class="m-section"><h2>${escapeHtml(w.tableHeading)}</h2><p>${escapeHtml(w.tableSub)}</p><div class="m-sandbox-controls"><div class="m-tabs" role="group" aria-label="Sandbox privacy mode"><button type="button" data-mode="original" aria-pressed="true">${escapeHtml(h.tabOriginal)}</button><button type="button" data-mode="blur" aria-pressed="false">${escapeHtml(h.tabBlur)}</button><button type="button" data-mode="replace" aria-pressed="false">${escapeHtml(h.tabReplace)} <small>${escapeHtml(h.tabReplaceSub)}</small></button></div><div class="m-preset-bar" role="group" aria-label="Role preset scenario"><span class="m-note">${escapeHtml(w.presetLabel)}</span><button type="button" class="m-preset-chip" data-preset="all" aria-pressed="true">${escapeHtml(w.presetAll)}</button><button type="button" class="m-preset-chip" data-preset="sales" aria-pressed="false">${escapeHtml(w.presetSales)}</button><button type="button" class="m-preset-chip" data-preset="fintech" aria-pressed="false">${escapeHtml(w.presetFintech)}</button><button type="button" class="m-preset-chip" data-preset="dev" aria-pressed="false">${escapeHtml(w.presetDev)}</button></div><div class="m-demo-status" role="status">${escapeHtml(w.statusInitial)}</div></div><div class="m-table-scroll" tabindex="0" role="region" aria-label="Sandbox customer data"><table class="m-table"><caption>${escapeHtml(w.tableCaption)}</caption><thead><tr>${w.tableHeaders.map(th => `<th scope="col">${escapeHtml(th)}</th>`).join('')}</tr></thead><tbody>${welcomeRows.map(row => {
+  return `<section class="m-section m-wrap" data-sandbox data-demo-mode="original" data-role-preset="all" data-status-original="${escapeHtml(st.original)}" data-status-blur="${escapeHtml(st.blur)}" data-status-replace="${escapeHtml(h.statusReplaced)}"><span class="m-kicker">${escapeHtml(w.kicker)}</span><h1 class="m-welcome-title">${escapeHtml(w.title)}</h1><p class="m-lead">${escapeHtml(w.lead)}</p><div class="m-grid"><article class="m-card"><h2>${escapeHtml(w.step1Title)}</h2><div class="m-toolbar" role="img" aria-label="Chrome toolbar: click the puzzle piece Extensions icon, find Screen Privacy Blur, and click Pin"><div>Chrome toolbar <span>☆ &nbsp; 🧩 ← Click Extensions</span></div><div class="m-extension-menu"><strong>Extensions</strong><div><span style="display:inline-flex;align-items:center;gap:6px"><img src="/app-icon.png?v=20261021" width="16" height="16" alt="" style="border-radius:4px" /> Screen Privacy Blur</span> <span>📌 Pin →</span></div></div></div><p>${w.step1BodyHtml}</p></article><article class="m-card"><h2>${escapeHtml(w.step2Title)}</h2><ol class="m-instructions">${w.step2ItemsHtml.map(item => `<li>${item}</li>`).join('')}</ol><p class="m-note">${escapeHtml(w.step2Note)}</p></article></div><section class="m-section"><h2>${escapeHtml(w.tableHeading)}</h2><p>${escapeHtml(w.tableSub)}</p><div class="m-sandbox-controls"><div class="m-tabs" role="group" aria-label="Sandbox privacy mode"><button type="button" data-mode="original" aria-pressed="true">${escapeHtml(h.tabOriginal)}</button><button type="button" data-mode="blur" aria-pressed="false">${escapeHtml(h.tabBlur)}</button><button type="button" data-mode="replace" aria-pressed="false">${escapeHtml(h.tabReplace)} <small>${escapeHtml(h.tabReplaceSub)}</small></button></div><div class="m-preset-bar" role="group" aria-label="Role preset scenario"><span class="m-note">${escapeHtml(w.presetLabel)}</span><button type="button" class="m-preset-chip" data-preset="all" aria-pressed="true">${escapeHtml(w.presetAll)}</button><button type="button" class="m-preset-chip" data-preset="sales" aria-pressed="false">${escapeHtml(w.presetSales)}</button><button type="button" class="m-preset-chip" data-preset="fintech" aria-pressed="false">${escapeHtml(w.presetFintech)}</button><button type="button" class="m-preset-chip" data-preset="dev" aria-pressed="false">${escapeHtml(w.presetDev)}</button></div><div class="m-demo-status" role="status">${escapeHtml(w.statusInitial)}</div></div><div class="m-table-scroll" tabindex="0" role="region" aria-label="Sandbox customer data"><table class="m-table"><caption>${escapeHtml(w.tableCaption)}</caption><thead><tr>${w.tableHeaders.map(th => `<th scope="col">${escapeHtml(th)}</th>`).join('')}</tr></thead><tbody>${welcomeRows.map(row => {
     const fields = ['sales', 'sales', 'sales', 'fintech', 'dev', 'fintech'];
     return `<tr>${row.map(([orig, repl], idx) => `<td data-field="${fields[idx]}" data-original="${orig}" data-replacement="${repl}">${orig}</td>`).join('')}</tr>`;
   }).join('')}</tbody></table></div></section><div class="m-actions">${installActionsHtml(welcomePath, 'hero', copy.pricing.freeCta)}<a class="m-button m-secondary" href="${pricingPath}">${escapeHtml(w.explorePricing)}</a><a class="m-text-link" href="/support/">${escapeHtml(w.contactSupport)}</a></div></section>`;
@@ -147,8 +168,12 @@ export function initializeDemo(root = document) {
       });
       const status = demo.querySelector('[role="status"]');
       if (status) {
-        const presetLabel = preset === 'sales' ? ' (SaaS Sales Demo preset)' : preset === 'fintech' ? ' (FinTech / Stripe preset)' : preset === 'dev' ? ' (Dev / Streamer preset)' : '';
-        status.textContent = mode === 'original' ? '⚠️ PII Exposed' : mode === 'blur' ? `🔒 Local Mask Active${presetLabel}` : `✨ Replaced with Mock Data — UI stays clean!${presetLabel}`;
+        const activePresetBtn = preset !== 'all' ? demo.querySelector(`[data-preset="${preset}"]`) : null;
+        const presetLabel = activePresetBtn ? ` (${activePresetBtn.textContent.trim()})` : '';
+        const textOriginal = demo.dataset.statusOriginal || '⚠️ PII Exposed';
+        const textBlur = demo.dataset.statusBlur || '🔒 Local Mask Active';
+        const textReplace = demo.dataset.statusReplace || '✨ Replaced with Mock Data — UI stays clean!';
+        status.textContent = mode === 'original' ? textOriginal : mode === 'blur' ? `${textBlur}${presetLabel}` : `${textReplace}${presetLabel}`;
       }
     };
     let timer = null;

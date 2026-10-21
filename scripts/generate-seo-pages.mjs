@@ -14,7 +14,7 @@ import { uninstallHtml, initializeRetention } from "../src/data/retention.mjs";
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const distDir = join(root, "dist");
 const measurementId = "G-PE695ZZE0F";
-const contentUpdatedAt = "2026-10-13";
+const contentUpdatedAt = "2026-10-21";
 const localizedPublicPaths = nonDefaultLocales.flatMap((l) => [
   localizedPath("/", l.code),
   localizedPath("/welcome/", l.code),
@@ -47,7 +47,8 @@ const sharedStyles = `
   a { color: #8ff7df; }
   .shell { width: min(1120px, calc(100vw - 32px)); margin: 0 auto; padding: 48px 0 64px; }
   .nav, .footer { display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
-  .brand { color: #e8fffa; font-weight: 800; text-decoration: none; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; color: #e8fffa; font-weight: 800; text-decoration: none; }
+  .brand-icon { width: 28px; height: 28px; border-radius: 7px; display: block; }
   .nav-links, .footer-links { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; align-items: center; }
   .nav-links a, .footer-links a { color: #b7d6d0; text-decoration: none; }
   .eyebrow { display: inline-flex; margin-top: 56px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 8px 14px; color: #9fe8d8; background: rgba(54,245,198,0.08); font-size: 14px; font-weight: 700; }
@@ -122,7 +123,7 @@ const footer = (locale = "en", basePath = "/") => {
   const welcomePath = localizedPath("/welcome/", locale);
   return `
   <footer class="footer">
-    <span>${escapeHtml(n.rights)}</span>
+    <a class="brand" href="${homePath}"><img class="brand-icon" src="/app-icon.png?v=20261021" width="24" height="24" alt="" /><span>${escapeHtml(n.rights)}</span></a>
     <nav class="footer-links" aria-label="Footer">
       <a data-placement="footer" href="${extensionUrl}">${escapeHtml(n.addToChromeFree)}</a>
       <a href="${homePath}#pricing">${escapeHtml(n.pricing)}</a>
@@ -144,13 +145,14 @@ const navigation = (locale = "en", basePath = "/") => {
   const homePath = localizedPath("/", locale);
   return `
   <nav class="nav" aria-label="Primary">
-    <a class="brand" href="${homePath}">Screen Privacy Blur</a>
+    <a class="brand" href="${homePath}"><img class="brand-icon" src="/app-icon.png?v=20261021" width="28" height="28" alt="" /><span>Screen Privacy Blur</span></a>
     <div class="nav-links">
       <a href="${homePath}#pricing">${escapeHtml(n.pricing)}</a>
       <a href="/compare/">${escapeHtml(n.compare)}</a>
       <a href="${homePath}#features">${escapeHtml(n.features)}</a>
       <a href="${homePath}#how-it-works">${escapeHtml(n.howItWorks)}</a>
       <a href="${homePath}#privacy">${escapeHtml(n.privacy)}</a>
+      <a href="/support/">${escapeHtml(n.support)}</a>
       <a data-placement="navbar" href="${extensionUrl}">${escapeHtml(n.addToChrome)}</a>
       ${languageMenuHtml(locale, basePath)}
     </div>
@@ -186,9 +188,9 @@ const document = ({
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
     <link rel="canonical" href="${absoluteUrl(path)}" />${hreflangLinksHtml(alternateBasePath)}
-    <link rel="icon" type="image/png" href="/app-icon.png" sizes="128x128" />
-    <link rel="apple-touch-icon" href="/app-icon.png" />
-    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/app-icon.png?v=20261021" sizes="128x128" />
+    <link rel="apple-touch-icon" href="/app-icon.png?v=20261021" />
+    <link rel="shortcut icon" href="/favicon.ico?v=20261021" sizes="any" />
     <meta property="og:title" content="${escapeHtml(title)}" />
     <meta property="og:description" content="${escapeHtml(description)}" />
     <meta property="og:type" content="website" />
@@ -417,6 +419,12 @@ await Promise.all([
   writeFile(join(distDir, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`),
   writeFile(
     join(distDir, "sitemap.xml"),
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${publicPaths
+      .map((path) => `  <url><loc>${absoluteUrl(path)}</loc><lastmod>${contentUpdatedAt}</lastmod></url>`)
+      .join("\n")}\n</urlset>\n`
+  ),
+  writeFile(
+    join(root, "public", "sitemap.xml"),
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${publicPaths
       .map((path) => `  <url><loc>${absoluteUrl(path)}</loc><lastmod>${contentUpdatedAt}</lastmod></url>`)
       .join("\n")}\n</urlset>\n`

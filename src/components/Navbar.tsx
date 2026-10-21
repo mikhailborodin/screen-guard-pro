@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Shield, Chrome } from "lucide-react";
+import { Chrome } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 
 import { installUrl } from "@/data/conversion.mjs";
@@ -20,18 +20,17 @@ export const Navbar = () => {
       <div className="container max-w-6xl mx-auto">
         <div className="flex items-center justify-between glass rounded-2xl px-3 sm:px-6 py-3">
           <a href={homePath} className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-              <Shield className="w-4 h-4 text-primary" />
-            </div>
+            <img src="/app-icon.png?v=20261021" alt="" width={32} height={32} className="w-8 h-8 rounded-lg" />
             <span className="font-display text-sm sm:text-base font-semibold text-foreground">Screen Privacy Blur</span>
           </a>
 
           <div className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
+            <a href={`${homePath}#pricing`} className="hover:text-foreground transition-colors">{nav.pricing}</a>
+            <Link to="/compare/" className="hover:text-foreground transition-colors">{nav.compare}</Link>
             <a href={`${homePath}#features`} className="hover:text-foreground transition-colors">{nav.features}</a>
             <a href={`${homePath}#how-it-works`} className="hover:text-foreground transition-colors">{nav.howItWorks}</a>
-            <a href={`${homePath}#pricing`} className="hover:text-foreground transition-colors">{nav.pricing}</a>
             <a href={`${homePath}#privacy`} className="hover:text-foreground transition-colors">{nav.privacy}</a>
-            <Link to="/support" className="hover:text-foreground transition-colors">{nav.support}</Link>
+            <Link to="/support/" className="hover:text-foreground transition-colors">{nav.support}</Link>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">

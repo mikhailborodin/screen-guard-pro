@@ -18,10 +18,127 @@ export function installUrl(path = '/', placement = 'hero') {
   return url.href;
 }
 export const escapeHtml = (value) => String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+const conversionMessagesByLocale = {
+  en: {
+    mobileCaption: 'Save this link and install on your desktop browser. No signup required.',
+    nonChromiumCaption: 'Install on desktop Chrome, Brave, Edge, Arc, or another Chromium browser.',
+    copiedStatus: 'Link copied! Open it on your desktop browser',
+    copyFallbackStatus: 'Copy the link below and open it on your desktop browser.',
+    sharedStatus: 'Shared! Open the link on your desktop browser.',
+  },
+  de: {
+    mobileCaption: 'Speichern Sie diesen Link für Ihren Desktop-Browser. Keine Anmeldung erforderlich.',
+    nonChromiumCaption: 'Installieren Sie die Erweiterung auf dem Desktop in Chrome, Brave, Edge oder Arc.',
+    copiedStatus: 'Link kopiert! Öffnen Sie ihn im Desktop-Browser',
+    copyFallbackStatus: 'Kopieren Sie den Link unten und öffnen Sie ihn im Desktop-Browser.',
+    sharedStatus: 'Geteilt! Öffnen Sie den Link in Ihrem Desktop-Browser.',
+  },
+  es: {
+    mobileCaption: 'Guarda este enlace e instálalo en tu navegador de escritorio. Sin registro.',
+    nonChromiumCaption: 'Instálalo en Chrome, Brave, Edge, Arc u otro navegador Chromium de escritorio.',
+    copiedStatus: '¡Enlace copiado! Ábrelo en tu navegador de escritorio',
+    copyFallbackStatus: 'Copia el enlace de abajo y ábrelo en tu navegador de escritorio.',
+    sharedStatus: '¡Compartido! Abre el enlace en tu navegador de escritorio.',
+  },
+  'pt-br': {
+    mobileCaption: 'Salve este link e instale no navegador do computador. Sem cadastro.',
+    nonChromiumCaption: 'Instale no Chrome, Brave, Edge, Arc ou outro navegador Chromium no computador.',
+    copiedStatus: 'Link copiado! Abra no navegador do seu computador',
+    copyFallbackStatus: 'Copie o link abaixo e abra no navegador do seu computador.',
+    sharedStatus: 'Compartilhado! Abra o link no navegador do seu computador.',
+  },
+  fr: {
+    mobileCaption: 'Enregistrez ce lien pour l’installer sur votre navigateur de bureau. Sans inscription.',
+    nonChromiumCaption: 'Installez sur Chrome, Brave, Edge, Arc ou un autre navigateur Chromium sur ordinateur.',
+    copiedStatus: 'Lien copié ! Ouvrez-le sur votre ordinateur',
+    copyFallbackStatus: 'Copiez le lien ci-dessous et ouvrez-le sur votre ordinateur.',
+    sharedStatus: 'Partagé ! Ouvrez le lien sur votre navigateur de bureau.',
+  },
+  it: {
+    mobileCaption: 'Salva questo link e installalo sul browser del computer. Nessuna registrazione.',
+    nonChromiumCaption: 'Installa su Chrome, Brave, Edge, Arc o un altro browser Chromium per desktop.',
+    copiedStatus: 'Link copiato! Aprilo sul browser del computer',
+    copyFallbackStatus: 'Copia il link qui sotto e aprilo sul browser del computer.',
+    sharedStatus: 'Condiviso! Apri il link sul browser del computer.',
+  },
+  nl: {
+    mobileCaption: 'Bewaar deze link en installeer op uw desktopbrowser. Geen account nodig.',
+    nonChromiumCaption: 'Installeer op desktop in Chrome, Brave, Edge, Arc of een andere Chromium-browser.',
+    copiedStatus: 'Link gekopieerd! Open deze op uw desktopbrowser',
+    copyFallbackStatus: 'Kopieer de onderstaande link en open deze op uw desktopbrowser.',
+    sharedStatus: 'Gedeeld! Open de link op uw desktopbrowser.',
+  },
+  pl: {
+    mobileCaption: 'Zapisz ten link i zainstaluj w przeglądarce na komputerze. Bez rejestracji.',
+    nonChromiumCaption: 'Zainstaluj na komputerze w przeglądarce Chrome, Brave, Edge lub Arc.',
+    copiedStatus: 'Link skopiowany! Otwórz go na komputerze',
+    copyFallbackStatus: 'Skopiuj poniższy link i otwórz go w przeglądarce na komputerze.',
+    sharedStatus: 'Udostępniono! Otwórz link w przeglądarce na komputerze.',
+  },
+  ru: {
+    mobileCaption: 'Сохраните ссылку и установите расширение в браузере на компьютере. Без регистрации.',
+    nonChromiumCaption: 'Установите на компьютере в Chrome, Brave, Edge, Arc или другом Chromium-браузере.',
+    copiedStatus: 'Ссылка скопирована! Откройте её на компьютере',
+    copyFallbackStatus: 'Скопируйте ссылку ниже и откройте её в браузере на компьютере.',
+    sharedStatus: 'Отправлено! Откройте ссылку в браузере на компьютере.',
+  },
+  tr: {
+    mobileCaption: 'Bu bağlantıyı kaydedin ve masaüstü tarayıcınıza kurun. Kayıt gerekmez.',
+    nonChromiumCaption: 'Masaüstünde Chrome, Brave, Edge, Arc veya başka bir Chromium tarayıcısına kurun.',
+    copiedStatus: 'Bağlantı kopyalandı! Masaüstü tarayıcınızda açın',
+    copyFallbackStatus: 'Aşağıdaki bağlantıyı kopyalayın ve masaüstü tarayıcınızda açın.',
+    sharedStatus: 'Paylaşıldı! Bağlantıyı masaüstü tarayıcınızda açın.',
+  },
+  ja: {
+    mobileCaption: 'このリンクを保存し、PCのブラウザからインストールしてください（登録不要）。',
+    nonChromiumCaption: 'PC版の Chrome、Brave、Edge、Arc などの Chromium ブラウザでインストールしてください。',
+    copiedStatus: 'リンクをコピーしました！PCのブラウザで開いてください',
+    copyFallbackStatus: '以下のリンクをコピーして、PCのブラウザで開いてください。',
+    sharedStatus: '共有しました！PCのブラウザでリンクを開いてください。',
+  },
+  ko: {
+    mobileCaption: '이 링크를 저장한 뒤 데스크톱 브라우저에서 설치하세요. 가입이 필요 없습니다.',
+    nonChromiumCaption: '데스크톱 Chrome, Brave, Edge, Arc 등 Chromium 브라우저에서 설치하세요.',
+    copiedStatus: '링크가 복사되었습니다! 데스크톱 브라우저에서 여세요',
+    copyFallbackStatus: '아래 링크를 복사하여 데스크톱 브라우저에서 여세요.',
+    sharedStatus: '공유됨! 데스크톱 브라우저에서 링크를 여세요.',
+  },
+  'zh-cn': {
+    mobileCaption: '保存此链接并在电脑浏览器上安装。无需注册。',
+    nonChromiumCaption: '请在电脑端 Chrome、Brave、Edge、Arc 或其他 Chromium 浏览器上安装。',
+    copiedStatus: '链接已复制！请在电脑浏览器中打开',
+    copyFallbackStatus: '请复制下方链接并在电脑浏览器中打开。',
+    sharedStatus: '已分享！请在电脑浏览器中打开该链接。',
+  },
+  'zh-tw': {
+    mobileCaption: '儲存此連結並在電腦瀏覽器上安裝。免註冊。',
+    nonChromiumCaption: '請在電腦版 Chrome、Brave、Edge、Arc 或其他 Chromium 瀏覽器上安裝。',
+    copiedStatus: '連結已複製！請在電腦瀏覽器中開啟',
+    copyFallbackStatus: '請複製下方連結並在電腦瀏覽器中開啟。',
+    sharedStatus: '已分享！請在電腦瀏覽器中開啟此連結。',
+  },
+  hi: {
+    mobileCaption: 'इस लिंक को सेव करें और अपने डेस्कटॉप ब्राउज़र पर इंस्टॉल करें। साइनअप की आवश्यकता नहीं।',
+    nonChromiumCaption: 'डेस्कटॉप Chrome, Brave, Edge, Arc या किसी अन्य Chromium ब्राउज़र पर इंस्टॉल करें।',
+    copiedStatus: 'लिंक कॉपी हो गया! इसे अपने डेस्कटॉप ब्राउज़र पर खोलें',
+    copyFallbackStatus: 'नीचे दिया गया लिंक कॉपी करें और अपने डेस्कटॉप ब्राउज़र पर खोलें।',
+    sharedStatus: 'शेयर किया गया! अपने डेस्कटॉप ब्राउज़र पर लिंक खोलें।',
+  },
+  id: {
+    mobileCaption: 'Simpan tautan ini dan instal di browser desktop Anda. Tanpa daftar.',
+    nonChromiumCaption: 'Instal di Chrome, Brave, Edge, Arc, atau browser Chromium desktop lainnya.',
+    copiedStatus: 'Tautan disalin! Buka di browser desktop Anda',
+    copyFallbackStatus: 'Salin tautan di bawah dan buka di browser desktop Anda.',
+    sharedStatus: 'Dibagikan! Buka tautan di browser desktop Anda.',
+  },
+};
+
 export function installActionsHtml(path = '/', placement = 'hero', label) {
-  const copy = getCopy(localeFromPath(path)).conversion;
+  const locale = localeFromPath(path);
+  const copy = getCopy(locale).conversion;
+  const msg = conversionMessagesByLocale[locale] || conversionMessagesByLocale.en;
   const ctaLabel = label ?? copy.addToChromeFree;
-  return `<div class="m-install-controls" data-install-controls data-browser-caption-default="${escapeHtml(copy.browserCaption)}">
+  return `<div class="m-install-controls" data-install-controls data-browser-caption-default="${escapeHtml(copy.browserCaption)}" data-caption-mobile="${escapeHtml(msg.mobileCaption)}" data-caption-non-chromium="${escapeHtml(msg.nonChromiumCaption)}" data-status-copied="${escapeHtml(msg.copiedStatus)}" data-status-copy-fallback="${escapeHtml(msg.copyFallbackStatus)}" data-status-shared="${escapeHtml(msg.sharedStatus)}">
     <a class="m-button" data-desktop-install data-install="chrome" data-placement="${placement}" href="${escapeHtml(installUrl(path, placement))}" target="_blank" rel="noopener noreferrer">${escapeHtml(ctaLabel)}</a>
     <div class="m-mobile-actions"><button type="button" class="m-button" data-copy-desktop>${escapeHtml(copy.copyDesktop)}</button><button type="button" class="m-button m-secondary" data-share-desktop>${escapeHtml(copy.shareDesktop)}</button></div>
     <p class="m-note" data-browser-caption>${escapeHtml(copy.browserCaption)}</p>
@@ -69,7 +186,9 @@ export function initializeConversion(root = document) {
     controls.forEach(control => {
       control.dataset.mobile = String(mobile);
       const defaultCaption = control.dataset.browserCaptionDefault || 'Compatible with your browser • Free install in 2 clicks • No signup required';
-      control.querySelector('[data-browser-caption]').textContent = mobile ? 'Save this link and install on your desktop browser. No signup required.' : chromium ? defaultCaption : 'Install on desktop Chrome, Brave, Edge, Arc, or another Chromium browser.';
+      const mobileCaption = control.dataset.captionMobile || 'Save this link and install on your desktop browser. No signup required.';
+      const nonChromiumCaption = control.dataset.captionNonChromium || 'Install on desktop Chrome, Brave, Edge, Arc, or another Chromium browser.';
+      control.querySelector('[data-browser-caption]').textContent = mobile ? mobileCaption : chromium ? defaultCaption : nonChromiumCaption;
     });
   };
   update();
@@ -81,7 +200,7 @@ export function initializeConversion(root = document) {
       if (!nav.clipboard?.writeText) throw new Error('Clipboard unavailable');
       await nav.clipboard.writeText(url);
       control.querySelector('.m-manual-copy').hidden = true;
-      status.textContent = 'Link copied! Open it on your desktop browser';
+      status.textContent = control.dataset.statusCopied || 'Link copied! Open it on your desktop browser';
     } catch {
       const fallback = control.querySelector('.m-manual-copy');
       fallback.hidden = false;
@@ -89,7 +208,7 @@ export function initializeConversion(root = document) {
       input.value = url;
       input.focus();
       input.select();
-      status.textContent = 'Copy the link below and open it on your desktop browser.';
+      status.textContent = control.dataset.statusCopyFallback || 'Copy the link below and open it on your desktop browser.';
     }
   };
   const onClick = async (event) => {
@@ -99,7 +218,7 @@ export function initializeConversion(root = document) {
     if (button.hasAttribute('data-copy-desktop') || typeof nav.share !== 'function') { await copy(control); return; }
     try {
       await nav.share({title:'Screen Privacy Blur — install on desktop', text:'Save this desktop install link for your next screen share.', url:control.querySelector('[data-desktop-install]').href});
-      control.querySelector('[data-install-status]').textContent = 'Shared! Open the link on your desktop browser.';
+      control.querySelector('[data-install-status]').textContent = control.dataset.statusShared || 'Shared! Open the link on your desktop browser.';
     } catch (error) {
       if (error.name !== 'AbortError') await copy(control);
     }
