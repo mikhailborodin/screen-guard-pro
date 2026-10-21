@@ -26,7 +26,22 @@ export function faqsForPage(page) {
     'obs-streaming': {question:'Will Screen Privacy Blur overlays appear in OBS Window Capture and Display Capture?', answer:'Yes. Overlays and DOM data replacements are rendered directly inside the browser viewport, so OBS Studio captures the protected view with zero extra CPU/GPU filter overhead.'},
   };
   const first = specific[slug] || {question:`How do I prepare ${page.eyebrow.toLowerCase()} protection before sharing?`, answer:`Open the browser page you plan to present, protect sensitive fields with manual blur or a Pro scenario, and review the exact navigation and scrolling path. Save the layout for the next session. ${page.description}`};
-  return [first, homeFaqs[0], homeFaqs[1], homeFaqs[2], ...(page.group === 'Compare' || page.group === 'Alternatives' ? [homeFaqs[3]] : [homeFaqs[4]])];
+  const bulletSummary = (page.bullets || []).join(', ');
+  return [
+    first,
+    {
+      question: `How do Manual Blur, Smart Auto-Blur, and Auto-Replace work for ${page.title}?`,
+      answer: `For ${page.title} (${page.eyebrow}), Manual Blur is free forever and lets you click exact DOM elements or draw custom frosted-glass regions (${bulletSummary}). Smart Auto-Blur Pro masks detected emails, phones, and API keys locally, while Auto-Replace Pro swaps sensitive text with realistic demo data.`,
+    },
+    {
+      question: `Does any page data leave my browser during ${page.eyebrow} sessions?`,
+      answer: `No. When using Screen Privacy Blur for ${page.title}, all pattern matching and DOM replacement run 100% locally inside the Manifest V3 Chrome extension. Open Chrome DevTools → Network while toggling ${page.eyebrow} protection to verify zero page content is uploaded.`,
+    },
+    {
+      question: `Can I save my ${page.eyebrow} layout for future calls and recordings?`,
+      answer: `Yes. Once you configure ${page.title} rules (${bulletSummary}) on a domain, Screen Privacy Blur saves that layout locally so your protection is ready automatically before your next Zoom, Google Meet, Microsoft Teams, Loom, or OBS session.`,
+    },
+  ];
 }
 export const faqSchema = (faqs) => ({'@context':'https://schema.org','@type':'FAQPage',mainEntity:faqs.map(({question,answer}) => ({'@type':'Question',name:question,acceptedAnswer:{'@type':'Answer',text:answer}}))});
 export const faqHtml = (faqs, locale = 'en') => {

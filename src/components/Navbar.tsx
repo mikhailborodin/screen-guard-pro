@@ -20,7 +20,7 @@ export const Navbar = () => {
       <div className="container max-w-6xl mx-auto">
         <div className="flex items-center justify-between glass rounded-2xl px-3 sm:px-6 py-3">
           <a href={homePath} className="flex items-center gap-2">
-            <img src="/app-icon.png?v=20261021" alt="" width={32} height={32} className="w-8 h-8 rounded-lg" />
+            <img src="/app-icon.png?v=20261021" alt="Screen Privacy Blur logo" width={32} height={32} className="w-8 h-8 rounded-lg" />
             <span className="font-display text-sm sm:text-base font-semibold text-foreground">Screen Privacy Blur</span>
           </a>
 

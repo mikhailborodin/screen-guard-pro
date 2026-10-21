@@ -94,7 +94,7 @@ const en = {
   },
   compatibility: {
     heading: 'Protects your screen across',
-    note: 'Protect the browser view you share. Local protection for the browser view you present.',
+    note: 'Hide or replace sensitive data in the browser view you share. Local protection for the browser view you present.',
   },
   comparison: {
     kicker: 'YOUR DEMO. WITHOUT THE PRIVATE DETAILS.',
@@ -233,10 +233,10 @@ const en = {
     note: 'Works with Chrome, Brave, Edge, Arc, and all Chromium browsers',
   },
   welcome: {
-    metaTitle: 'Welcome & privacy sandbox | Screen Privacy Blur',
+    metaTitle: 'Interactive Sandbox & Demo | Screen Privacy Blur',
     metaDescription: 'Pin Screen Privacy Blur and test manual blur, local pattern masks, and synthetic demo data on a fictional customer table.',
     kicker: "YOU'RE READY TO SHARE SAFER",
-    title: 'Welcome to Screen Privacy Blur! Test it right here in 10 seconds.',
+    title: 'Interactive Screen Privacy Blur Sandbox — Test Modes in 10 Seconds',
     lead: 'This page contains fictional customer data. Test the interactive mode switcher below or open the installed extension to apply your own privacy rules.',
     step1Title: '1. Pin the extension',
     step1BodyHtml: 'Click the puzzle icon in Chrome’s toolbar. Find <strong>Screen Privacy Blur</strong>, then click the <strong>Pin</strong> icon.',
@@ -421,10 +421,10 @@ const translations = {
       note: 'Funktioniert mit Chrome, Brave, Edge, Arc und allen Chromium-Browsern',
     },
     welcome: {
-      metaTitle: 'Willkommen & Datenschutz-Sandbox | Screen Privacy Blur',
+      metaTitle: 'Interaktive Datenschutz-Sandbox | Screen Privacy Blur',
       metaDescription: 'Heften Sie Screen Privacy Blur an und testen Sie manuelles Blur, lokale Mustermasken und synthetische Demo-Daten an einer fiktiven Kundentabelle.',
       kicker: 'BEREIT FÜR SICHERES BILDSCHIRMTEILEN',
-      title: 'Willkommen bei Screen Privacy Blur! Testen Sie es hier in 10 Sekunden.',
+      title: 'Interaktive Screen Privacy Blur Sandbox — Modi in 10 Sekunden testen',
       lead: 'Diese Seite enthält fiktive Kundendaten. Testen Sie unten den interaktiven Modus-Umschalter oder öffnen Sie die installierte Erweiterung.',
       step1Title: '1. Erweiterung anheften (Pin)',
       step1BodyHtml: 'Klicken Sie oben rechts in Chrome auf das Puzzle-Symbol. Suchen Sie <strong>Screen Privacy Blur</strong> und klicken Sie auf die <strong>Pinnwand-Nadel (Pin)</strong>.',
@@ -958,7 +958,7 @@ const translations = {
       note: 'Работает в Chrome, Brave, Edge, Arc и всех браузерах на базе Chromium',
     },
     welcome: {
-      metaTitle: 'Добро пожаловать — песочница приватности | Screen Privacy Blur',
+      metaTitle: 'Интерактивная песочница | Screen Privacy Blur',
       metaDescription: 'Закрепите Screen Privacy Blur и протестируйте ручной блюр, локальные маски и подмену демо-данных на тестовой таблице клиентов.',
       kicker: 'ВЫ ГОТОВЫ К БЕЗОПАСНЫМ ДЕМОНСТРАЦИЯМ',
       title: 'Добро пожаловать в Screen Privacy Blur! Протестируйте его прямо здесь за 10 секунд.',
@@ -1137,7 +1137,7 @@ const translations = {
       note: 'Fonctionne avec Chrome, Brave, Edge, Arc et tous les navigateurs Chromium',
     },
     welcome: {
-      metaTitle: 'Bienvenue & bac à sable de confidentialité | Screen Privacy Blur',
+      metaTitle: 'Bienvenue & bac à sable interactif | Screen Privacy Blur',
       metaDescription: 'Épinglez Screen Privacy Blur et testez le flou manuel, les masques locaux et les données de démo synthétiques sur un tableau client fictif.',
       kicker: 'PRÊT À PARTAGER EN TOUTE SÉCURITÉ',
       title: 'Bienvenue sur Screen Privacy Blur ! Testez-le ici en 10 secondes.',
@@ -1319,7 +1319,7 @@ Object.assign(translations, {
       note: 'Funziona con Chrome, Brave, Edge, Arc e tutti i browser Chromium',
     },
     welcome: {
-      metaTitle: 'Benvenuto e sandbox privacy | Screen Privacy Blur',
+      metaTitle: 'Benvenuto e sandbox interattiva | Screen Privacy Blur',
       metaDescription: 'Fissa Screen Privacy Blur e prova sfocatura manuale, maschere locali e dati demo sintetici su una tabella clienti fittizia.',
       kicker: 'PRONTO A CONDIVIDERE IN SICUREZZA',
       title: 'Benvenuto in Screen Privacy Blur! Provalo qui in 10 secondi.',
@@ -1400,7 +1400,7 @@ Object.assign(translations, {
     },
     compatibility: {
       heading: 'Beschermt je scherm in',
-      note: 'Bescherm de browserweergave die je deelt. Lokale bescherming voor je presentaties.',
+      note: 'Gevoelige data vervagen of vervangen in de browserweergave die je deelt. Lokale bescherming voor je presentaties.',
     },
     comparison: {
       kicker: 'JOUW DEMO. ZONDER PRIVÉGEGEVENS.',
@@ -1498,7 +1498,7 @@ Object.assign(translations, {
       note: 'Werkt met Chrome, Brave, Edge, Arc en alle Chromium-browsers',
     },
     welcome: {
-      metaTitle: 'Welkom & privacy-sandbox | Screen Privacy Blur',
+      metaTitle: 'Welkom & interactieve sandbox | Screen Privacy Blur',
       metaDescription: 'Zet Screen Privacy Blur vast en test handmatig vervagen, lokale patroonmaskers en synthetische demogegevens op een fictieve klantentabel.',
       kicker: 'KLAAR OM VEILIGER TE DELEN',
       title: 'Welkom bij Screen Privacy Blur! Test het hier in 10 seconden.',
@@ -1738,7 +1738,7 @@ Object.assign(translations, {
     hero: {
       badge: 'Manifest V3 • %100 Yerel İşleme • Chrome Web Mağazası’nda 4.9★',
       title: 'Ekranınızı Paylaşmadan Önce Hassas Verileri Otomatik Bulanıklaştırın veya Değiştirin',
-      description: 'Zoom, Meet ve Loom’da e-postaları, telefon numaralarını, API anahtarlarını ve finansal verileri koruyun. Öğeleri manuel olarak bulanıklaştırın, hassas kalıpları maskeyle otomatik algılayın veya gerçek müşteri verilerini tek tıkla temiz demo verileriyle değiştirin.',
+      description: 'Zoom, Meet ve Loom’da e-postaları, telefon numaralarını, API anahtarlarını ve finansal verileri koruyun. Ögeleri manuel olarak bulanıklaştırın, hassas kalıpları maskeyle otomatik algılayın veya gerçek müşteri verilerini tek tıkla temiz demo verileriyle değiştirin.',
       tryDemo: 'Aşağıdaki Etkileşimli Demoyu Deneyin ↓',
       note: 'Manuel bulanıklaştırma için hesap gerekmez. Sayfa verileriniz cihazınızda kalır.',
       watchDemo: '▶ 45 Sn’lik Demoyu İzle',
@@ -1771,7 +1771,7 @@ Object.assign(translations, {
       matrixCaption: 'Manuel Bulanıklaştırma vs. Maskeyle Smart Auto-Blur vs. Canlı Veri Değiştirme Karşılaştırması',
       matrixHeaders: ['Özellik', 'Manuel Bulanıklaştırma (Ücretsiz)', 'Smart Auto-Blur (Pro)', 'Auto-Replace Veri (Pro)'],
       matrixRows: [
-        ['Veriyi nasıl hedefler', 'Tam DOM öğesine tıklayın veya serbest alan çizin', 'Yerel regex ve kalıp maskeleri (e-posta, telefon, anahtar, kart)', 'Yerel kalıp maskeleri + özel CRM/panel kuralları'],
+        ['Veriyi nasıl hedefler', 'Tam DOM ögesine tıklayın veya serbest alan çizin', 'Yerel regex ve kalıp maskeleri (e-posta, telefon, anahtar, kart)', 'Yerel kalıp maskeleri + özel CRM/panel kuralları'],
         ['Görüşmelerdeki görünüm', 'Özelleştirilebilir buzlu cam katmanı', 'Algılanan kişisel veriler üzerinde otomatik buzlu cam', 'Gerçekçi sentetik demo verileriyle temiz ve doğal arayüz'],
         ['En uygun kullanım', 'Hızlı şirket içi aramalar ve tekil bölümler', 'Canlı hata ayıklama, kod yayınları ve destek çağrıları', 'Müşteri satış demoları, Loom eğitimleri ve Stripe/CRM sunumları'],
         ['Rol ön ayarları', 'Web sitesi başına kaydedilen düzenler', 'Dev / Streamer ve PII maske profilleri', 'SaaS Satış Demosu, FinTech / Stripe ve Dev / Streamer senaryoları'],
@@ -1788,7 +1788,7 @@ Object.assign(translations, {
       items: [
         ['⌕', 'Maskeyle Smart Auto-Blur', 'E-postaları, telefonları, kartları, API anahtarlarını ve özel regex kalıplarını yerel olarak otomatik algılayın ve bulanıklaştırın.'],
         ['✧', 'Canlı Veri Değiştirme', 'Canlı demolar için gerçek müşteri e-postalarını, telefonlarını, isimlerini ve tutarlarını gerçekçi sentetik verilerle değiştirin.'],
-        ['↗', 'DOM Öğesi ve Alan Seçimi', 'Kaydırma sırasında bulanıklığı sabitlemek için herhangi bir HTML öğesine tıklayın veya serbest boyutlandırılabilir cam katmanlar çizin.'],
+        ['↗', 'DOM Ögesi ve Alan Seçimi', 'Kaydırma sırasında bulanıklığı sabitlemek için herhangi bir HTML ögesine tıklayın veya serbest boyutlandırılabilir cam katmanlar çizin.'],
         ['▧', 'Site Bazında Kayıtlı Düzenler', 'Gizlilik düzeninizi Stripe, HubSpot, Gmail veya AWS için bir kez ayarlayın; sonraki girişinizde otomatik yüklensin.'],
         ['⌘', 'Chrome Yan Paneli ve Kısayollar', 'Aktif bulanıklıkları, maskeleri ve sunum modunu kalıcı Chrome Yan Panelinden yönetin.'],
         ['◇', '%100 Yerel ve Sıfır Telemetri', 'Kalıp eşleştirme ve DOM değiştirme tarayıcı belleğinizde gerçekleşir. Ekran içeriği hiçbir sunucuya yüklenmez.'],
@@ -1799,7 +1799,7 @@ Object.assign(translations, {
       title: 'Basit gizlilik. İki çalışma şekli.',
       subtitle: 'Manuel koruma sonsuza dek ücretsizdir. Otomatik algılama ve temiz demo verilerini uzantıda açın.',
       freeTitle: 'Sonsuza Dek Ücretsiz', freePriceSub: 'sonsuza dek', freeNote: 'Başlamak için hesap veya lisans anahtarı gerekmez',
-      freeBullets: ['Sınırsız manuel bulanıklaştırma katmanı (sürükle, boyutlandır, sabitle)', 'Tam DOM öğesi seçimi', 'Özelleştirilebilir bulanıklık şiddeti, opaklık, renk ve cam efektleri', 'Web sitesi bazında düzen kaydetme', 'Tam sayfa Sunum Modu'],
+      freeBullets: ['Sınırsız manuel bulanıklaştırma katmanı (sürükle, boyutlandır, sabitle)', 'Tam DOM ögesi seçimi', 'Özelleştirilebilir bulanıklık şiddeti, opaklık, renk ve cam efektleri', 'Web sitesi bazında düzen kaydetme', 'Tam sayfa Sunum Modu'],
       freeCta: 'Chrome’a Ekle — Ücretsiz',
       proKicker: 'OTOMASYON VE CANLI DEMOLAR İÇİN', proTitle: 'Smart Auto Blur Pro', proPriceSub: '/ ay · yıllık faturalandırılır ($48/yıl)',
       proNote: 'Veya aylık ödemede $5/ay · $59 tek seferlik Ömür Boyu (Lifetime) erişim',
@@ -1820,7 +1820,7 @@ Object.assign(translations, {
       title: 'Bir sonraki ekran paylaşımınızdan önce hazır',
       items: [
         ['01 · YÜKLE', 'Chrome’a ekleyin ve sabitleyin', 'Screen Privacy Blur’u Chrome araç çubuğunda her zaman elinizin altında tutun.'],
-        ['02 · KORU', 'Modunuzu seçin', 'Bir öğe seçin, bulanıklık alanı çizin veya Pro maskeleri ve değiştirme senaryolarını kullanın.'],
+        ['02 · KORU', 'Modunuzu seçin', 'Bir öge seçin, bulanıklık alanı çizin veya Pro maskeleri ve değiştirme senaryolarını kullanın.'],
         ['03 · SUN', 'Kontrol edin, sonra paylaşın', 'Zoom, Meet, Teams, Loom veya OBS’de sunum yapmadan önce sayfayı gözden geçirin.'],
       ],
       sandboxCta: 'Başlangıç sandbox’ını deneyin →',
@@ -1865,7 +1865,7 @@ Object.assign(translations, {
       step1BodyHtml: 'Chrome araç çubuğundaki yapboz simgesine tıklayın. <strong>Screen Privacy Blur</strong>’u bulun ve <strong>Sabitle (Pin)</strong> simgesine tıklayın.',
       step2Title: '2. Aşağıda bir modu test edin',
       step2ItemsHtml: [
-        '<strong>Manuel Bulanıklaştırma (Ücretsiz):</strong> uzantıyı açın, bir öğe seçin veya tablo hücresinin üzerine dikdörtgen çizin.',
+        '<strong>Manuel Bulanıklaştırma (Ücretsiz):</strong> uzantıyı açın, bir öge seçin veya tablo hücresinin üzerine dikdörtgen çizin.',
         '<strong>Smart Auto Blur (Pro):</strong> bu sayfada e-posta, telefon, kart veya API anahtarı maskelerini etkinleştirin.',
         '<strong>Auto-Replace (Pro):</strong> bir demo senaryosu seçin ve örnek e-postaları, isimleri veya bakiyeleri temiz sahte verilerle değiştirin.',
       ],
@@ -1895,7 +1895,7 @@ Object.assign(translations, {
       websiteNote: 'Yalnızca web sitesi alan adı gönderilir. Yollar ve parametreler kaldırılır. Lütfen özel dahili sunucu adlarını girmeyin.',
       websiteSubmit: 'Web sitesi alan adını paylaş',
       reinstallHeading: 'Bir sonraki demonuz için gerekli mi?',
-      reinstallBody: 'Manuel katmanlar, tam öğe seçimi ve kaydedilmiş düzenler sonsuza dek ücretsizdir.',
+      reinstallBody: 'Manuel katmanlar, tam öge seçimi ve kaydedilmiş düzenler sonsuza dek ücretsizdir.',
       reinstallCta: 'Chrome Web Mağazası’ndan yeniden yükle',
       supportLink: 'Bir web sitesi veya özel kalıp için yardım alın →',
     },
@@ -2119,7 +2119,7 @@ Object.assign(translations, {
     },
     compatibility: {
       heading: 'あらゆる画面共有・業務ツールに対応',
-      note: '共有するブラウザ画面をローカルで保護。プレゼンやデモを安全に。',
+      note: '画面共有の機密データを自動ぼかし・置換。共有するブラウザ画面をローカルで保護し、プレゼンやデモを安全に。',
     },
     comparison: {
       kicker: '機密情報を見せずに、最高のデモを。',
@@ -2456,7 +2456,7 @@ Object.assign(translations, {
     },
     hero: {
       badge: 'Manifest V3 • 100% 本地处理 • Chrome 应用商店 4.9★ 高分好评',
-      title: '在共享屏幕前，自动模糊或替换敏感数据',
+      title: '在共享屏幕和录制演示前，自动模糊或替换浏览器中的敏感数据',
       description: '在 Zoom、Meet 和 Loom 演示中保护邮箱、电话号码、API 密钥和财务数据。支持手动模糊页面元素、按掩码自动识别敏感信息，或一键将真实客户隐私替换为整洁的仿真演示数据。',
       tryDemo: '在下方体验交互式演示 ↓',
       note: '手动模糊无需注册账号。您的页面数据始终保留在本地设备上。',
@@ -2477,7 +2477,7 @@ Object.assign(translations, {
     },
     compatibility: {
       heading: '全方位保护您的屏幕共享与办公平台',
-      note: '保护您正在共享的浏览器视图。为每一次在线演示提供纯本地隐私防护。',
+      note: '屏幕共享敏感数据自动模糊与替换：保护您正在共享的浏览器视图，为每一次在线演示提供纯本地隐私防护。',
     },
     comparison: {
       kicker: '您的产品演示，不再泄露任何隐私细节。',
@@ -2635,7 +2635,7 @@ Object.assign(translations, {
     },
     hero: {
       badge: 'Manifest V3 • 100% 本機處理 • Chrome 線上應用程式商店 4.9★ 好評',
-      title: '在分享螢幕前，自動模糊或替換敏感資料',
+      title: '在分享螢幕與錄製簡報前，自動模糊或替換瀏覽器中的敏感資料',
       description: '在 Zoom、Meet 和 Loom 上保護電子郵件、電話號碼、API 金鑰與財務資料。手動模糊頁面元素、透過遮罩自動偵測敏感格式，或一鍵將真實客戶個資替換為乾淨的模擬展示資料。',
       tryDemo: '在下方體驗互動式展示 ↓',
       note: '手動模糊無需註冊帳號。您的頁面資料始終留在您的裝置上。',
@@ -2656,7 +2656,7 @@ Object.assign(translations, {
     },
     compatibility: {
       heading: '全面保護您的螢幕分享與工作平台',
-      note: '保護您分享的瀏覽器畫面。為每一次簡報提供本機隱私防護。',
+      note: '螢幕分享敏感資料自動模糊與替換：保護您分享的瀏覽器畫面，為每一次簡報提供本機隱私防護。',
     },
     comparison: {
       kicker: '您的產品展示，不再外洩私人細節。',
@@ -2934,7 +2934,7 @@ Object.assign(translations, {
     },
     welcome: {
       metaTitle: 'स्वागत है और गोपनीयता सैंडबॉक्स | Screen Privacy Blur',
-      metaDescription: 'Screen Privacy Blur को पिन करें और काल्पनिक ग्राहक तालिका पर मैन्युअल ब्लर, लोकल पैटर्न मास्क और सिंथेटिक डेमो डेटा का परीक्षण करें।',
+      metaDescription: 'Screen Privacy Blur पिन करें और ग्राहक तालिका पर मैन्युअल ब्लर, लोकल मास्क व डेमो डेटा परखें।',
       kicker: 'सुरक्षित रूप से स्क्रीन शेयर करने के लिए तैयार',
       title: 'Screen Privacy Blur में आपका स्वागत है! यहाँ 10 सेकंड में इसका परीक्षण करें।',
       lead: 'इस पेज में काल्पनिक ग्राहक डेटा है। नीचे इंटरैक्टिव मोड स्विचर का परीक्षण करें या अपने नियम लागू करने के लिए इंस्टॉल किया गया एक्सटेंशन खोलें।',

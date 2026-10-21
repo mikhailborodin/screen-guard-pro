@@ -11,6 +11,7 @@ export const seoPages = [
     group: "Trust",
     eyebrow: "Privacy Policy",
     title: "Privacy Policy for Screen Privacy Blur",
+    seoTitle: "Data Protection Policy | Screen Privacy Blur",
     description:
       "Learn how Screen Privacy Blur protects screen privacy without collecting screen content, browsing activity, or personal files.",
     sections: [
@@ -41,7 +42,8 @@ export const seoPages = [
     path: "/terms/",
     group: "Trust",
     eyebrow: "Terms of Service",
-    title: "Terms of Service",
+    title: "Terms of Service for Screen Privacy Blur",
+    seoTitle: "Terms of Service | Screen Privacy Blur",
     description:
       "Terms for using Screen Privacy Blur, including free manual blur features and an optional Smart Auto Blur Pro subscription.",
     sections: [
@@ -73,6 +75,7 @@ export const seoPages = [
     group: "Trust",
     eyebrow: "Data Collection",
     title: "What Screen Privacy Blur collects",
+    seoTitle: "Zero Data Upload Policy | Screen Privacy Blur",
     description:
       "Screen Privacy Blur is local-first: it does not upload screen content, page text, screenshots, recordings, passwords, or API keys.",
     sections: [
@@ -104,6 +107,7 @@ export const seoPages = [
     group: "Trust",
     eyebrow: "Permissions",
     title: "Why Screen Privacy Blur needs browser permissions",
+    seoTitle: "Browser Permissions Guide | Screen Privacy Blur",
     description:
       "Understand how Screen Privacy Blur uses browser permissions for local blur overlays, saved preferences, billing, and support.",
     sections: [
@@ -135,6 +139,7 @@ export const seoPages = [
     group: "Use cases",
     eyebrow: "Use case",
     title: "Screen sharing without exposing sensitive data",
+    seoTitle: "Hide Sensitive Data on Calls | Screen Privacy Blur",
     description:
       "Use Screen Privacy Blur before sales calls, investor updates, onboarding sessions, or live debugging where private information can appear unexpectedly.",
     sections: [
@@ -156,6 +161,7 @@ export const seoPages = [
     group: "Use cases",
     eyebrow: "Use case",
     title: "Blur sensitive information in Google Meet",
+    seoTitle: "Hide Sensitive Info in Google Meet | Screen Privacy Blur",
     description:
       "Blur dashboards, inboxes, internal tools, and private fields before sharing a Chrome tab in Google Meet.",
     sections: [
@@ -177,6 +183,7 @@ export const seoPages = [
     group: "Use cases",
     eyebrow: "Use case",
     title: "Screen privacy for Zoom demos",
+    seoTitle: "Protect Customer Data on Zoom | Screen Privacy Blur",
     description:
       "Cover sensitive browser fields before sharing a browser window or tab during Zoom calls, customer demos, and recordings.",
     sections: [
@@ -198,6 +205,7 @@ export const seoPages = [
     group: "Use cases",
     eyebrow: "Use case",
     title: "Hide private details before Loom recordings",
+    seoTitle: "Hide Private Details in Loom | Screen Privacy Blur",
     description:
       "Record product walkthroughs, bug reports, and async updates with fewer accidental leaks in browser-based workflows.",
     sections: [
@@ -219,6 +227,7 @@ export const seoPages = [
     group: "Use cases",
     eyebrow: "Use case",
     title: "Hide API keys during live debugging",
+    seoTitle: "Hide API Keys in Live Debugging | Screen Privacy Blur",
     description:
       "Blur API keys, tokens, emails, and customer IDs before sharing docs, consoles, dashboards, or internal admin tools.",
     sections: [
@@ -240,6 +249,7 @@ export const seoPages = [
     group: "Alternatives",
     eyebrow: "Alternative",
     title: "Safe screen share alternative",
+    seoTitle: "Safe Presentation Alternative | Screen Privacy Blur",
     description:
       "A lightweight Chrome extension for practical local blur overlays before sharing a browser screen in a demo, call, or recording.",
     sections: [
@@ -261,6 +271,7 @@ export const seoPages = [
     group: "Alternatives",
     eyebrow: "Alternative",
     title: "DataBlur alternative for browser screen sharing",
+    seoTitle: "DataBlur Alternative for Chrome | Screen Privacy Blur",
     description:
       "A Chrome-focused way to blur sensitive browser content before a demo, call, or recording without adding a post-production step.",
     sections: [
@@ -282,6 +293,7 @@ export const seoPages = [
     group: "Alternatives",
     eyebrow: "Alternative",
     title: "Privacy Blur alternative for Chrome",
+    seoTitle: "Chrome Redaction Extension | Screen Privacy Blur",
     description:
       "Screen Privacy Blur helps founders, creators, and remote teams blur sensitive areas directly in Chrome before sharing their screen.",
     sections: [

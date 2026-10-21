@@ -123,7 +123,7 @@ const footer = (locale = "en", basePath = "/") => {
   const welcomePath = localizedPath("/welcome/", locale);
   return `
   <footer class="footer">
-    <a class="brand" href="${homePath}"><img class="brand-icon" src="/app-icon.png?v=20261021" width="24" height="24" alt="" /><span>${escapeHtml(n.rights)}</span></a>
+    <a class="brand" href="${homePath}"><img class="brand-icon" src="/app-icon.png?v=20261021" width="24" height="24" alt="Screen Privacy Blur logo" /><span>${escapeHtml(n.rights)}</span></a>
     <nav class="footer-links" aria-label="Footer">
       <a data-placement="footer" href="${extensionUrl}">${escapeHtml(n.addToChromeFree)}</a>
       <a href="${homePath}#pricing">${escapeHtml(n.pricing)}</a>
@@ -147,7 +147,7 @@ const navigation = (locale = "en", basePath = "/") => {
   const homePath = localizedPath("/", locale);
   return `
   <nav class="nav" aria-label="Primary">
-    <a class="brand" href="${homePath}"><img class="brand-icon" src="/app-icon.png?v=20261021" width="28" height="28" alt="" /><span>Screen Privacy Blur</span></a>
+    <a class="brand" href="${homePath}"><img class="brand-icon" src="/app-icon.png?v=20261021" width="28" height="28" alt="Screen Privacy Blur icon" /><span>Screen Privacy Blur</span></a>
     <div class="nav-links">
       <a href="${homePath}#pricing">${escapeHtml(n.pricing)}</a>
       <a href="/compare/">${escapeHtml(n.compare)}</a>
@@ -231,16 +231,16 @@ const breadcrumb = (page) => ({
 
 const homeSeoMetaByLocale = {
   en: {
-    title: "Auto-Blur & Replace Sensitive Data | Screen Privacy Blur",
+    title: "Hide & Replace Sensitive Data | Screen Privacy Blur",
     description: "Hide emails, phones, API keys & balances on Zoom, Meet, Teams, and Loom. Free manual blur, local pattern masks, and 1-click Live Data Replacement.",
   },
   de: {
-    title: "Sensible Daten weichzeichnen & ersetzen | Screen Privacy Blur",
+    title: "Sensible Daten schützen & ersetzen | Screen Privacy Blur",
     description: "Schützen Sie E-Mails, Telefonnummern, API-Keys & Kontostände in Zoom, Meet, Teams und Loom. Manuelles Blur, lokale Masken und Live-Datenersatz.",
   },
   es: {
     title: "Difumina o reemplaza datos sensibles | Screen Privacy Blur",
-    description: "Protege correos, teléfonos, claves API y saldos en Zoom, Meet, Teams y Loom. Desenfoque manual gratis, máscaras locales y reemplazo de datos.",
+    description: "Protege correos, teléfonos, claves API y saldos en Zoom, Meet, Teams और Loom. Desenfoque manual gratis, máscaras locales y reemplazo de datos.".replace("और", "y"),
   },
   "pt-br": {
     title: "Desfoque ou substitua dados sensíveis | Screen Privacy Blur",
@@ -263,11 +263,11 @@ const homeSeoMetaByLocale = {
     description: "Chroń e-maile, telefony, klucze API i salda na Zoom, Meet, Teams i Loom. Darmowe ręczne rozmycie, lokalne maski i podmiana na dane demo.",
   },
   ru: {
-    title: "Размытие и подмена приватных данных | Screen Privacy Blur",
+    title: "Авто-размытие и подмена данных | Screen Privacy Blur",
     description: "Скрывайте email, телефоны, API-ключи и балансы в Zoom, Meet, Teams и Loom. Бесплатное размытие, авто-маски и замена на демо-данные в 1 клик.",
   },
   tr: {
-    title: "Hassas Verileri Bulanıklaştır & Değiştir | Screen Privacy Blur",
+    title: "Hassas Verileri Koru & Değiştir | Screen Privacy Blur",
     description: "Zoom, Meet, Teams ve Loom’da e-postaları, telefonları, API anahtarlarını ve bakiyeleri koruyun. Ücretsiz manuel bulanıklaştırma ve canlı demo verileri.",
   },
   ja: {
@@ -287,11 +287,11 @@ const homeSeoMetaByLocale = {
     description: "在 Zoom、Meet、Teams 與 Loom 分享畫面時保護信箱、電話、API 金鑰與餘額。提供免費手動模糊、本機遮罩與一鍵模擬資料替換。",
   },
   hi: {
-    title: "स्क्रीन शेयरिंग डेटा ऑटो-ब्लर और रिप्लेस | Screen Privacy Blur",
-    description: "Zoom, Meet, Teams और Loom पर ईमेल, फ़ोन नंबर, API कुंजी और बैलेंस छुपाएं। मुफ़्त मैनुअल ब्लर, लोकल मास्क और 1-क्लिक मॉक डेटा रिप्लेसमेंट।",
+    title: "डेटा ऑटो-ब्लर और रिप्लेस | Screen Privacy Blur",
+    description: "Zoom, Meet और Loom पर ईमेल, फ़ोन नंबर व API कुंजी छुपाएं। मुफ़्त मैन्युअल ब्लर और 1-क्लिक डेमो डेटा।",
   },
   id: {
-    title: "Blur & Ganti Data Sensitif Saat Share Screen | Screen Privacy Blur",
+    title: "Lindungi & Ganti Data Sensitif | Screen Privacy Blur",
     description: "Lindungi email, nomor telepon, kunci API, dan saldo di Zoom, Meet, Teams, dan Loom. Blur manual gratis, masker lokal, dan penggantian data demo.",
   },
 };
@@ -330,6 +330,7 @@ const formatPageTitle = (rawTitle) => {
 
 const renderPage = (page) => {
   const related = relatedPages(page);
+  const pageTitle = page.seoTitle || formatPageTitle(page.title);
   const faqs =
     page.path.startsWith("/use-cases/") || page.path.startsWith("/compare/") || page.path.startsWith("/alternatives/")
       ? faqsForPage(page)
@@ -350,15 +351,15 @@ const renderPage = (page) => {
       </section>
       <ul class="bullets">${page.bullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join("")}</ul>
       ${page.sources?.length ? `<aside><p>Sources checked October 13, 2026: ${page.sources.map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.label)}</a>`).join(" · ")}</p></aside>` : ""}
-      <section class="how"><h2>How to prepare before sharing</h2><ol><li>Open the browser tab or desktop context you plan to present.</li><li>Place blur overlays over the private fields that can appear during the walkthrough.</li><li>Review the visible area, then start the call or recording.</li></ol></section>
+      <section class="how"><h2>How to prepare before sharing</h2><p>When setting up <strong>${escapeHtml(page.title)}</strong> (${escapeHtml(pageTitle)}), Screen Privacy Blur runs 100% locally in your Chromium browser so private records, credentials, and financial balances remain hidden or replaced with realistic demo data before any frame is shared.</p><ol><li>Open the browser tab or desktop context you plan to present.</li><li>Place blur overlays over the private fields that can appear during the walkthrough.</li><li>Review the visible area, then start the call or recording.</li></ol></section>
       ${faqs.length ? comparisonTableHtml(page) : ""}
-      ${related.length ? `<section><h2>Related resources</h2><div class="grid">${related.map((item) => `<article class="card"><a href="${item.path}"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p></a></article>`).join("")}</div></section>` : ""}
+      ${related.length ? `<section><h2>Related resources</h2><div class="grid">${related.map((item) => `<article class="card"><h3><a href="${item.path}">${escapeHtml(item.title)}</a></h3><p>${escapeHtml(item.bullets[0])}</p></article>`).join("")}</div></section>` : ""}
       ${faqs.length ? faqHtml(faqs) : ""}
       ${footer("en", page.path)}
     </main>`;
 
   return document({
-    title: formatPageTitle(page.title),
+    title: pageTitle,
     description: page.description,
     path: page.path,
     body: content,
@@ -366,8 +367,9 @@ const renderPage = (page) => {
   });
 };
 
-const renderHub = ({ path, group, title, description }) => {
+const renderHub = ({ path, group, title, seoTitle, description }) => {
   const pages = seoPages.filter((page) => page.group === group);
+  const pageTitle = seoTitle || formatPageTitle(title);
   const hubBreadcrumb = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -377,11 +379,11 @@ const renderHub = ({ path, group, title, description }) => {
     ],
   };
   return document({
-    title: formatPageTitle(title),
+    title: pageTitle,
     description,
     path,
     jsonLd: [hubBreadcrumb],
-    body: `<main class="shell">${navigation("en", path)}<span class="eyebrow">Screen Privacy Blur</span><h1>${escapeHtml(title)}</h1><p class="lead">${escapeHtml(description)}</p><div class="actions">${installActionsHtml(path, "hero", "Add to Chrome — Free")}</div><section class="grid">${pages.map((page) => `<article class="card"><a href="${page.path}"><p>${escapeHtml(page.eyebrow)}</p><h2>${escapeHtml(page.title)}</h2><p>${escapeHtml(page.description)}</p></a></article>`).join("")}</section><section class="how"><h2>How to choose the right protection mode</h2><ol><li><strong>Manual Blur (Free):</strong> Click any exact DOM element or draw a resizable frosted-glass region over predictable private areas, and save your layout per website.</li><li><strong>Smart Auto-Blur by Mask (Pro):</strong> Automatically detect and blur emails, phone numbers, credit cards, SSNs, API keys, and custom regex patterns locally inside Chrome.</li><li><strong>Live Data Replacement (Pro):</strong> Swap real customer PII and balances with realistic synthetic demo data so your CRM or financial dashboard stays clean and readable during live calls.</li></ol></section>${footer("en", path)}</main>`,
+    body: `<main class="shell">${navigation("en", path)}<span class="eyebrow">Screen Privacy Blur</span><h1>${escapeHtml(title)}</h1><p class="lead">${escapeHtml(description)}</p><div class="actions">${installActionsHtml(path, "hero", "Add to Chrome — Free")}</div><section class="grid">${pages.map((page) => `<article class="card"><span class="m-kicker">${escapeHtml(page.eyebrow)}</span><h2><a href="${page.path}">${escapeHtml(page.title)}</a></h2><p>${escapeHtml(page.bullets.join(" · "))}</p></article>`).join("")}</section><section class="how"><h2>How to choose the right protection mode</h2><p>Explore <strong>${escapeHtml(title)}</strong> (${escapeHtml(pageTitle)}) to compare how Screen Privacy Blur protects sensitive browser tabs locally before you share your screen or record a product walkthrough.</p><ol><li><strong>Manual Blur (Free):</strong> Click any exact DOM element or draw a resizable frosted-glass region over predictable private areas, and save your layout per website.</li><li><strong>Smart Auto-Blur by Mask (Pro):</strong> Automatically detect and blur emails, phone numbers, credit cards, SSNs, API keys, and custom regex patterns locally inside Chrome.</li><li><strong>Live Data Replacement (Pro):</strong> Swap real customer PII and balances with realistic synthetic demo data so your CRM or financial dashboard stays clean and readable during live calls.</li></ol></section>${footer("en", path)}</main>`,
   });
 };
 
@@ -430,6 +432,18 @@ const renderUninstall = (locale = "en") => {
     robots: "noindex,follow",
     analyticsScript: deferredAnalytics,
     body: `<header class="m-wrap home-nav">${navigation(locale, "/uninstall/")}</header><main>${uninstallHtml(locale)}</main><div class="m-wrap home-footer">${footer(locale, "/uninstall/")}</div><script>(${initializeRetention.toString()})();</script>`,
+  });
+};
+
+const renderSupport = (appAssets) => {
+  const supportTitle = "Customer Support & Help | Screen Privacy Blur";
+  const supportDesc = "Contact Screen Privacy Blur customer support for help with Chrome extension installation, custom auto-blur regex masks, Live Data Replacement rules, or Pro billing.";
+  return document({
+    title: supportTitle,
+    description: supportDesc,
+    path: "/support/",
+    appAssets,
+    body: `<div id="root"><main class="shell">${navigation("en", "/support/")}<span class="eyebrow">Customer Support</span><h1>Customer Support &amp; Help for Screen Privacy Blur</h1><p class="lead">${escapeHtml(supportDesc)}</p><section class="grid" aria-label="Support topics"><article class="card"><h2>Installation &amp; Side Panel Setup</h2><p>Need help pinning the Screen Privacy Blur extension in Chrome, Brave, Edge, or Arc? Open our interactive sandbox or reach out below for step-by-step guidance on manual DOM element blur and saved per-website layouts.</p></article><article class="card"><h2>Custom Regex Masks &amp; Live Data Replacement</h2><p>If an internal CRM, financial dashboard, or developer console uses a custom identifier format, send us the non-sensitive field structure and we will help you configure a local Smart Auto-Blur mask or Auto-Replace rule.</p></article><article class="card"><h2>Pro Billing &amp; Subscription Help</h2><p>Questions about monthly, annual, or lifetime Smart Auto Blur Pro access, invoice receipts, or restoring your license on a new Chromium browser profile? Our support team responds within one business day.</p></article><article class="card"><h2>macOS Desktop Overlay App</h2><p>Get help installing the Screen Privacy Blur macOS DMG, attaching click-through blur regions to native desktop windows, or combining browser and desktop protection for Zoom, Meet, Teams, Loom, and OBS Studio.</p></article></section>${footer("en", "/support/")}</main></div>`,
   });
 };
 
@@ -491,13 +505,7 @@ await Promise.all([
   (async () => {
     const target = outputPath("/support/");
     await mkdir(dirname(target), { recursive: true });
-    await writeFile(target, appShell
-      .replace(/<title>[^<]*<\/title>/, '<title>Support | Screen Privacy Blur</title>')
-      .replaceAll('content="https://privacyblur.co/"', 'content="https://privacyblur.co/support/"')
-      .replace('href="https://privacyblur.co/"', 'href="https://privacyblur.co/support/"')
-      .replace(/(<meta property="og:title" content=")[^"]+/, '$1Support | Screen Privacy Blur')
-      .replace(/(<meta name="twitter:title" content=")[^"]+/, '$1Support | Screen Privacy Blur'));
-
+    await writeFile(target, renderSupport(appAssets));
   })(),
   ...seoPages.map(async (page) => {
     const target = outputPath(page.path);
@@ -505,17 +513,25 @@ await Promise.all([
     await writeFile(target, renderPage(page));
   }),
   ...[
-    { path: "/compare/", group: "Compare", title: "Compare browser privacy tools", description: "Compare local blur, automation, and synthetic demo data workflows." },
+    {
+      path: "/compare/",
+      group: "Compare",
+      title: "Compare browser privacy tools",
+      seoTitle: "Compare Browser Redaction Tools | Screen Privacy Blur",
+      description: "Compare local blur, automation, and synthetic demo data workflows.",
+    },
     {
       path: "/use-cases/",
       group: "Use cases",
       title: "Screen privacy use cases",
+      seoTitle: "Presentation & Demo Use Cases | Screen Privacy Blur",
       description: "Practical ways to hide sensitive browser and desktop information before a live screen share or recording.",
     },
     {
       path: "/alternatives/",
       group: "Alternatives",
       title: "Screen Privacy Blur alternatives",
+      seoTitle: "Chrome Redaction Alternatives | Screen Privacy Blur",
       description: "Compare browser-first privacy workflows for demos, calls, recordings, and remote collaboration.",
     },
   ].map(async (hub) => {

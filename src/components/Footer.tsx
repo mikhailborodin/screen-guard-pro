@@ -19,7 +19,7 @@ export const Footer = () => {
       <div className="container max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2">
-            <img src="/app-icon.png?v=20261021" alt="" width={32} height={32} className="w-8 h-8 rounded-lg" />
+            <img src="/app-icon.png?v=20261021" alt="Screen Privacy Blur logo" width={32} height={32} className="w-8 h-8 rounded-lg" />
             <span className="font-display font-semibold">Screen Privacy Blur</span>
           </div>
 

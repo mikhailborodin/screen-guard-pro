@@ -2,6 +2,7 @@ export const upgradeSeoPages = [
   {
     path: '/compare/blurweb-alternative/', group: 'Compare', eyebrow: 'BlurWeb alternative',
     title: 'Screen Privacy Blur vs. BlurWeb',
+    seoTitle: 'BlurWeb Alternative & Comparison | Screen Privacy Blur',
     description: 'Compare browser blur workflows: start with free manual protection, then add local masks and Live Data Replacement for polished demos.',
     sections: [
       {title: 'A free starting point without a license key', body: 'Screen Privacy Blur includes unlimited manual overlays, exact element selection, customization, and saved layouts in its free tier. Install and start protecting a tab without a license key for manual blur.'},
@@ -13,6 +14,7 @@ export const upgradeSeoPages = [
   {
     path: '/compare/zeroblur-alternative/', group: 'Compare', eyebrow: 'ZeroBlur alternative',
     title: 'A Manifest V3 alternative to ZeroBlur',
+    seoTitle: 'Manifest V3 ZeroBlur Alternative | Screen Privacy Blur',
     description: 'Looking beyond manual blur? Screen Privacy Blur combines browser overlays with local auto-detection and synthetic demo data.',
     sections: [
       {title: 'Start with the familiar manual workflow', body: 'Select exact page elements or draw adjustable rectangles. Set blur intensity and save the layout per website before your next call.'},
@@ -23,6 +25,7 @@ export const upgradeSeoPages = [
   {
     path: '/compare/loom-blur-alternative/', group: 'Compare', eyebrow: 'Loom blur alternative',
     title: 'A browser-wide alternative to Loom blur',
+    seoTitle: 'Browser-Wide Loom Redaction Tool | Screen Privacy Blur',
     description: 'Protect browser content before Zoom, Meet, Teams, Loom, and OBS sharing with free manual blur and optional Pro automation.',
     sections: [
       {title: 'Protect the source browser tab', body: 'Screen Privacy Blur changes what appears on your browser page before the call or recording. Share that protected tab or browser window in Zoom, Meet, Teams, Loom, or OBS. Browser protection does not cover other desktop apps.'},
@@ -34,6 +37,7 @@ export const upgradeSeoPages = [
   {
     path: '/compare/contextblur-alternative/', group: 'Compare', eyebrow: 'ContextBlur alternative',
     title: 'Screen Privacy Blur vs. ContextBlur',
+    seoTitle: 'ContextBlur Alternative & Guide | Screen Privacy Blur',
     description: 'Compare element blur, local pattern masks, saved layouts, and synthetic data replacement for live browser presentations.',
     sections: [
       {title: 'Element selection and saved layouts', body: 'ContextBlur documents exact element targeting and saved CSS selectors. Screen Privacy Blur also offers exact element selection, draggable overlays, and per-website layouts in its free tier.'},
@@ -45,6 +49,7 @@ export const upgradeSeoPages = [
   {
     path: '/use-cases/sales-demos-crm/', group: 'Use cases', eyebrow: 'Sales demos & CRM',
     title: 'Replace customer data during live CRM demos',
+    seoTitle: 'Replace Data in Live CRM Demos | Screen Privacy Blur',
     description: 'Present HubSpot, Salesforce, or Pipedrive workflows with fictional emails and phones instead of real customer identities.',
     sections: [
       {title: 'Set up a demo scenario', body: 'Open the CRM page you plan to share. In Data Replacement Pro, choose fictional names, emails, and phone numbers, then edit source matching rules for the fields on that page.'},
@@ -55,6 +60,7 @@ export const upgradeSeoPages = [
   {
     path: '/use-cases/developers-api-keys/', group: 'Use cases', eyebrow: 'Developers & API keys',
     title: 'Hide API keys during screen sharing and coding streams',
+    seoTitle: 'Hide API Keys on Coding Streams | Screen Privacy Blur',
     description: 'Use local masks and manual blur to protect visible tokens, .env secrets, and AWS or GitHub keys in browser dashboards.',
     sections: [
       {title: 'Protect browser-visible secrets', body: 'Before sharing, open the console, repository page, or browser-based editor. Use Smart Auto Blur Pro API key masks and custom rules for the secret formats your team uses.'},
@@ -65,6 +71,7 @@ export const upgradeSeoPages = [
   {
     path: '/use-cases/stripe-fintech-dashboards/', group: 'Use cases', eyebrow: 'Stripe & financial dashboards',
     title: 'Hide balances and customer PII in financial dashboards',
+    seoTitle: 'Hide Balances in Stripe & Fintech | Screen Privacy Blur',
     description: 'Prepare Stripe and fintech browser dashboards for presentations with manual blur, local masks, and synthetic demo values.',
     sections: [
       {title: 'Decide what the audience needs to see', body: 'Identify balances, revenue figures, email addresses, phone numbers, and account details. Blur fields that are irrelevant to the story and replace supported values when a realistic example helps.'},
@@ -75,6 +82,7 @@ export const upgradeSeoPages = [
   {
     path: '/use-cases/microsoft-teams/', group: 'Use cases', eyebrow: 'Microsoft Teams',
     title: 'Blur sensitive data in Microsoft Teams screen sharing',
+    seoTitle: 'Hide Sensitive Data in MS Teams | Screen Privacy Blur',
     description: 'Hide customer emails, balances, and internal fields in Chrome before sharing your screen or browser window in Microsoft Teams.',
     sections: [
       {title: 'Prepare your browser tab before joining Teams', body: 'Open the web dashboard, CRM, or admin console in Chrome and apply manual blur overlays, local PII pattern masks, or Live Data Replacement before starting your Microsoft Teams screen share.'},
@@ -85,6 +93,7 @@ export const upgradeSeoPages = [
   {
     path: '/use-cases/obs-streaming/', group: 'Use cases', eyebrow: 'OBS Studio & streaming',
     title: 'Hide API keys and PII in OBS Studio & live streams',
+    seoTitle: 'Hide Secrets in OBS Studio Streams | Screen Privacy Blur',
     description: 'Protect browser tabs captured in OBS Studio, Twitch, or YouTube coding streams with local blur overlays, regex masks, and mock data.',
     sections: [
       {title: 'Stream browser workflows without leaking secrets', body: 'When OBS Studio captures a Chrome window or display, any accidental reveal of an API token, customer email, or billing balance is broadcast live. Use Screen Privacy Blur to mask sensitive DOM elements beforehand.'},
