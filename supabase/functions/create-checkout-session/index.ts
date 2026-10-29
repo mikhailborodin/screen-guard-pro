@@ -6,16 +6,39 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
+type AttributionInput = {
+  utm_source?: unknown;
+  utm_medium?: unknown;
+  utm_campaign?: unknown;
+  utm_content?: unknown;
+  click_id_type?: unknown;
+  referrer_host?: unknown;
+  landing_path?: unknown;
+};
+
 type CheckoutRequest = {
   feature?: string;
   source?: string;
   extensionId?: string;
   billingInterval?: string;
+  installId?: string;
+  paywallFeature?: string;
+  attribution?: AttributionInput | null;
   successUrl?: string;
   cancelUrl?: string;
 };
 
 type BillingInterval = "month" | "year" | "lifetime";
+
+const UUID_V4_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const ALLOWED_PAYWALL_FEATURES = new Set([
+  "smart-auto-blur",
+  "role-sales",
+  "role-fintech",
+  "role-dev",
+  "auto-replace",
+  "data-replacement",
+]);
 
 const json = (body: unknown, init?: ResponseInit) =>
   new Response(JSON.stringify(body), {
@@ -33,6 +56,28 @@ const requiredString = (value: unknown, field: string) => {
   }
 
   return value.trim();
+};
+
+const optionalSafeAttr = (value: unknown, maxLength = 120) => {
+  if (typeof value !== "string") return "";
+  return value.trim().replace(/[^\w./:@+-]/g, "").slice(0, maxLength);
+};
+
+const buildAttributionMetadata = (attribution: unknown): Record<string, string> => {
+  if (!attribution || typeof attribution !== "object" || Array.isArray(attribution)) {
+    return {};
+  }
+  const input = attribution as AttributionInput;
+  const pairs: Array<[string, string]> = [
+    ["utmSource", optionalSafeAttr(input.utm_source, 80)],
+    ["utmMedium", optionalSafeAttr(input.utm_medium, 80)],
+    ["utmCampaign", optionalSafeAttr(input.utm_campaign, 100)],
+    ["utmContent", optionalSafeAttr(input.utm_content, 100)],
+    ["clickIdType", optionalSafeAttr(input.click_id_type, 32)],
+    ["referrerHost", optionalSafeAttr(input.referrer_host, 100)],
+    ["landingPath", optionalSafeAttr(input.landing_path, 150)],
+  ];
+  return Object.fromEntries(pairs.filter(([, val]) => val.length > 0));
 };
 
 const requiredBillingInterval = (value: unknown): BillingInterval => {
@@ -102,6 +147,22 @@ Deno.serve(async (req) => {
       return json({ error: "Invalid extensionId" }, { status: 400 });
     }
 
+    let installId = "";
+    if (body.installId !== undefined && body.installId !== "") {
+      if (typeof body.installId !== "string" || !UUID_V4_RE.test(body.installId.trim())) {
+        return json({ error: "Invalid installId" }, { status: 400 });
+      }
+      installId = body.installId.trim();
+    }
+
+    let paywallFeature = "";
+    if (body.paywallFeature !== undefined && body.paywallFeature !== "") {
+      if (typeof body.paywallFeature !== "string" || !ALLOWED_PAYWALL_FEATURES.has(body.paywallFeature.trim())) {
+        return json({ error: "Invalid paywallFeature" }, { status: 400 });
+      }
+      paywallFeature = body.paywallFeature.trim();
+    }
+
     const isLifetime = billingInterval === "lifetime";
     const priceId = billingInterval === "year" ? yearlyPriceId : monthlyPriceId;
     if (!isLifetime && !priceId) {
@@ -109,7 +170,16 @@ Deno.serve(async (req) => {
     }
     const activationToken = createActivationToken();
     const activationTokenHash = await sha256Hex(activationToken);
-    const metadata = { feature, source, extensionId, billingInterval, activationTokenHash };
+    const metadata: Record<string, string> = {
+      feature,
+      source,
+      extensionId,
+      billingInterval,
+      activationTokenHash,
+      ...(installId ? { installId } : {}),
+      ...(paywallFeature ? { paywallFeature } : {}),
+      ...buildAttributionMetadata(body.attribution),
+    };
     const stripe = new Stripe(stripeSecretKey, { apiVersion: "2026-07-29.dahlia" });
     const session = await stripe.checkout.sessions.create({
       mode: isLifetime ? "payment" : "subscription",

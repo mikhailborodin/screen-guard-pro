@@ -8,6 +8,7 @@ import Uninstall from "./pages/Uninstall";
 import { initializeConversion } from "./data/conversion.mjs";
 import { getCopy, getLocaleMeta, localeFromPath, localizedPath, nonDefaultLocales, stripLocalePrefix } from "./data/locales.mjs";
 import { initializeRetention } from "./data/retention.mjs";
+import { initializeWebTelemetry } from "./data/webTelemetry.mjs";
 import Welcome from "./pages/Welcome";
 import { upgradeSeoPages } from "./data/upgradeSeoPages.mjs";
 import Index from "./pages/Index";
@@ -27,7 +28,7 @@ const siteUrl = "https://privacyblur.co";
 const routerBase = import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const RouteMetadata = () => {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const locale = localeFromPath(pathname);
   const copy = getCopy(locale);
   const canonicalPath = pathname === "/" ? "/" : `${pathname.replace(/\/+$/, "")}/`;
@@ -75,8 +76,13 @@ const RouteMetadata = () => {
   useEffect(() => {
     const cleanupConversion = initializeConversion();
     const cleanupRetention = initializeRetention();
-    return () => { cleanupConversion(); cleanupRetention(); };
-  }, [pathname]);
+    const cleanupTelemetry = initializeWebTelemetry();
+    return () => {
+      cleanupConversion();
+      cleanupRetention();
+      cleanupTelemetry();
+    };
+  }, [pathname, search]);
 
   return null;
 };

@@ -1,3 +1,5 @@
+import { trackWebEvent } from "@/data/webTelemetry.mjs";
+
 type InstallTarget = "chrome" | "macos";
 export type InstallPlacement = "hero" | "navbar" | "pricing" | "comparison_table" | "footer" | "cta" | "mac_section" | "growth_page";
 
@@ -38,4 +40,5 @@ export const trackInstallClick = ({ target, placement, targetUrl }: InstallClick
     target_url: targetUrl,
     transport_type: "beacon",
   });
+  trackWebEvent("install_cta_clicked", { target, placement });
 };

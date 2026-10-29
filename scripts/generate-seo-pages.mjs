@@ -10,6 +10,7 @@ import { marketingStyles } from "../src/data/marketingStyles.mjs";
 import { installActionsHtml, attributeInstallLinks, initializeConversion } from "../src/data/conversion.mjs";
 import { faqHtml, faqSchema, faqsForPage, getHomeFaqs } from "../src/data/faq.mjs";
 import { uninstallHtml, initializeRetention } from "../src/data/retention.mjs";
+import { initializeWebTelemetry } from "../src/data/webTelemetry.mjs";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const distDir = join(root, "dist");
@@ -214,7 +215,7 @@ body{background:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linea
     ${jsonLd.map((entry) => `<script type="application/ld+json">${asJsonLd(entry)}</script>`).join("\n    ")}
     ${appAssets}
   </head>
-  <body>${attributeInstallLinks(body, path)}${appAssets ? "" : `<script>(${initializeConversion.toString()})();</script>`}</body>
+  <body>${attributeInstallLinks(body, path)}${appAssets ? "" : `<script>(${initializeConversion.toString()})();(${initializeWebTelemetry.toString()})();</script>`}</body>
 </html>`;
 
 const breadcrumb = (page) => ({
