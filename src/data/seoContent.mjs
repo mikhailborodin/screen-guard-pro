@@ -18,7 +18,22 @@ export const seoPages = [
       {
         title: "What we collect",
         body:
-          "The extension does not collect, transmit, sell, or store your screen content, page content, browsing history, screenshots, recordings, passwords, API keys, or form fields.",
+          "The extension does not upload screen content, browsing history, screenshots, recordings, passwords, API keys or form fields for product analytics. Detection and visual masking run locally. Replacement scenarios may save the original and fictional values you select in your local browser profile so you can reuse a demonstration.",
+      },
+      {
+        title: "Extension usage analytics from version 2.7.3",
+        body:
+          "Version 2.7.3 offers optional product analytics to measure use of the extension and its protection features. Analytics are off until you explicitly enable them in the extension panel. Declining does not disable protection features. After consent, each Chrome profile receives a random installation identifier stored in chrome.storage.local; it is not synchronized between profiles. Events contain only the event name, installation identifier, cached Pro status, extension version and interface language. A paywall event also identifies the protection feature that opened it. An activity request is attempted at most once per UTC day, following an interaction such as opening the panel, pressing Alt+B or using a protection feature. Starting the background worker or restoring saved protection does not count as activity.",
+      },
+      {
+        title: "Analytics processors and installation links",
+        body:
+          "Extension analytics are sent over HTTPS to our Supabase backend and processed in PostHog. Installation identifiers are pseudonymous, not fully anonymous. After consent, welcome, upgrade and uninstall links can carry the installation identifier and extension version to privacyblur.co so those interactions can be associated with the same installation. No visited-site URLs or domains, page text, form values, screenshots, selectors, subscription tokens or credentials are included in extension analytics. We disable IP and location enrichment on the PostHog capture payload and do not forward the user's IP in it. Service providers still receive network connection information and may retain operational access logs under their own settings.",
+      },
+      {
+        title: "How analytics are used and retained",
+        body:
+          "We use product analytics to understand and improve the extension's disclosed functionality. We do not sell this data, use it for advertising or behavioral ad profiles, or transfer it for unrelated purposes. Supabase and PostHog process it as service providers. Received analytics are subject to the configured analytics-project retention settings; infrastructure logs have separate retention settings. You can turn analytics off again in the extension panel to stop future analytics and remove the local identifier from future website links. Turning it off does not undo requests already sent. Clearing extension data or uninstalling removes the local installation identifier but does not automatically delete events already received by the analytics service. Contact support about access or deletion, providing the installation identifier if available so the relevant data can be located.",
       },
       {
         title: "How blur works",
@@ -33,7 +48,7 @@ export const seoPages = [
       {
         title: "Data retention, user controls, and enterprise compliance",
         body:
-          "Saved blur coordinates, selected CSS selectors, custom regex masks, and Live Data Replacement dictionaries are stored exclusively inside your local browser profile via chrome.storage.local. Uninstalling the extension or clicking Clear All Rules inside the Chrome Side Panel permanently deletes those local rules from your device. Because Screen Privacy Blur never ingests or proxies customer PII onto external servers, security and compliance teams evaluating the extension for SOC 2, HIPAA, GDPR, or ISO 27001 workflows can deploy it without signing a third-party data processing addendum for screen content.",
+          "Blur processing and replacement scenarios stay in the browser. Extension preferences and site presets may use Chrome storage.sync and follow your Chrome synchronization settings; replacement scenarios, subscription credentials, installation identifiers and the daily activity marker use storage.local. Clearing a blur or stopping protection does not delete your saved scenarios or previously received analytics. Uninstalling removes the extension's local data. Evaluate your organization's own compliance requirements and the actual data flows before use; this policy does not certify compliance with a security standard.",
       },
     ],
     bullets: [
@@ -107,7 +122,7 @@ export const seoPages = [
       {
         title: "Strict separation between browser extension and marketing site",
         body:
-          "The packaged Chrome extension operates under a strict Manifest V3 Content Security Policy with zero third-party analytics trackers, zero remote script execution, and zero telemetry payloads reporting which websites you visit or which DOM elements you blur. All pattern matching for emails, phone numbers, credit cards, API tokens, and synthetic Live Data Replacement happens synchronously in isolated browser memory on your computer and is discarded as soon as the tab closes.",
+          "The packaged Chrome extension uses bundled code under Manifest V3 and does not include the PostHog JavaScript SDK, autocapture, session replay or remote executable scripts. From version 2.7.3, after you explicitly enable analytics in the extension panel, its Supabase backend can forward limited product events to PostHog: a pseudonymous installation identifier, event name, cached Pro status, version, interface language and, for a paywall event, the feature name. Extension analytics contain no visited-site URLs or domains, page text, form values, DOM selectors or replacement values. Saved replacement scenarios remain in local extension storage until removed by the user or by uninstalling.",
       },
     ],
     bullets: [
@@ -134,17 +149,17 @@ export const seoPages = [
       {
         title: "Storage",
         body:
-          "Local storage may be used to remember your blur preferences, saved areas, and Pro status so you do not have to configure the same setup repeatedly.",
+          "Chrome storage remembers preferences, site presets and Pro status. Some preferences and site presets use storage.sync and follow your Chrome synchronization settings. Replacement scenarios, subscription credentials, the per-profile installation identifier and the daily analytics marker use storage.local.",
       },
       {
         title: "Network calls",
         body:
-          "The extension may contact billing or support endpoints for Pro checkout and subscription verification. It does not upload screen content for blur processing.",
+          "The extension contacts Supabase for subscription verification, intentionally submitted support requests and, from version 2.7.3, optional product analytics after explicit consent. Upgrade links open the website paywall. Analytics are forwarded server-side to PostHog; the PostHog SDK is not included in the extension. Screen content is not uploaded for blur processing.",
       },
       {
         title: "Manifest V3 technical breakdown for security reviewers",
         body:
-          "Screen Privacy Blur requests only four Chrome Manifest V3 permissions: activeTab to target the specific tab you are preparing for a screen share, scripting to inject the local CSS backdrop-filter and text-masking styles into the active page, storage to persist your per-domain blur rules inside chrome.storage.local, and sidePanel to render the dedicated control panel alongside your workspace without cluttering the viewport or appearing inside tab-only screen captures.",
+          "Screen Privacy Blur requests activeTab, tabs, scripting, storage and sidePanel. These let it identify the target tab, apply bundled protection code, remember settings and keep controls beside the page. The existing https://*.supabase.co/* host permission supports backend requests. Optional site permissions are requested for replacement scenarios that must remain protected across page reloads. Version 2.7.3 does not add permissions or host permissions for analytics.",
       },
     ],
     bullets: [
