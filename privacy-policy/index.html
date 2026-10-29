@@ -97,7 +97,7 @@ body{background:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linea
     <label class="m-manual-copy" hidden>Desktop install link <input readonly aria-label="Desktop install link" /></label>
   </div><a class="button secondary" href="/support/">Contact support</a></div>
       <section class="grid" aria-label="Details">
-        <article class="card"><h2>What we collect</h2><p>The extension does not upload screen content, browsing history, screenshots, recordings, passwords, API keys or form fields for product analytics. Detection and visual masking run locally. Replacement scenarios may save the original and fictional values you select in your local browser profile so you can reuse a demonstration.</p></article><article class="card"><h2>Extension usage analytics from version 2.7.3</h2><p>Version 2.7.3 offers optional product analytics to measure use of the extension and its protection features. Analytics are off until you explicitly enable them in the extension panel. Declining does not disable protection features. After consent, each Chrome profile receives a random installation identifier stored in chrome.storage.local; it is not synchronized between profiles. Events contain only the event name, installation identifier, cached Pro status, extension version and interface language. A paywall event also identifies the protection feature that opened it. An activity request is attempted at most once per UTC day, following an interaction such as opening the panel, pressing Alt+B or using a protection feature. Starting the background worker or restoring saved protection does not count as activity.</p></article><article class="card"><h2>Analytics processors and installation links</h2><p>Extension analytics are sent over HTTPS to our Supabase backend and processed in PostHog. Installation identifiers are pseudonymous, not fully anonymous. After consent, welcome, upgrade and uninstall links can carry the installation identifier and extension version to privacyblur.co so those interactions can be associated with the same installation. No visited-site URLs or domains, page text, form values, screenshots, selectors, subscription tokens or credentials are included in extension analytics. We disable IP and location enrichment on the PostHog capture payload and do not forward the user's IP in it. Service providers still receive network connection information and may retain operational access logs under their own settings.</p></article><article class="card"><h2>How analytics are used and retained</h2><p>We use product analytics to understand and improve the extension's disclosed functionality. We do not sell this data, use it for advertising or behavioral ad profiles, or transfer it for unrelated purposes. Supabase and PostHog process it as service providers. Received analytics are subject to the configured analytics-project retention settings; infrastructure logs have separate retention settings. You can turn analytics off again in the extension panel to stop future analytics and remove the local identifier from future website links. Turning it off does not undo requests already sent. Clearing extension data or uninstalling removes the local installation identifier but does not automatically delete events already received by the analytics service. Contact support about access or deletion, providing the installation identifier if available so the relevant data can be located.</p></article><article class="card"><h2>How blur works</h2><p>Manual blur and Smart Auto Blur run locally in your browser. Blur rules are applied on-device before you share your screen, join a call, or record a walkthrough.</p></article><article class="card"><h2>Support and billing</h2><p>If you contact support or purchase Pro, the information you submit for that workflow is handled only to respond to your request, complete checkout, or verify subscription status. The website uninstall survey sends your selected reason and an optional, explicitly submitted website domain to website analytics; the entered URL path, query, and fragment are removed.</p></article><article class="card"><h2>Data retention, user controls, and enterprise compliance</h2><p>Blur processing and replacement scenarios stay in the browser. Extension preferences and site presets may use Chrome storage.sync and follow your Chrome synchronization settings; replacement scenarios, subscription credentials, installation identifiers and the daily activity marker use storage.local. Clearing a blur or stopping protection does not delete your saved scenarios or previously received analytics. Uninstalling removes the extension's local data. Evaluate your organization's own compliance requirements and the actual data flows before use; this policy does not certify compliance with a security standard.</p></article>
+        <article class="card"><h2>What we collect</h2><p>The extension does not collect, transmit, sell, or store your screen content, page content, browsing history, screenshots, recordings, passwords, API keys, or form fields.</p></article><article class="card"><h2>How blur works</h2><p>Manual blur and Smart Auto Blur run locally in your browser. Blur rules are applied on-device before you share your screen, join a call, or record a walkthrough.</p></article><article class="card"><h2>Support and billing</h2><p>If you contact support or purchase Pro, the information you submit for that workflow is handled only to respond to your request, complete checkout, or verify subscription status. The website uninstall survey sends your selected reason and an optional, explicitly submitted website domain to website analytics; the entered URL path, query, and fragment are removed.</p></article><article class="card"><h2>Data retention, user controls, and enterprise compliance</h2><p>Saved blur coordinates, selected CSS selectors, custom regex masks, and Live Data Replacement dictionaries are stored exclusively inside your local browser profile via chrome.storage.local. Uninstalling the extension or clicking Clear All Rules inside the Chrome Side Panel permanently deletes those local rules from your device. Because Screen Privacy Blur never ingests or proxies customer PII onto external servers, security and compliance teams evaluating the extension for SOC 2, HIPAA, GDPR, or ISO 27001 workflows can deploy it without signing a third-party data processing addendum for screen content.</p></article>
       </section>
       <ul class="bullets"><li>No screen recording or screenshot upload</li><li>No sale of personal information</li><li>No behavioral ad profiling</li><li>Support messages are used only for support follow-up</li></ul>
       
@@ -194,5 +194,315 @@ body{background:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linea
   };
   root.addEventListener('click', onClick);
   return () => { media.removeEventListener('change', update); root.removeEventListener('click', onClick); };
+})();(function initializeWebTelemetry(root = document, customEndpoint) {
+  const doc = root?.ownerDocument || root;
+  const win = doc?.defaultView || (typeof window !== "undefined" ? window : undefined);
+  if (!win || !doc) return () => {};
+
+  const ENDPOINT = customEndpoint || "https://rqwssmxjpphxngrncjfb.supabase.co/functions/v1/web-telemetry";
+  const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  const VERSION_RE = /^\d{1,5}(?:\.\d{1,5}){1,3}$/;
+  const FEATURES = new Set([
+    "smart-auto-blur",
+    "role-sales",
+    "role-fintech",
+    "role-dev",
+    "auto-replace",
+    "data-replacement",
+  ]);
+  const INTERNAL_SOURCES = new Set(["extension_install", "extension_uninstall"]);
+  const LOCALES = new Set([
+    "de", "es", "pt-br", "fr", "it", "nl", "pl", "ru", "tr", "ja", "ko", "zh-cn", "zh-tw", "hi", "id",
+  ]);
+
+  const clean = (val, max = 120) => {
+    if (typeof val !== "string") return "";
+    return val.replace(/[^\w./:@+-]/g, "").slice(0, max);
+  };
+
+  const readCookie = (name) => {
+    try {
+      const prefix = `${name}=`;
+      const hit = (doc.cookie || "")
+        .split(";")
+        .map((part) => part.trim())
+        .find((part) => part.startsWith(prefix));
+      return hit ? decodeURIComponent(hit.slice(prefix.length)) : "";
+    } catch {
+      return "";
+    }
+  };
+
+  const writeCookie = (name, value, maxAgeSeconds) => {
+    try {
+      const secure = win.location?.protocol === "https:" ? "; Secure" : "";
+      doc.cookie = `${name}=${encodeURIComponent(value)}; Path=/; Max-Age=${maxAgeSeconds}; SameSite=Lax${secure}`;
+    } catch {
+      // Ignore cookie write failures in restricted browsing modes.
+    }
+  };
+
+  const readStore = (key) => {
+    try {
+      return win.localStorage?.getItem(key) || readCookie(key);
+    } catch {
+      return readCookie(key);
+    }
+  };
+
+  const writeStore = (key, value, maxAgeSeconds = 2592000) => {
+    try {
+      win.localStorage?.setItem(key, value);
+    } catch {
+      // Ignore storage quota / privacy mode errors.
+    }
+    writeCookie(key, value, maxAgeSeconds);
+  };
+
+  const makeUuidV4 = () => {
+    if (win.crypto?.randomUUID) return win.crypto.randomUUID();
+    const bytes = new Uint8Array(16);
+    if (win.crypto?.getRandomValues) {
+      win.crypto.getRandomValues(bytes);
+    } else {
+      for (let i = 0; i < 16; i += 1) bytes[i] = Math.floor(Math.random() * 256);
+    }
+    bytes[6] = (bytes[6] & 0x0f) | 0x40;
+    bytes[8] = (bytes[8] & 0x3f) | 0x80;
+    const hex = Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+    return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+  };
+
+  const getVisitorId = () => {
+    const existing = readStore("pb_vid");
+    if (UUID_RE.test(existing)) return existing;
+    const created = makeUuidV4();
+    writeStore("pb_vid", created, 31536000);
+    return created;
+  };
+
+  const normalizePathname = (rawPath) => {
+    const safe = clean(rawPath || "/", 150) || "/";
+    const withSlash = safe.startsWith("/") ? safe : `/${safe}`;
+    return withSlash === "/" ? "/" : `${withSlash.replace(/\/+$/, "")}/`;
+  };
+
+  const stripLocale = (pathname) => {
+    const parts = pathname.split("/").filter(Boolean);
+    if (parts.length > 0 && LOCALES.has(parts[0].toLowerCase())) {
+      const rest = parts.slice(1).join("/");
+      return rest ? `/${rest}/` : "/";
+    }
+    return pathname;
+  };
+
+  const detectClickIdType = (params) => {
+    for (const [param, source] of [
+      ["gclid", "google_ads"],
+      ["gbraid", "google_ads"],
+      ["wbraid", "google_ads"],
+      ["msclkid", "bing_ads"],
+      ["fbclid", "meta_ads"],
+      ["ttclid", "tiktok_ads"],
+      ["twclid", "x_ads"],
+    ]) {
+      if (params.get(param)) return { click_id_type: param, inferred_source: source };
+    }
+    return { click_id_type: "", inferred_source: "" };
+  };
+
+  const captureAttribution = () => {
+    const params = new URLSearchParams(win.location?.search || "");
+    const rawInstallId = (params.get("install_id") || "").trim();
+    if (UUID_RE.test(rawInstallId)) {
+      writeStore("pb_iid", rawInstallId, 31536000);
+    }
+    const rawVersion = (params.get("v") || "").trim();
+    if (VERSION_RE.test(rawVersion)) {
+      writeStore("pb_ver", rawVersion, 31536000);
+    }
+
+    const rawUtmSource = clean(params.get("utm_source") || "", 80);
+    const isInternalFlow = INTERNAL_SOURCES.has(rawUtmSource);
+    const { click_id_type, inferred_source } = detectClickIdType(params);
+    const effectiveUtmSource = !isInternalFlow ? (rawUtmSource || inferred_source) : "";
+    const hasMarketingTouch = Boolean(effectiveUtmSource || click_id_type);
+
+    let saved = null;
+    try {
+      const rawSaved = readStore("pb_ft");
+      if (rawSaved) saved = JSON.parse(rawSaved);
+    } catch {
+      saved = null;
+    }
+
+    const shouldWriteFirstTouch =
+      !saved || (saved.utm_source === "direct" && hasMarketingTouch);
+
+    if (shouldWriteFirstTouch && !isInternalFlow) {
+      let referrerHost = "";
+      try {
+        if (doc.referrer) {
+          const refUrl = new URL(doc.referrer);
+          if (refUrl.hostname && refUrl.hostname !== win.location?.hostname) {
+            referrerHost = clean(refUrl.hostname, 100);
+          }
+        }
+      } catch {
+        referrerHost = "";
+      }
+
+      const inferredFromReferrer = referrerHost ? `referral_${referrerHost}` : "direct";
+      const nextFirstTouch = {
+        utm_source: effectiveUtmSource || inferredFromReferrer,
+        utm_medium: clean(params.get("utm_medium") || (inferred_source ? "cpc" : referrerHost ? "referral" : ""), 80),
+        utm_campaign: clean(params.get("utm_campaign") || "", 100),
+        utm_content: clean(params.get("utm_content") || "", 100),
+        click_id_type,
+        referrer_host: referrerHost,
+        landing_path: normalizePathname(win.location?.pathname || "/"),
+      };
+      writeStore("pb_ft", JSON.stringify(nextFirstTouch), 2592000);
+      saved = nextFirstTouch;
+    }
+
+    const rawFeature = (params.get("paywall_feature") || params.get("feature") || "").trim();
+    const paywallFeature = FEATURES.has(rawFeature) ? rawFeature : "smart-auto-blur";
+    const storedInstallId = readStore("pb_iid");
+    const storedVersion = readStore("pb_ver");
+
+    return {
+      visitorId: getVisitorId(),
+      installId: UUID_RE.test(storedInstallId) ? storedInstallId : "",
+      version: VERSION_RE.test(storedVersion) ? storedVersion : "",
+      firstTouch: saved,
+      paywallFeature,
+      rawUtmSource,
+    };
+  };
+
+  const state = win.__pbTelemetryState || {
+    routeKeys: new Set(),
+    boundRoots: new WeakSet(),
+    lastClickKey: "",
+    lastClickAt: 0,
+  };
+  win.__pbTelemetryState = state;
+
+  const track = (event, extra = {}) => {
+    if (event === "install_cta_clicked") {
+      const clickKey = `${extra.target || ""}:${extra.placement || ""}`;
+      const now = Date.now();
+      if (state.lastClickKey === clickKey && now - state.lastClickAt < 300) return;
+      state.lastClickKey = clickKey;
+      state.lastClickAt = now;
+    }
+    const attr = captureAttribution();
+    const pathname = normalizePathname(win.location?.pathname || "/");
+    const locale = clean(doc.documentElement?.lang || "en", 16) || "en";
+    const stitchedKey = attr.installId ? `pb_stitched_${attr.installId}` : "";
+    const needsStitch = Boolean(stitchedKey && readStore(stitchedKey) !== "1");
+
+    const payload = {
+      event,
+      visitor_id: attr.visitorId,
+      path: pathname,
+      locale,
+      ...(attr.installId ? { install_id: attr.installId } : {}),
+      ...(needsStitch ? { stitch: true } : {}),
+      ...(attr.version ? { version: attr.version } : {}),
+      ...(attr.firstTouch ? { first_touch: attr.firstTouch } : {}),
+      ...extra,
+    };
+
+    if (needsStitch) {
+      writeStore(stitchedKey, "1", 31536000);
+    }
+
+    if (typeof win.fetch === "function") {
+      win.fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        keepalive: true,
+        credentials: "omit",
+      }).catch(() => {});
+    }
+  };
+
+  win.__pbTelemetry = {
+    track,
+    getAttribution: captureAttribution,
+  };
+
+  // Automatic route-view tracking (deduplicated per route + search state)
+  const attr = captureAttribution();
+  const pathname = normalizePathname(win.location?.pathname || "/");
+  const baseRoute = stripLocale(pathname);
+  const routeKey = `${pathname}|${attr.paywallFeature}|${attr.installId}`;
+
+  if (!state.routeKeys.has(routeKey)) {
+    state.routeKeys.add(routeKey);
+    if (baseRoute === "/welcome/") {
+      track("welcome_viewed", {
+        from_extension_install: attr.rawUtmSource === "extension_install",
+      });
+    } else if (baseRoute === "/uninstall/") {
+      track("extension_uninstalled");
+    } else if (baseRoute === "/paywall/") {
+      track("paywall_viewed", { feature: attr.paywallFeature });
+    } else if (baseRoute === "/payment-cancelled/") {
+      track("checkout_cancelled_view", { feature: attr.paywallFeature });
+    } else if (baseRoute !== "/payment-success/") {
+      let alreadyLanded = false;
+      try {
+        alreadyLanded = win.sessionStorage?.getItem("pb_session_landed") === "1";
+        win.sessionStorage?.setItem("pb_session_landed", "1");
+      } catch {
+        alreadyLanded = false;
+      }
+      if (!alreadyLanded) {
+        track("site_landing_viewed");
+      }
+    }
+  }
+
+  if (state.boundRoots.has(root)) {
+    return () => {};
+  }
+  state.boundRoots.add(root);
+
+  const onClick = (ev) => {
+    const targetEl = ev.target && typeof ev.target.closest === "function"
+      ? ev.target.closest("a[data-install], a[data-placement]")
+      : null;
+    if (!targetEl) return;
+    const href = targetEl.getAttribute("href") || "";
+    const isMac = targetEl.dataset?.install === "macos" || href.endsWith(".dmg");
+    const isCws = href.includes("chromewebstore.google.com/detail/");
+    if (!isMac && !isCws) return;
+    const placement = clean(targetEl.dataset?.placement || "hero", 40) || "hero";
+    track("install_cta_clicked", {
+      target: isMac ? "macos" : "chrome",
+      placement,
+    });
+  };
+
+  const onSurveyChange = (ev) => {
+    const input = ev.target;
+    if (!input || input.name !== "uninstall-reason") return;
+    const reason = input.value;
+    if (!["website", "pattern", "free", "finished"].includes(reason)) return;
+    track("uninstall_feedback_submitted", { reason });
+  };
+
+  root.addEventListener("click", onClick);
+  root.addEventListener("change", onSurveyChange);
+
+  return () => {
+    root.removeEventListener("click", onClick);
+    root.removeEventListener("change", onSurveyChange);
+    state.boundRoots.delete(root);
+  };
 })();</script></body>
 </html>
