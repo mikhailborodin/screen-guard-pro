@@ -23,9 +23,22 @@ type SubscriptionStatusResponse = {
   };
 };
 
+export type FirstTouchAttribution = {
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_content?: string;
+  click_id_type?: string;
+  referrer_host?: string;
+  landing_path?: string;
+};
+
 export type CheckoutParams = {
   extensionId: string;
   billingInterval: BillingInterval;
+  installId?: string;
+  paywallFeature?: string;
+  attribution?: FirstTouchAttribution | null;
 };
 
 export type SubscriptionStatus = {
@@ -80,7 +93,10 @@ const requireOk = async (response: Response) => {
   throw new Error(errorMessage);
 };
 
-export const buildPaymentQuery = (extensionId: string) => {
+export const buildPaymentQuery = (
+  extensionId: string,
+  extra?: { installId?: string; paywallFeature?: string },
+) => {
   const params = new URLSearchParams({
     source: EXTENSION_SOURCE,
     feature: PRO_FEATURE,
@@ -89,14 +105,30 @@ export const buildPaymentQuery = (extensionId: string) => {
   if (extensionId) {
     params.set("extension_id", extensionId);
   }
+  if (extra?.installId) {
+    params.set("install_id", extra.installId);
+  }
+  if (extra?.paywallFeature && extra.paywallFeature !== PRO_FEATURE) {
+    params.set("paywall_feature", extra.paywallFeature);
+  }
 
   return params.toString();
 };
 
-export const buildHostedRoute = (path: "/payment-success/" | "/payment-cancelled/", extensionId: string) =>
-  `${SITE_URL}${path}?${buildPaymentQuery(extensionId)}`;
+export const buildHostedRoute = (
+  path: "/payment-success/" | "/payment-cancelled/",
+  extensionId: string,
+  extra?: { installId?: string; paywallFeature?: string },
+) => `${SITE_URL}${path}?${buildPaymentQuery(extensionId, extra)}`;
 
-export const createCheckoutSession = async ({ extensionId, billingInterval }: CheckoutParams) => {
+export const createCheckoutSession = async ({
+  extensionId,
+  billingInterval,
+  installId,
+  paywallFeature,
+  attribution,
+}: CheckoutParams) => {
+  const extraQuery = { installId, paywallFeature };
   const response = await fetch(endpoint("create-checkout-session"), {
     method: "POST",
     headers: {
@@ -108,8 +140,11 @@ export const createCheckoutSession = async ({ extensionId, billingInterval }: Ch
       source: EXTENSION_SOURCE,
       extensionId,
       billingInterval,
-      successUrl: buildHostedRoute("/payment-success/", extensionId),
-      cancelUrl: buildHostedRoute("/payment-cancelled/", extensionId),
+      ...(installId ? { installId } : {}),
+      ...(paywallFeature ? { paywallFeature } : {}),
+      ...(attribution ? { attribution } : {}),
+      successUrl: buildHostedRoute("/payment-success/", extensionId, extraQuery),
+      cancelUrl: buildHostedRoute("/payment-cancelled/", extensionId, extraQuery),
     }),
   });
 

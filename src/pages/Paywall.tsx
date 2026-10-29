@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { ALLOWED_PAYWALL_FEATURES, getWebAttribution, trackWebEvent } from "@/data/webTelemetry.mjs";
 import { type BillingInterval, createCheckoutSession } from "@/lib/billing";
 
 const benefits = [
@@ -56,9 +57,13 @@ const Paywall = () => {
   const [isStartingCheckout, setIsStartingCheckout] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const extensionId = useMemo(() => {
+  const { extensionId, paywallFeature } = useMemo(() => {
     const params = new URLSearchParams(location.search);
-    return params.get("extension_id") ?? "";
+    const rawFeature = (params.get("paywall_feature") ?? params.get("feature") ?? "").trim();
+    return {
+      extensionId: params.get("extension_id") ?? "",
+      paywallFeature: ALLOWED_PAYWALL_FEATURES.includes(rawFeature) ? rawFeature : "smart-auto-blur",
+    };
   }, [location.search]);
 
   const startCheckout = async () => {
@@ -66,7 +71,18 @@ const Paywall = () => {
     setError(null);
 
     try {
-      const checkoutUrl = await createCheckoutSession({ extensionId, billingInterval });
+      const attr = getWebAttribution();
+      trackWebEvent("checkout_started", {
+        billing_interval: billingInterval,
+        feature: paywallFeature,
+      });
+      const checkoutUrl = await createCheckoutSession({
+        extensionId,
+        billingInterval,
+        installId: attr.installId || undefined,
+        paywallFeature,
+        attribution: attr.firstTouch,
+      });
       window.location.assign(checkoutUrl);
     } catch (checkoutError) {
       setError(checkoutError instanceof Error ? checkoutError.message : "Unable to start checkout.");
