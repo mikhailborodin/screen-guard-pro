@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CheckCircle2, Chrome, Loader2, ShieldCheck } from "lucide-react";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { ALLOWED_PAYWALL_FEATURES, trackWebEvent } from "@/data/webTelemetry.mjs";
 import { activateExtension, checkSubscriptionStatus } from "@/lib/billing";
 import { useLocation } from "react-router-dom";
 
@@ -15,10 +16,15 @@ const PaymentSuccess = () => {
   const [isChecking, setIsChecking] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLifetime, setIsLifetime] = useState(false);
+  const trackedSuccessRef = useRef(false);
 
-  const extensionId = useMemo(() => {
+  const { extensionId, paywallFeature } = useMemo(() => {
     const params = new URLSearchParams(location.search);
-    return params.get("extension_id") ?? "";
+    const rawFeature = (params.get("paywall_feature") ?? params.get("feature") ?? "").trim();
+    return {
+      extensionId: params.get("extension_id") ?? "",
+      paywallFeature: ALLOWED_PAYWALL_FEATURES.includes(rawFeature) ? rawFeature : "smart-auto-blur",
+    };
   }, [location.search]);
 
   const sessionId = new URLSearchParams(location.search).get("session_id") ?? undefined;
@@ -49,6 +55,13 @@ const PaymentSuccess = () => {
         return;
       }
       setIsLifetime(status.plan === "lifetime");
+      if (!trackedSuccessRef.current) {
+        trackedSuccessRef.current = true;
+        trackWebEvent("checkout_completed_view", {
+          billing_interval: status.plan ?? "year",
+          feature: paywallFeature,
+        });
+      }
       await activateExtension(extensionId, activationToken);
       setVerificationState("active");
     } catch (statusError) {
@@ -57,7 +70,7 @@ const PaymentSuccess = () => {
     } finally {
       setIsChecking(false);
     }
-  }, [extensionId, activationToken, sessionId]);
+  }, [extensionId, activationToken, paywallFeature, sessionId]);
 
   useEffect(() => { void verifySubscription(); }, [verifySubscription]);
 
