@@ -505,7 +505,7 @@ const renderNoindexApp = (path, appAssets) =>
 
 const appShell = await readFile(join(distDir, "index.html"), "utf8");
 const appAssets = appShell
-  .match(/<script type="module" crossorigin src="[^"]+"><\/script>|<link rel="stylesheet" crossorigin href="[^"]+">/g)
+  .match(/<script type="module" crossorigin src="[^"]+"><\/script>|<link rel="(?:stylesheet|modulepreload)" crossorigin href="[^"]+">/g)
   ?.join("\n    ");
 
 if (!appAssets) {

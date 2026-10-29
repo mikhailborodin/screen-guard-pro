@@ -25,7 +25,7 @@ const PaymentCancelled = () => {
 
             <div className="flex flex-col justify-center gap-3 sm:flex-row">
               <Button asChild variant="hero" size="lg">
-                <Link to={`/paywall${location.search}`}>
+                <Link to={`/paywall/${location.search}`}>
                   <RotateCcw className="h-5 w-5" />
                   Try again
                 </Link>

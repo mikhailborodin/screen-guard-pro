@@ -101,9 +101,9 @@ const App = () => (
           ))}
           <Route path="/compare" element={<GrowthHub group="Compare" title="Compare browser privacy tools" description="Compare local blur, automation, and synthetic demo data workflows." />} />
           {upgradeSeoPages.map(page => <Route key={page.path} path={`${page.path}*`} element={<GrowthPage page={page} />} />)}
-          <Route path="/paywall" element={<Paywall />} />
-          <Route path="/payment-success" element={<PaymentSuccess />} />
-          <Route path="/payment-cancelled" element={<PaymentCancelled />} />
+          <Route path="/paywall/*" element={<Paywall />} />
+          <Route path="/payment-success/*" element={<PaymentSuccess />} />
+          <Route path="/payment-cancelled/*" element={<PaymentCancelled />} />
           <Route path="/support" element={<Support />} />
           <Route path="/support/" element={<Support />} />
           <Route path="/privacy-policy/*" element={<GrowthPage page={growthPagesByPath["/privacy-policy"]} />} />

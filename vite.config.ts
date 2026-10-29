@@ -20,10 +20,18 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes("node_modules")) {
-            if (id.includes("react") || id.includes("scheduler")) return "vendor-react";
-            if (id.includes("@radix-ui") || id.includes("lucide-react")) return "vendor-ui";
+          const normalized = id.replaceAll("\\", "/");
+          if (/\/node_modules\/(react|react-dom|scheduler)\//.test(normalized)) {
+            return "vendor-react";
+          }
+          if (normalized.includes("/node_modules/")) {
             return "vendor";
+          }
+          if (normalized.endsWith("/src/data/locales.mjs")) {
+            return "locales";
+          }
+          if (normalized.includes("/src/data/")) {
+            return "content";
           }
         },
       },

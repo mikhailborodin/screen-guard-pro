@@ -112,7 +112,7 @@ const Paywall = () => {
                   : `Start ${billingInterval === "year" ? "yearly" : "monthly"} Pro`}
               </Button>
               <Button asChild variant="glass" size="xl" className="w-full sm:w-auto">
-                <Link to={`/payment-success${location.search}`}>I already paid</Link>
+                <Link to={`/payment-success/${location.search}`}>I already paid</Link>
               </Button>
             </div>
 

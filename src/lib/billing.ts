@@ -93,7 +93,7 @@ export const buildPaymentQuery = (extensionId: string) => {
   return params.toString();
 };
 
-export const buildHostedRoute = (path: "/payment-success" | "/payment-cancelled", extensionId: string) =>
+export const buildHostedRoute = (path: "/payment-success/" | "/payment-cancelled/", extensionId: string) =>
   `${SITE_URL}${path}?${buildPaymentQuery(extensionId)}`;
 
 export const createCheckoutSession = async ({ extensionId, billingInterval }: CheckoutParams) => {
@@ -108,8 +108,8 @@ export const createCheckoutSession = async ({ extensionId, billingInterval }: Ch
       source: EXTENSION_SOURCE,
       extensionId,
       billingInterval,
-      successUrl: buildHostedRoute("/payment-success", extensionId),
-      cancelUrl: buildHostedRoute("/payment-cancelled", extensionId),
+      successUrl: buildHostedRoute("/payment-success/", extensionId),
+      cancelUrl: buildHostedRoute("/payment-cancelled/", extensionId),
     }),
   });
 

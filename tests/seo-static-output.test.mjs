@@ -1,5 +1,5 @@
 import { execFile } from "node:child_process";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { dirname, join } from "node:path";
@@ -167,9 +167,40 @@ test("production build emits crawlable canonical HTML for every sitemap URL", as
   assert.match(support, /<script type="module" crossorigin src="\/assets\//);
 });
 
-test("transactional application pages are not indexable", async () => {
+test("transactional application pages are not indexable and load acyclic JS chunks", async () => {
   for (const path of ["/paywall/", "/payment-success/", "/payment-cancelled/"]) {
     const html = await readFile(outputPath(path), "utf8");
     assert.match(html, /<meta name="robots" content="noindex,nofollow" \/>/);
+    assert.match(html, /<script type="module" crossorigin src="\/assets\/index-[^"]+\.js"><\/script>/);
+    assert.match(html, /<link rel="modulepreload" crossorigin href="\/assets\/vendor-react-[^"]+\.js">/);
+  }
+
+  const assetsDir = join(root, "dist/assets");
+  const jsFiles = (await readdir(assetsDir)).filter((file) => file.endsWith(".js"));
+  assert.ok(jsFiles.length >= 2, "expected chunked JS output in dist/assets");
+
+  const graph = new Map();
+  for (const file of jsFiles) {
+    const code = await readFile(join(assetsDir, file), "utf8");
+    const deps = [...code.matchAll(/from\s*["']\.\/([^"']+\.js)["']/g)].map((match) => match[1]);
+    graph.set(file, deps);
+  }
+
+  const state = new Map();
+  const visit = (node, trail = []) => {
+    const current = state.get(node);
+    if (current === "visiting") {
+      assert.fail(`Circular JS chunk dependency detected: ${[...trail, node].join(" -> ")}`);
+    }
+    if (current === "visited") return;
+    state.set(node, "visiting");
+    for (const dep of graph.get(node) ?? []) {
+      visit(dep, [...trail, node]);
+    }
+    state.set(node, "visited");
+  };
+
+  for (const file of jsFiles) {
+    visit(file);
   }
 });
