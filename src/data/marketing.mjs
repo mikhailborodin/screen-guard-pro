@@ -100,6 +100,18 @@ export const finalCtaHtml = (path = '/', locale = localeFromPath(path)) => {
   return `<section class="m-section m-wrap" id="cta"><div class="m-card m-highlight m-cta-box"><h2>${escapeHtml(c.title)}</h2><p>${escapeHtml(c.description)}</p><div class="m-cta-actions">${installActionsHtml(path, 'footer')}</div><p class="m-note">${escapeHtml(c.note)}</p></div></section>`;
 };
 
+export const partnerBannerHtml = `<aside class="partner-placement" lang="en" aria-label="Partner advertisement">
+  <a class="partner-banner" href="https://calendlab.com/signup?utm_source=privacyblur&amp;utm_medium=referral&amp;utm_campaign=retro_banner" rel="sponsored">
+    <span class="partner-banner-icon" aria-hidden="true">31</span>
+    <span class="partner-banner-copy">
+      <span class="partner-banner-label">Partner link</span>
+      <strong>CalendLab</strong>
+      <span>Book meetings with one link.</span>
+    </span>
+    <span class="partner-banner-button">Try it free <span aria-hidden="true">»</span></span>
+  </a>
+</aside>`;
+
 export const resourceLinksHtml = () => `<nav class="m-resource-links" aria-label="Comparisons and use cases">${seoPages.filter(p => p.group !== 'Trust').map(p => `<a href="${p.path}">${p.title}</a>`).join('')}</nav>`;
 export const welcomeRows = [
   [

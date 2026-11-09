@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 import { extensionUrl, seoPages, siteUrl } from "../src/data/seoContent.mjs";
 import { getCopy, getLocaleMeta, localeList, localizedPath, nonDefaultLocales } from "../src/data/locales.mjs";
-import { heroTitle, heroDescription, heroHtml, featuresHtml, comparisonHtml, comparisonTableHtml, pricingHtml, trustHtml, stepsHtml, macDesktopHtml, finalCtaHtml, resourceLinksHtml, welcomeHtml, initializeDemo, compatibilityHtml, reviewsHtml } from "../src/data/marketing.mjs";
+import { heroTitle, heroDescription, heroHtml, featuresHtml, comparisonHtml, comparisonTableHtml, pricingHtml, trustHtml, stepsHtml, macDesktopHtml, finalCtaHtml, resourceLinksHtml, welcomeHtml, initializeDemo, compatibilityHtml, reviewsHtml, partnerBannerHtml } from "../src/data/marketing.mjs";
 import { marketingStyles } from "../src/data/marketingStyles.mjs";
 
 import { installActionsHtml, attributeInstallLinks, initializeConversion } from "../src/data/conversion.mjs";
@@ -446,7 +446,7 @@ const renderHome = (locale = "en") => {
     alternateBasePath: "/",
     analyticsScript: deferredAnalytics,
     jsonLd: [productSchemaForLocale(locale, path), faqSchema(faqs)],
-    body: `<header class="m-wrap home-nav">${navigation(locale, "/")}</header><main>${heroHtml(locale)}${compatibilityHtml(locale)}${comparisonHtml(locale)}${featuresHtml(locale)}${pricingHtml(locale)}${macDesktopHtml(locale)}${stepsHtml(locale)}${trustHtml(locale)}${reviewsHtml(locale)}${faqHtml(faqs, locale)}${finalCtaHtml(path, locale)}</main><div class="m-wrap home-footer">${footer(locale, "/")}</div><script>(${initializeDemo.toString()})();
+    body: `<header class="m-wrap home-nav">${navigation(locale, "/")}</header><main>${heroHtml(locale)}${compatibilityHtml(locale)}${comparisonHtml(locale)}${featuresHtml(locale)}${pricingHtml(locale)}${macDesktopHtml(locale)}${stepsHtml(locale)}${trustHtml(locale)}${reviewsHtml(locale)}${faqHtml(faqs, locale)}${finalCtaHtml(path, locale)}${partnerBannerHtml}</main><div class="m-wrap home-footer">${footer(locale, "/")}</div><script>(${initializeDemo.toString()})();
   document.querySelectorAll('a[data-install], a[data-placement]').forEach(link => link.addEventListener('click', () => {
     if (typeof window.gtag === 'function') window.gtag('event', link.dataset.install === 'macos' ? 'download_macos_click' : 'install_chrome_click', {placement:link.dataset.placement || 'hero', target_url:link.href, transport_type:'beacon'});
   }));</script>`,

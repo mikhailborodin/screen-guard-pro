@@ -8,7 +8,7 @@ import { PrivacyPromise } from "@/components/PrivacyPromise";
 import { CTA } from "@/components/CTA";
 import { MarketingSection } from "@/components/MarketingSection";
 import { localeFromPath } from "@/data/locales.mjs";
-import { comparisonHtml, pricingHtml, stepsHtml, compatibilityHtml, reviewsHtml } from "@/data/marketing.mjs";
+import { comparisonHtml, pricingHtml, stepsHtml, compatibilityHtml, reviewsHtml, partnerBannerHtml } from "@/data/marketing.mjs";
 import { marketingStyles } from "@/data/marketingStyles.mjs";
 import { Footer } from "@/components/Footer";
 
@@ -32,6 +32,7 @@ const Index = () => {
       <MarketingSection html={reviewsHtml(locale)} />
       <FAQSection />
       <CTA />
+      <MarketingSection html={partnerBannerHtml} />
       <Footer />
     </main>
   );
